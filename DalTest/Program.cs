@@ -16,6 +16,9 @@ internal class Program
     private static readonly ITask? s_dalTask = new TaskImplementation(); //stage 1
     private static readonly IDependence? s_dalDependence = new DependenceImplementation(); //stage 1
 
+    /// <summary>
+    /// the main menu
+    /// </summary>
     private static void Menu()
     {
         Console.WriteLine("Choose Entity:");
@@ -25,6 +28,9 @@ internal class Program
         Console.WriteLine("3 - Dependence");
     }
 
+    /// <summary>
+    /// the sub menu
+    /// </summary>
     private static void SubMenu()
     {
 
@@ -36,24 +42,34 @@ internal class Program
         Console.WriteLine("4 - Update");
         Console.WriteLine("5 - Delete");
     }
+
+    /// <summary>
+    /// this function input details to a worker and add him to the list
+    /// </summary>
     private static void AddWorker()
     {
-        int _id = Console.Read();
+        Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
+        int _id = Console.Read();//input the details
         Rank _rank = (Rank)Console.Read();
         double _hourPrice = Console.Read();
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
-        Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
-        Console.WriteLine(s_dalWorker?.Create(_worker));
+        Worker _worker = new(_id, _rank, _hourPrice, _name, _email);//build the worker
+        Console.WriteLine(s_dalWorker?.Create(_worker));//add to the list and print the ID's worker
 
     }
+    /// <summary>
+    /// this function input details to a task and add it to the list
+    /// </summary>
     private static void AddTask()
     {
-        int Id = Console.Read();
+        Console.WriteLine("Enter Id, Id worker, name, description, mile stone, time, create date, " +
+            "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
+        int Id = Console.Read();//input the details
         int IdWorker = Console.Read();
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
-        bool MileStone = bool.Parse(Console.ReadLine()!);
+        bool MileStone = bool.Parse(Console.ReadLine()!);//input and convert...
         TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
         DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
         DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
@@ -64,102 +80,186 @@ internal class Program
         string? Notes = Console.ReadLine();
         int Rank = Console.Read();
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
-            , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);
-        Console.WriteLine(s_dalTask?.Create(_Task));
+            , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
+        Console.WriteLine(s_dalTask?.Create(_Task));//add to the list and print the Id's task
 
 
     }
+    /// <summary>
+    /// this function input details to a dependence and add it to the list
+    /// </summary>
     private static void AddDependence()
     {
-        int _id = Console.Read();
+        Console.WriteLine("Enter Id, dependence task and previous task");
+        int _id = Console.Read();//input the details
         int _DependenceTask = Console.Read();
         int PrevTask = Console.Read();
-        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
-        Console.WriteLine(s_dalDependence?.Create(_Dependence));
+        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);//build the dependence
+        Console.WriteLine(s_dalDependence?.Create(_Dependence));//add to the list and print the ID
 
     }
+    /// <summary>
+    /// this function input id of worker and print the object with the write ID
+    /// </summary>
     private static void WorkerObjectView()
     {
+        Console.WriteLine("Enter Id for print");
         int _id = Console.Read();
         Console.WriteLine(s_dalWorker?.Read(_id));
     }
-
+    /// <summary>
+    /// this function input id of task and print the object with the write ID
+    /// </summary>
     private static void TaskObjectView()
     {
+        Console.WriteLine("Enter Id for print");
         int _id = Console.Read();
         Console.WriteLine(s_dalTask?.Read(_id));
     }
-
+    /// <summary>
+    /// this function input id of dependence and print the object with the write ID
+    /// </summary>
     private static void DependenceObjectView()
     {
+        Console.WriteLine("Enter Id for print");
         int _id = Console.Read();
         Console.WriteLine(s_dalDependence?.Read(_id));
     }
-
+    /// <summary>
+    /// this function input the wanted details to update and build new worker
+    /// </summary>
     private static void UpdateWorker()
     {
+        Console.WriteLine("Enter Id:");
         int _id = Console.Read();
-        Console.WriteLine(s_dalDependence!.Read(_id));
-        Console.WriteLine("Enter New Details:");
-        Rank _rank = (Rank)Console.Read();
-        double _hourPrice = Console.Read();
+        Console.WriteLine(s_dalWorker!.Read(_id));
+        Worker? worker1 = s_dalWorker.Read(_id);
+        Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name and email:");
+        Rank? _rank = (Rank)Console.Read();//input and convert to rank enum
+        if (_rank == null)
+        { _rank = worker1!.WorkerRank; }
+        else { }
+        double? _hourPrice = Console.Read();
+        if (_hourPrice == null)
+        { _hourPrice = worker1!.HourPrice; }
+        else { }
         string? _name = Console.ReadLine();
+        if (_name == null)
+        { _name = worker1!.Name; }
+        else { }
         string? _email = Console.ReadLine();
-        Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
-        s_dalWorker?.Update(_worker);
+        if (_email == null)
+        { _email = worker1!.Email; }
+        else { }
+        //Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
+        // s_dalWorker?.Update(_worker);
     }
 
     private static void UpdateTask()
     {
+        Console.WriteLine("Enter Id:");
         int Id = Console.Read();
-        Console.WriteLine(s_dalDependence!.Read(Id));
-        Console.WriteLine("Enter New Details:");
-        int IdWorker = Console.Read();
+        Console.WriteLine(s_dalTask!.Read(Id));
+        Task? task1 = s_dalTask.Read(Id);
+        Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
+        Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
+        int? IdWorker = Console.Read();
+        if (IdWorker == null)
+            IdWorker = task1!.IdWorker;
+        else { }
         string? Name = Console.ReadLine();
+        if (Name == null)
+            Name = task1!.Name;
+        else { }
         string? Description = Console.ReadLine();
+        if (Description == null)
+            Description = task1!.Description;
+        else { }
         bool MileStone = bool.Parse(Console.ReadLine()!);
+        if (MileStone)
+            MileStone = task1!.MileStone;
+        else { }
         TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
+        if (Time == null)
+            Time = task1!.Time;
+        else { }
         DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
+        if (CreateDate == null)
+            CreateDate = task1!.CreateDate;
+        else { }
         DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
+        if (WantedStartDate == null)
+            WantedStartDate = task1!.WantedStartDate;
+        else { }
         DateTime? StartDate = DateTime.Parse(Console.ReadLine()!);
+        if (StartDate == null)
+            StartDate = task1!.StartDate;
+        else { }
         DateTime? EndingDate = DateTime.Parse(Console.ReadLine()!);
+        if (EndingDate == null)
+            EndingDate = task1!.EndingDate;
+        else { }
         DateTime? DeadLine = DateTime.Parse(Console.ReadLine()!);
+        if (DeadLine == null)
+            DeadLine = task1!.DeadLine;
+        else { }
         string? Product = Console.ReadLine();
+        if (Product == null)
+            Product = task1!.Product;
+        else { }
         string? Notes = Console.ReadLine();
-        int Rank = Console.Read();
-        Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
-            , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);
-        s_dalTask?.Update(_Task);
+        if (Notes == null)
+            Notes = task1!.Notes;
+        else { }
+        int? Rank = Console.Read();
+        if (Rank == null)
+            Rank = task1!.Rank;
+        else { }
+        // Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
+        // , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);
+        // s_dalTask?.Update(_Task);
     }
     private static void UpdateDependence()
     {
+        Console.WriteLine("Enter Id:");
         int _id = Console.Read();
         Console.WriteLine(s_dalDependence!.Read(_id));
-        Console.WriteLine("Enter New Details:");
-        int _DependenceTask = Console.Read();
-        int PrevTask = Console.Read();
-        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
-        s_dalDependence?.Update(_Dependence);
+        Dependencies? dependence1 = s_dalDependence.Read(_id);
+        Console.WriteLine("Enter New Details for dependence task and previous task:");
+        int? _DependenceTask = Console.Read();
+        if (_DependenceTask == null)
+            _DependenceTask = dependence1!.DependenceTask;
+        else { }
+        int? PrevTask = Console.Read();
+        if (PrevTask == null)
+            PrevTask = dependence1!.PrevTask;
+        else { }
+        //Dependence _Dependence = new(_id, _DependenceTask, PrevTask);
+        //s_dalDependence?.Update(_Dependence);
     }
     private static void DeleteDependence()
     {
+        Console.WriteLine("Enter Id to delete");
         int _id = Console.Read();
         s_dalDependence?.Delete(_id);
     }
 
     private static void DeleteTask()
     {
+        Console.WriteLine("Enter Id to delete");
         int _id = Console.Read();
         s_dalTask?.Delete(_id);
     }
 
     private static void DeleteWorker()
     {
+        Console.WriteLine("Enter Id to delete");
         int _id = Console.Read();
         s_dalWorker?.Delete(_id);
     }
     private static void WorkerListView()
     {
+        Console.WriteLine("workers list:");
         List<Worker> workerList = s_dalWorker!.ReadAll();
         for (int i = 0; i < workerList.Count; i++)
         {
@@ -169,6 +269,7 @@ internal class Program
 
     private static void TaskListView()
     {
+        Console.WriteLine("tasks list:");
         List<Task> taskList = s_dalTask!.ReadAll();
         for (int i = 0; i < taskList.Count; i++)
         {
@@ -178,6 +279,7 @@ internal class Program
 
     private static void DependenceListView()
     {
+        Console.WriteLine("dependences list:");
         List<Dependencies> dependenceList = s_dalDependence!.ReadAll();
         for (int i = 0; i < dependenceList.Count; i++)
         {
@@ -263,7 +365,7 @@ internal class Program
             Initialization.Do(s_dalWorker, s_dalTask, s_dalDependence);
 
             Menu();
-            int choose = int.Parse(Console.ReadLine());
+            int choose = int.Parse(Console.ReadLine()!);
 
             while (choose != 0)
             {
@@ -274,21 +376,22 @@ internal class Program
                         break;
                     case 1:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine());
-                        SubMenuWorker(choose1);
+                        choose1 = int.Parse(Console.ReadLine()!);
+                        SubMenuWorker((int)choose1-48);
                         break;
                     case 2:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine());
-                        SubMenuTask(choose1);
+                        choose1 = int.Parse(Console.ReadLine()!);
+                        SubMenuTask((int)choose1-48);
                         break;
                     case 3:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine());
-                        SubMenuDependence(choose1);
+                        choose1 = int.Parse(Console.ReadLine()!);
+                        SubMenuDependence((int)choose1 - 48);
                         break;
                 }
-                choose = int.Parse(Console.ReadLine());
+                Menu();
+                choose = int.Parse(Console.ReadLine()!);
             }
 
         }
