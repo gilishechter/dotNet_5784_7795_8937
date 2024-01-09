@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalFacade", "DalFacade\DalFacade.csproj", "{773AD929-505B-488F-AA2F-E8EC8CFD4F3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{773AD929-505B-488F-AA2F-E8EC8CFD4F3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalTest", "DalTest\DalTest.csproj", "{952B7F3F-B4E4-4A09-9405-1F9657B3C8AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{952B7F3F-B4E4-4A09-9405-1F9657B3C8AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalList", "DalList\DalList.csproj", "{CC475DC8-4BDB-4D45-A55E-645290C5D10D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{CC475DC8-4BDB-4D45-A55E-645290C5D10D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stage0", "stage0\stage0.csproj", "{A374BC19-3240-4691-90AE-AC7036D83415}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,18 @@ Global
 		{CC475DC8-4BDB-4D45-A55E-645290C5D10D}.Release|x64.Build.0 = Release|Any CPU
 		{CC475DC8-4BDB-4D45-A55E-645290C5D10D}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC475DC8-4BDB-4D45-A55E-645290C5D10D}.Release|x86.Build.0 = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|x64.Build.0 = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Debug|x86.Build.0 = Debug|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x64.ActiveCfg = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x64.Build.0 = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x86.ActiveCfg = Release|Any CPU
+		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
