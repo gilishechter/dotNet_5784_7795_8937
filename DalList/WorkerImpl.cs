@@ -8,18 +8,15 @@ public class WorkerImplementation : IWorker
 {
     public int Create(Worker item)
     {
-        for (int i = 0; i < DataSource.Workers.Count; i++)
+        foreach (Worker Worker1 in DataSource.Workers)
         {
-            if (DataSource.Workers[i] == item)
+            if (Worker1.Id == item.Id)
             {
                 throw new Exception($"this worker with id={item.Id} is already exist");
             }
-            else
-            {
-                DataSource.Workers.Add(item);
-
-            }
         }
+       
+        DataSource.Workers.Add(item);
         return item.Id;
     }
 

@@ -49,9 +49,9 @@ internal class Program
     private static void AddWorker()
     {
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
-        int _id = Console.Read();//input the details
-        Rank _rank = (Rank)Console.Read();
-        double _hourPrice = Console.Read();
+        int.TryParse(Console.ReadLine(),out int _id);//input the details
+        Rank.TryParse(Console.ReadLine(),out Rank _rank);
+        double.TryParse(Console.ReadLine(),out double _hourPrice);
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);//build the worker
@@ -65,20 +65,20 @@ internal class Program
     {
         Console.WriteLine("Enter Id, Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        int Id = Console.Read();//input the details
-        int IdWorker = Console.Read();
+        int.TryParse(Console.ReadLine(),out int Id);//input the details
+        int.TryParse(Console.ReadLine(), out int IdWorker);
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
-        bool MileStone = bool.Parse(Console.ReadLine()!);//input and convert...
-        TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
-        DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
-        DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
-        DateTime? StartDate = DateTime.Parse(Console.ReadLine()!);
-        DateTime? EndingDate = DateTime.Parse(Console.ReadLine()!);
-        DateTime? DeadLine = DateTime.Parse(Console.ReadLine()!);
+        bool.TryParse(Console.ReadLine(), out bool MileStone);
+        TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time);
+        DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate);
+        DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate);
+        DateTime.TryParse(Console.ReadLine(), out DateTime StartDate);
+        DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate);
+        DateTime.TryParse(Console.ReadLine(), out DateTime DeadLine);
         string? Product = Console.ReadLine();
         string? Notes = Console.ReadLine();
-        int Rank = Console.Read();
+        int.TryParse(Console.ReadLine(), out int Rank);
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
         Console.WriteLine(s_dalTask?.Create(_Task));//add to the list and print the Id's task
@@ -240,21 +240,21 @@ internal class Program
     private static void DeleteDependence()
     {
         Console.WriteLine("Enter Id to delete");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         s_dalDependence?.Delete(_id);
     }
 
     private static void DeleteTask()
     {
         Console.WriteLine("Enter Id to delete");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         s_dalTask?.Delete(_id);
     }
 
     private static void DeleteWorker()
     {
         Console.WriteLine("Enter Id to delete");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         s_dalWorker?.Delete(_id);
     }
     private static void WorkerListView()
@@ -365,29 +365,29 @@ internal class Program
             Initialization.Do(s_dalWorker, s_dalTask, s_dalDependence);
 
             Menu();
-            int choose = int.Parse(Console.ReadLine()!);
+            int.TryParse(Console.ReadLine(), out int choose);
 
             while (choose != 0)
             {
-                int choose1;
+                //int choose1;
                 switch (choose)
                 {
                     case 0:
                         break;
                     case 1:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine()!);
-                        SubMenuWorker((int)choose1-48);
+                        int.TryParse(Console.ReadLine(), out int choose1);
+                        SubMenuWorker(choose1);
                         break;
                     case 2:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine()!);
-                        SubMenuTask((int)choose1-48);
+                        int.TryParse(Console.ReadLine(), out int choose2);
+                        SubMenuTask(choose2);
                         break;
                     case 3:
                         SubMenu();
-                        choose1 = int.Parse(Console.ReadLine()!);
-                        SubMenuDependence((int)choose1 - 48);
+                        int.TryParse(Console.ReadLine(), out int choose3);
+                        SubMenuDependence(choose3 );
                         break;
                 }
                 Menu();
