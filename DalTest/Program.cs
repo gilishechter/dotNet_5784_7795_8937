@@ -92,9 +92,9 @@ internal class Program
     {
         Console.WriteLine("Enter Id, dependence task and previous task");
         int.TryParse(Console.ReadLine(), out int _id);//input the details
-        int _DependenceTask = Console.Read();
-        int PrevTask = Console.Read();
-        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);//build the dependence
+        int.TryParse(Console.ReadLine(), out int _DependenceTask);
+        int.TryParse(Console.ReadLine(), out int _PrevTask);
+        Dependencies _Dependence = new(_id, _DependenceTask, _PrevTask);//build the dependence
         Console.WriteLine(s_dalDependence?.Create(_Dependence));//add to the list and print the ID
 
     }
@@ -122,7 +122,7 @@ internal class Program
     private static void DependenceObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dalDependence?.Read(_id));
     }
     /// <summary>
