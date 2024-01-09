@@ -158,7 +158,7 @@ internal class Program
     private static void UpdateTask()
     {
         Console.WriteLine("Enter Id:");
-        int Id = Console.Read();
+        int.TryParse( Console.ReadLine(),out int Id );
         Console.WriteLine(s_dalTask!.Read(Id));
         Task? task1 = s_dalTask.Read(Id);
         Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
@@ -175,7 +175,7 @@ internal class Program
         if (Description == null)
             Description = task1!.Description;
         else { }
-        bool MileStone = bool.Parse(Console.ReadLine()!);
+       bool.TryParse(Console.ReadLine(),out bool MileStone);
         if (MileStone)
             MileStone = task1!.MileStone;
         else { }
@@ -211,7 +211,7 @@ internal class Program
         if (Notes == null)
             Notes = task1!.Notes;
         else { }
-        int? Rank = Console.Read();
+        int.TryParse( Console.ReadLine(),out int Rank);
         if (Rank == null)
             Rank = task1!.Rank;
         else { }
