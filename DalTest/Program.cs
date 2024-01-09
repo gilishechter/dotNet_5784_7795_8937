@@ -131,15 +131,15 @@ internal class Program
     private static void UpdateWorker()
     {
         Console.WriteLine("Enter Id:");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dalWorker!.Read(_id));
-        Worker? worker1 = s_dalWorker.Read(_id);
+        Worker worker1 = s_dalWorker.Read(_id)!;
         Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name and email:");
-        Rank? _rank = (Rank)Console.Read();//input and convert to rank enum
+        Rank.TryParse(Console.ReadLine(), out Rank _rank);
         if (_rank == null)
         { _rank = worker1!.WorkerRank; }
         else { }
-        double? _hourPrice = Console.Read();
+        double.TryParse(Console.ReadLine(), out double _hourPrice);
         if (_hourPrice == null)
         { _hourPrice = worker1!.HourPrice; }
         else { }
@@ -151,8 +151,8 @@ internal class Program
         if (_email == null)
         { _email = worker1!.Email; }
         else { }
-        //Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
-        // s_dalWorker?.Update(_worker);
+        Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
+        s_dalWorker?.Update(_worker);
     }
 
     private static void UpdateTask()
@@ -222,11 +222,11 @@ internal class Program
     private static void UpdateDependence()
     {
         Console.WriteLine("Enter Id:");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dalDependence!.Read(_id));
-        Dependencies? dependence1 = s_dalDependence.Read(_id);
+        Dependencies dependence1 = s_dalDependence.Read(_id)!;
         Console.WriteLine("Enter New Details for dependence task and previous task:");
-        int? _DependenceTask = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _DependenceTask);
         if (_DependenceTask == null)
             _DependenceTask = dependence1!.DependenceTask;
         else { }
@@ -234,8 +234,8 @@ internal class Program
         if (PrevTask == null)
             PrevTask = dependence1!.PrevTask;
         else { }
-        //Dependence _Dependence = new(_id, _DependenceTask, PrevTask);
-        //s_dalDependence?.Update(_Dependence);
+        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
+        s_dalDependence?.Update(_Dependence);
     }
     private static void DeleteDependence()
     {
