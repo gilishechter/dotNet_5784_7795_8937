@@ -91,7 +91,7 @@ internal class Program
     private static void AddDependence()
     {
         Console.WriteLine("Enter Id, dependence task and previous task");
-        int _id = Console.Read();//input the details
+        int.TryParse(Console.ReadLine(), out int _id);//input the details
         int _DependenceTask = Console.Read();
         int PrevTask = Console.Read();
         Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);//build the dependence
@@ -104,7 +104,7 @@ internal class Program
     private static void WorkerObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dalWorker?.Read(_id));
     }
     /// <summary>
@@ -113,7 +113,7 @@ internal class Program
     private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        int _id = Console.Read();
+        int.TryParse(Console.ReadLine(),out int _id);
         Console.WriteLine(s_dalTask?.Read(_id));
     }
     /// <summary>
@@ -230,7 +230,7 @@ internal class Program
         if (_DependenceTask == null)
             _DependenceTask = dependence1!.DependenceTask;
         else { }
-        int? PrevTask = Console.Read();
+        int.TryParse(Console.ReadLine(),out int PrevTask);
         if (PrevTask == null)
             PrevTask = dependence1!.PrevTask;
         else { }
