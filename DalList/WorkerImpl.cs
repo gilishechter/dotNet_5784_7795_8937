@@ -46,11 +46,11 @@ public class WorkerImplementation : IWorker
 
     public void Update(Worker item)
     {
-        for (int i = 0; i < DataSource.Workers.Count; i++)
+        foreach (Worker worker1 in DataSource.Workers)
         {
-            if (DataSource.Workers[i] == item)
+            if (worker1.Id == item.Id)
             {
-                DataSource.Workers.Remove(DataSource.Workers[i]);
+                DataSource.Workers.Remove(worker1);
                 DataSource.Workers.Add(item);
                 return;
             }

@@ -224,18 +224,15 @@ internal class Program
         Console.WriteLine("Enter Id:");
         int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dalDependence!.Read(_id));
-        Dependencies dependence1 = s_dalDependence.Read(_id)!;
-        Console.WriteLine("Enter New Details for dependence task and previous task:");
-        int.TryParse(Console.ReadLine(), out int _DependenceTask);
-        if (_DependenceTask == null)
-            _DependenceTask = dependence1!.DependenceTask;
-        else { }
-        int.TryParse(Console.ReadLine(),out int PrevTask);
-        if (PrevTask == null)
-            PrevTask = dependence1!.PrevTask;
-        else { }
-        Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
-        s_dalDependence?.Update(_Dependence);
+        Dependencies? dependence1 = s_dalDependence.Read(_id);
+        if (dependence1 != null)
+        {
+            Console.WriteLine("Enter New Details for dependence task and previous task:");
+            int.TryParse(Console.ReadLine(), out int _DependenceTask);
+            int.TryParse(Console.ReadLine(), out int PrevTask);
+            Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
+            s_dalDependence?.Update(_Dependence);
+        }       
     }
     private static void DeleteDependence()
     {

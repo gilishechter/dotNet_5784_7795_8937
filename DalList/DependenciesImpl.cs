@@ -39,16 +39,16 @@ public class DependenceImplementation : IDependence
 
     public void Update(Dependencies item)
     {
-
-        for (int i = 0; i < DataSource.Dependencies.Count; i++)
+        foreach (Dependencies dependence1 in DataSource.Dependencies)
         {
-            if (DataSource.Dependencies[i] == item)
+            if (dependence1.Id == item.Id)
             {
-                DataSource.Dependencies.Remove(DataSource.Dependencies[i]);
+                DataSource.Dependencies.Remove(dependence1);
                 DataSource.Dependencies.Add(item);
                 return;
             }
         }
         throw new Exception($"this dependence with id={item.Id} is not exist");
+       
     }
 }

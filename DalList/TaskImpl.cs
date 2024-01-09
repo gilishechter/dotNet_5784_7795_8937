@@ -41,11 +41,11 @@ public class TaskImplementation : ITask
     public void Update(Task item)
     {
 
-        for (int i = 0; i < DataSource.Tasks.Count; i++)
+        foreach (Task task1 in DataSource.Tasks)
         {
-            if (DataSource.Tasks[i] == item)
+            if (task1.Id == item.Id)
             {
-                DataSource.Tasks.Remove(DataSource.Tasks[i]);
+                DataSource.Tasks.Remove(task1);
                 DataSource.Tasks.Add(item);
                 return;
             }
