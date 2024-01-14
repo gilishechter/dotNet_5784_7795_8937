@@ -12,10 +12,7 @@ using System.Runtime.CompilerServices;
 internal class Program
 {
 
-    private static readonly IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
-    private static readonly ITask? s_dalTask = new TaskImplementation(); //stage 1
-    private static readonly IDependence? s_dalDependence = new DependenceImplementation(); //stage 1
-
+    static readonly IDal s_dal = new DalList();
     /// <summary>
     /// the main menu
     /// </summary>
@@ -55,7 +52,7 @@ internal class Program
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);//build the worker
-        Console.WriteLine(s_dalWorker?.Create(_worker));//add to the list and print the ID's worker
+        Console.WriteLine(s_dal.Worker?.Create(_worker));//add to the list and print the ID's worker
 
     }
     /// <summary>
@@ -81,7 +78,7 @@ internal class Program
         int.TryParse(Console.ReadLine(), out int Rank);
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
-        Console.WriteLine(s_dalTask?.Create(_Task));//add to the list and print the Id's task
+        Console.WriteLine(s_dal.Task?.Create(_Task));//add to the list and print the Id's task
 
 
     }
@@ -95,7 +92,7 @@ internal class Program
         int.TryParse(Console.ReadLine(), out int _DependenceTask);
         int.TryParse(Console.ReadLine(), out int _PrevTask);
         Dependencies _Dependence = new(_id, _DependenceTask, _PrevTask);//build the dependence
-        Console.WriteLine(s_dalDependence?.Create(_Dependence));//add to the list and print the ID
+        Console.WriteLine(s_dal.Dependencies?.Create(_Dependence));//add to the list and print the ID
 
     }
     /// <summary>
@@ -105,7 +102,7 @@ internal class Program
     {
         Console.WriteLine("Enter Id for print");
         int.TryParse(Console.ReadLine(), out int _id);
-        Console.WriteLine(s_dalWorker?.Read(_id));
+        Console.WriteLine(s_dal.Worker?.Read(_id));
     }
     /// <summary>
     /// this function input id of task and print the object with the write ID
@@ -114,7 +111,7 @@ internal class Program
     {
         Console.WriteLine("Enter Id for print");
         int.TryParse(Console.ReadLine(),out int _id);
-        Console.WriteLine(s_dalTask?.Read(_id));
+        Console.WriteLine(s_dal.Task?.Read(_id));
     }
     /// <summary>
     /// this function input id of dependence and print the object with the write ID
@@ -123,7 +120,7 @@ internal class Program
     {
         Console.WriteLine("Enter Id for print");
         int.TryParse(Console.ReadLine(), out int _id);
-        Console.WriteLine(s_dalDependence?.Read(_id));
+        Console.WriteLine(s_dal.Dependencies?.Read(_id));
     }
     /// <summary>
     /// this function input the wanted details to update and build new worker
@@ -132,8 +129,8 @@ internal class Program
     {
         Console.WriteLine("Enter Id:");
         int.TryParse(Console.ReadLine(), out int _id);
-        Console.WriteLine(s_dalWorker!.Read(_id));
-        Worker worker1 = s_dalWorker.Read(_id)!;
+        Console.WriteLine(s_dal.Worker!.Read(_id));
+        Worker worker1 = s_dal.Worker.Read(_id)!;
         Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name and email:");
         
         if (!Rank.TryParse(Console.ReadLine(), out Rank _rank))
@@ -143,33 +140,33 @@ internal class Program
             _hourPrice = worker1!.HourPrice; 
         
         string? _name = Console.ReadLine();
-        if (_name == null)
+        if (_name == "")
            _name = worker1!.Name; 
         
         string? _email = Console.ReadLine();
-        if (_email == null)
+        if (_email == "")
           _email = worker1!.Email; 
         
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
-        s_dalWorker?.Update(_worker);
+        s_dal.Worker?.Update(_worker);
     }
 
     private static void UpdateTask()
     {
         Console.WriteLine("Enter Id:");
         int.TryParse( Console.ReadLine(),out int Id );
-        Console.WriteLine(s_dalTask!.Read(Id));
-        Task? task1 = s_dalTask.Read(Id);
+        Console.WriteLine(s_dal.Task!.Read(Id));
+        Task? task1 = s_dal.Task.Read(Id);
         Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
         if(!int.TryParse(Console.ReadLine(),out int IdWorker))
             IdWorker = task1!.IdWorker;
         string? Name = Console.ReadLine();
-        if(Name == null)
+        if(Name =="")
             Name = task1!.Name;
         
         string? Description = Console.ReadLine();
-        if (Description == null)
+        if (Description == "")
             Description = task1!.Description;
         
        bool.TryParse(Console.ReadLine(),out bool MileStone);
@@ -200,11 +197,11 @@ internal class Program
             DeadLine = task1!.DeadLine;
         
         string? Product = Console.ReadLine();
-        if (Product == null)
+        if (Product == "")
             Product = task1!.Product;
     
         string? Notes = Console.ReadLine();
-        if (Notes == null)
+        if (Notes == "")
             Notes = task1!.Notes;
         
        
@@ -212,14 +209,14 @@ internal class Program
             _Rank = task1!.Rank;
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
         , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, _Rank);
-        s_dalTask?.Update(_Task);
+        s_dal.Task?.Update(_Task);
     }
     private static void UpdateDependence()
     {
         Console.WriteLine("Enter Id:");
         int.TryParse(Console.ReadLine(), out int _id);
-        Console.WriteLine(s_dalDependence!.Read(_id));
-        Dependencies? dependence1 = s_dalDependence.Read(_id);
+        Console.WriteLine(s_dal.Dependencies!.Read(_id));
+        Dependencies? dependence1 = s_dal.Dependencies.Read(_id);
         if (dependence1 != null)
         {
             Console.WriteLine("Enter New Details for dependence task and previous task:");
@@ -228,33 +225,33 @@ internal class Program
               if( !int.TryParse(Console.ReadLine(), out int PrevTask))
                 PrevTask=dependence1.PrevTask;  
             Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
-            s_dalDependence?.Update(_Dependence);
+            s_dal.Dependencies?.Update(_Dependence);
         }       
     }
     private static void DeleteDependence()
     {
         Console.WriteLine("Enter Id to delete");
         int.TryParse(Console.ReadLine(), out int _id);
-        s_dalDependence?.Delete(_id);
+        s_dal.Dependencies?.Delete(_id);
     }
 
     private static void DeleteTask()
     {
         Console.WriteLine("Enter Id to delete");
         int.TryParse(Console.ReadLine(), out int _id);
-        s_dalTask?.Delete(_id);
+        s_dal.Task?.Delete(_id);
     }
 
     private static void DeleteWorker()
     {
         Console.WriteLine("Enter Id to delete");
         int.TryParse(Console.ReadLine(), out int _id);
-        s_dalWorker?.Delete(_id);
+        s_dal.Worker?.Delete(_id);
     }
     private static void WorkerListView()
     {
         Console.WriteLine("workers list:");
-        List<Worker> workerList = s_dalWorker!.ReadAll();
+        List<Worker> workerList = s_dal.Worker!.ReadAll();
         for (int i = 0; i < workerList.Count; i++)
         {
             Console.WriteLine(workerList[i]);
@@ -264,7 +261,7 @@ internal class Program
     private static void TaskListView()
     {
         Console.WriteLine("tasks list:");
-        List<Task> taskList = s_dalTask!.ReadAll();
+        List<Task> taskList = s_dal.Task!.ReadAll();
         for (int i = 0; i < taskList.Count; i++)
         {
             Console.WriteLine(taskList[i]);
@@ -274,7 +271,7 @@ internal class Program
     private static void DependenceListView()
     {
         Console.WriteLine("dependences list:");
-        List<Dependencies> dependenceList = s_dalDependence!.ReadAll();
+        List<Dependencies> dependenceList = s_dal.Dependencies!.ReadAll();
         for (int i = 0; i < dependenceList.Count; i++)
         {
             Console.WriteLine(dependenceList[i]);
@@ -356,7 +353,7 @@ internal class Program
     {
         try
         {
-            Initialization.Do(s_dalWorker, s_dalTask, s_dalDependence);
+            Initialization.Do(s_dal);
 
             Menu();
             int.TryParse(Console.ReadLine(), out int choose);
