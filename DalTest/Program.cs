@@ -381,17 +381,22 @@ internal class Program
                     case 3:
                         SubMenu();
                         int.TryParse(Console.ReadLine(), out int choose3);
-                        SubMenuDependence(choose3 );
+                        SubMenuDependence(choose3);
                         break;
                 }
+
+
+
                 Menu();
                 choose = int.Parse(Console.ReadLine()!);
             }
-
         }
+
         catch (Exception Ex)
         {
             Console.WriteLine(Ex);
         }
+
+
     }
 }
