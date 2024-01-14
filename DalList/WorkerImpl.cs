@@ -4,7 +4,7 @@ using Do;
 using System.Collections.Generic;
 
 /* Work implementation clsdd*/
-public class WorkerImplementation : IWorker
+internal class WorkerImplementation : IWorker
 {
     public int Create(Worker item)
     {

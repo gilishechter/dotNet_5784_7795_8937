@@ -6,9 +6,10 @@ using System.Collections.Generic;
 
 public static class Initialization
 {
-    private static IWorker? s_dalWorker; //stage 1
-    private static ITask? s_dalTask; //stage 1
-    private static IDependence? s_dalDependence; //stage 1
+    //private static IWorker? s_dalWorker; //stage 1
+    //private static ITask? s_dalTask; //stage 1
+    //private static IDependence? s_dalDependence; //stage 1
+    private static IDal? s_dal;
     //private static object _id;
     private static readonly Random s_rand = new();
 
@@ -28,7 +29,7 @@ public static class Initialization
             int _hourPrice = rand.Next(30, 1000);
             Rank _workerRank = (Rank)rand.Next((int)Rank.Beginner, (int)Rank.Expert + 1);
             Worker _newWorker = new(_id, _workerRank, _hourPrice, _name, _email);
-            s_dalWorker?.Create(_newWorker);
+            s_dal?.Worker?.Create(_newWorker);
         }
     }
 
@@ -83,7 +84,7 @@ public static class Initialization
         _idDependences[39] = new(40, 20, 6);
         for (int i = 0; i < 40; i++)
         {
-            s_dalDependence?.Create(_idDependences[i]);
+            s_dal?.Dependencies?.Create(_idDependences[i]);
         }
 
     }
@@ -185,17 +186,16 @@ public static class Initialization
 
             TimeSpan _time = new TimeSpan(randomHours, randomMinutes, randomSeconds);
             Task newTask = new Task(_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);
-            s_dalTask?.Create(newTask);
+            s_dal?.Task?.Create(newTask);
         }
 
     }
 
 
-    public static void Do(IWorker? dalWorker, ITask? dalTask, IDependence? dalDependence)
+    public static void Do(IDal dal)
     {
-        s_dalWorker = dalWorker ?? throw new Exception("DALWorker can not be null!");
-        s_dalTask = dalTask ?? throw new Exception("DALTask can not be null!");
-        s_dalDependence = dalDependence ?? throw new Exception("DALDependence can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
+
         createDependences();
         createTask();
         createWorker();
