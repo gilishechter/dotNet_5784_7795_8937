@@ -251,31 +251,32 @@ internal class Program
     private static void WorkerListView()
     {
         Console.WriteLine("workers list:");
-        List<Worker> workerList = s_dal.Worker!.ReadAll();
-        for (int i = 0; i < workerList.Count; i++)
+        IEnumerable<Worker?> workerList = s_dal.Worker!.ReadAll();
+        foreach (Worker? worker in workerList)
         {
-            Console.WriteLine(workerList[i]);
+            Console.WriteLine(worker);
         }
     }
 
     private static void TaskListView()
     {
         Console.WriteLine("tasks list:");
-        List<Task> taskList = s_dal.Task!.ReadAll();
-        for (int i = 0; i < taskList.Count; i++)
+        IEnumerable<Task?> taskList = s_dal.Task!.ReadAll();
+        foreach (Task? task in taskList)
         {
-            Console.WriteLine(taskList[i]);
+            Console.WriteLine(task);
         }
     }
 
     private static void DependenceListView()
     {
         Console.WriteLine("dependences list:");
-        List<Dependencies> dependenceList = s_dal.Dependencies!.ReadAll();
-        for (int i = 0; i < dependenceList.Count; i++)
+        IEnumerable<Dependencies?> dependenceList = s_dal.Dependencies!.ReadAll();
+        foreach(Dependencies? dep in dependenceList)
         {
-            Console.WriteLine(dependenceList[i]);
+            Console.WriteLine(dep);
         }
+       
     }
 
     private static void SubMenuWorker(int choose1)

@@ -24,19 +24,22 @@ internal class TaskImplementation : ITask
                 return;
             }
         }
-        throw new Exception($"this task with id={id} is not exist");
+        throw new DalDoesNotExistException($"this task with id={id} is not exist");
     }
 
     public Task? Read(int id)
     {
-        Task? findTask = DataSource.Tasks.Find(obj => obj.Id == id);
-        return findTask;
+        return DataSource.Tasks.FirstOrDefault(obj => obj.Id == id);
     }
 
-    public List<Task> ReadAll()
+    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
-        return new List<Task>(DataSource.Tasks);
+        if (filter == null)
+            return DataSource.Tasks.Select(item => item);
+        else
+            return DataSource.Tasks.Where(filter);
     }
+
 
     public void Update(Task item)
     {
@@ -50,6 +53,16 @@ internal class TaskImplementation : ITask
                 return;
             }
         }
-        throw new Exception($"this task with id={item.Id} is not exist");
+        throw new DalDoesNotExistException($"this task with id={item.Id} is not exist");
+    }
+
+    public Task? Read(Func<Task, bool> filter)
+    {
+        foreach (Task task1 in DataSource.Tasks)
+        {
+            if(filter(task1))
+                return task1;
+        }
+        return null;
     }
 }

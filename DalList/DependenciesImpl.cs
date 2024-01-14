@@ -23,19 +23,23 @@ internal class DependenceImplementation : IDependence
                 return;
             }
         }
-        throw new Exception($"this dependence with id={id} is not exist");
+        throw new DalDoesNotExistException($"this dependence with id={id} is not exist");
     }
 
     public Dependencies? Read(int id)
     {
-        Dependencies? findDependence = DataSource.Dependencies.Find(obj => obj.Id == id);
-        return findDependence;
+      
+        return DataSource.Dependencies.FirstOrDefault(d => d.Id == id);
     }
 
-    public List<Dependencies> ReadAll()
+    public IEnumerable<Dependencies?> ReadAll(Func<Dependencies, bool>? filter = null) //stage 2
     {
-        return new List<Dependencies>(DataSource.Dependencies);
+        if (filter == null)
+            return DataSource.Dependencies.Select(item => item);
+        else
+            return DataSource.Dependencies.Where(filter);
     }
+
 
     public void Update(Dependencies item)
     {
@@ -48,7 +52,17 @@ internal class DependenceImplementation : IDependence
                 return;
             }
         }
-        throw new Exception($"this dependence with id={item.Id} is not exist");
+        throw new DalDoesNotExistException($"this dependence with id={item.Id} is not exist");
        
+    }
+
+    public Dependencies? Read(Func<Dependencies, bool> filter)
+    {
+        foreach (Dependencies dependence1 in DataSource.Dependencies)
+        {
+            if(filter(dependence1))
+                return dependence1;
+        }
+        return null;
     }
 }

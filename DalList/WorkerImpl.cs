@@ -12,7 +12,7 @@ internal class WorkerImplementation : IWorker
         {
             if (Worker1.Id == item.Id)
             {
-                throw new Exception($"this worker with id={item.Id} is already exist");
+                throw new DalAlreadyExistsException($"this worker with id={item.Id} is already exist");
             }
         }
        
@@ -30,19 +30,22 @@ internal class WorkerImplementation : IWorker
                 return;
             }
         }
-        throw new Exception($"this worker with id={id} is not exist");
+        throw new DalDoesNotExistException($"this worker with id={id} is not exist");
     }
 
     public Worker? Read(int id)
     {
-        Worker? findWorker = DataSource.Workers.Find(obj => obj.Id == id);
-        return findWorker;
+        return DataSource.Workers.FirstOrDefault(obj => obj.Id == id);
     }
 
-    public List<Worker> ReadAll()
+    public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter = null) //stage 2
     {
-        return new List<Worker>(DataSource.Workers);
+        if (filter == null)
+            return DataSource.Workers.Select(item => item);
+        else
+            return DataSource.Workers.Where(filter);
     }
+
 
     public void Update(Worker item)
     {
@@ -55,6 +58,16 @@ internal class WorkerImplementation : IWorker
                 return;
             }
         }
-        throw new Exception($"this worker with id={item.Id} is not exist");
+        throw new DalDoesNotExistException($"this worker with id={item.Id} is not exist");
+    }
+
+    public Worker? Read(Func<Worker, bool> filter)
+    {
+        foreach (Worker worker1 in DataSource.Workers)
+        {
+            if(filter(worker1))
+                return worker1;
+        }
+        return null;
     }
 }
