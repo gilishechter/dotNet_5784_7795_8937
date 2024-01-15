@@ -46,8 +46,10 @@ internal class Program
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
         if (!int.TryParse(Console.ReadLine(), out int _id))//input the details
             throw new WrongInputException("Wrong Input, Try Again");
-        Rank.TryParse(Console.ReadLine(), out Rank _rank);
-        double.TryParse(Console.ReadLine(), out double _hourPrice);
+        if(!Rank.TryParse(Console.ReadLine(), out Rank _rank))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!double.TryParse(Console.ReadLine(), out double _hourPrice))
+            throw new WrongInputException("Wrong Input, Try Again");
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);//build the worker
@@ -61,20 +63,30 @@ internal class Program
     {
         Console.WriteLine("Enter Id, Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        int.TryParse(Console.ReadLine(), out int Id);//input the details
-        int.TryParse(Console.ReadLine(), out int IdWorker);
+        if(!int.TryParse(Console.ReadLine(), out int Id))//input the details
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!int.TryParse(Console.ReadLine(), out int IdWorker))
+            throw new WrongInputException("Wrong Input, Try Again");
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
-        bool.TryParse(Console.ReadLine(), out bool MileStone);
-        TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time);
-        DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate);
-        DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate);
-        DateTime.TryParse(Console.ReadLine(), out DateTime StartDate);
-        DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate);
-        DateTime.TryParse(Console.ReadLine(), out DateTime DeadLine);
+        if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!DateTime.TryParse(Console.ReadLine(), out DateTime StartDate))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!DateTime.TryParse(Console.ReadLine(), out DateTime DeadLine))
+            throw new WrongInputException("Wrong Input, Try Again");
         string? Product = Console.ReadLine();
         string? Notes = Console.ReadLine();
-        int.TryParse(Console.ReadLine(), out int Rank);
+        if(!int.TryParse(Console.ReadLine(), out int Rank))
+            throw new WrongInputException("Wrong Input, Try Again");
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
         Console.WriteLine(s_dal.Task?.Create(_Task));//add to the list and print the Id's task
@@ -87,9 +99,12 @@ internal class Program
     private static void AddDependence()
     {
         Console.WriteLine("Enter Id, dependence task and previous task");
-        int.TryParse(Console.ReadLine(), out int _id);//input the details
-        int.TryParse(Console.ReadLine(), out int _DependenceTask);
-        int.TryParse(Console.ReadLine(), out int _PrevTask);
+        if(!int.TryParse(Console.ReadLine(), out int _id))//input the details
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!int.TryParse(Console.ReadLine(), out int _DependenceTask))
+            throw new WrongInputException("Wrong Input, Try Again");
+        if(!int.TryParse(Console.ReadLine(), out int _PrevTask))
+            throw new WrongInputException("Wrong Input, Try Again");
         Dependencies _Dependence = new(_id, _DependenceTask, _PrevTask);//build the dependence
         Console.WriteLine(s_dal.Dependencies?.Create(_Dependence));//add to the list and print the ID
 
