@@ -62,12 +62,12 @@ internal class Program
     private static void AddTask()
     {
         //the user input the details that he want to add
-        Console.WriteLine("Enter Id, Id worker, name, description, mile stone, time, create date, " +
+        Console.WriteLine("Enter Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        if(!int.TryParse(Console.ReadLine(), out int Id))//input the details and check if is right details
+        //if(!int.TryParse(Console.ReadLine(), out int Id))
+           // throw new WrongInputException("Wrong Input, Try Again");
+        if (!int.TryParse(Console.ReadLine(), out int IdWorker))//input the details and check if is right details
             throw new WrongInputException("Wrong Input, Try Again");//throw exception if is wrong input
-        if (!int.TryParse(Console.ReadLine(), out int IdWorker))
-            throw new WrongInputException("Wrong Input, Try Again");
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
         if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
@@ -88,7 +88,7 @@ internal class Program
         string? Notes = Console.ReadLine();
         if(!int.TryParse(Console.ReadLine(), out int Rank))
             throw new WrongInputException("Wrong Input, Try Again");
-        Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
+        Task _Task = new(0, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
         Console.WriteLine(s_dal.Task?.Create(_Task));//add to the list and print the Id's task
 
@@ -99,14 +99,14 @@ internal class Program
     /// </summary>
     private static void AddDependence()
     {
-        Console.WriteLine("Enter Id, dependence task and previous task");
-        if(!int.TryParse(Console.ReadLine(), out int _id))//input the details
-            throw new WrongInputException("Wrong Input, Try Again");
-        if(!int.TryParse(Console.ReadLine(), out int _DependenceTask))
+        Console.WriteLine("Enter dependence task and previous task");
+        //if(!int.TryParse(Console.ReadLine(), out int _id))
+            //throw new WrongInputException("Wrong Input, Try Again");
+        if(!int.TryParse(Console.ReadLine(), out int _DependenceTask))//input the details
             throw new WrongInputException("Wrong Input, Try Again");
         if(!int.TryParse(Console.ReadLine(), out int _PrevTask))
             throw new WrongInputException("Wrong Input, Try Again");
-        Dependencies _Dependence = new(_id, _DependenceTask, _PrevTask);//build the dependence
+        Dependencies _Dependence = new(0, _DependenceTask, _PrevTask);//build the dependence
         Console.WriteLine(s_dal.Dependencies?.Create(_Dependence));//add to the list and print the ID
 
     }
@@ -118,6 +118,8 @@ internal class Program
         Console.WriteLine("Enter Id for print");
         if(!int.TryParse(Console.ReadLine(), out int _id))
             throw new WrongInputException("Wrong Input, Try Again");
+        if (s_dal.Worker?.Read(_id) == null)
+            throw new DalDoesNotExistException($"this ID worker={_id} doesn't exist");
         Console.WriteLine(s_dal.Worker?.Read(_id));
     }
     /// <summary>
@@ -128,6 +130,8 @@ internal class Program
         Console.WriteLine("Enter Id for print");
         if(!int.TryParse(Console.ReadLine(), out int _id))
             throw new WrongInputException("Wrong Input, Try Again");
+        if(s_dal.Task?.Read(_id)==null)
+            throw new DalDoesNotExistException($"this ID task={_id} doesn't exist");
         Console.WriteLine(s_dal.Task?.Read(_id));
     }
     /// <summary>
@@ -138,6 +142,8 @@ internal class Program
         Console.WriteLine("Enter Id for print");
         if(!int.TryParse(Console.ReadLine(), out int _id))
             throw new WrongInputException("Wrong Input, Try Again");
+        if(s_dal.Dependencies?.Read(_id)==null)
+            throw new DalDoesNotExistException($"this ID dependence={_id} doesn't exist");
         Console.WriteLine(s_dal.Dependencies?.Read(_id));
     }
     /// <summary>
@@ -332,25 +338,32 @@ internal class Program
     /// <param name="choose1"></param>
     private static void SubMenuWorker(int choose1)
     {
-        switch (choose1)
+        try
         {
-            case 0:
-                break;
-            case 1:
-                AddWorker();
-                break;
-            case 2:
-                WorkerObjectView();
-                break;
-            case 3:
-                WorkerListView();
-                break;
-            case 4:
-                UpdateWorker();
-                break;
-            case 5:
-                DeleteWorker();
-                break;
+            switch (choose1)
+            {
+                case 0:
+                    break;
+                case 1:
+                    AddWorker();
+                    break;
+                case 2:
+                    WorkerObjectView();
+                    break;
+                case 3:
+                    WorkerListView();
+                    break;
+                case 4:
+                    UpdateWorker();
+                    break;
+                case 5:
+                    DeleteWorker();
+                    break;
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
         }
     }
     /// <summary>
@@ -359,25 +372,32 @@ internal class Program
     /// <param name="choose1"></param>
     private static void SubMenuTask(int choose1)
     {
-        switch (choose1)
+        try
         {
-            case 0:
-                break;
-            case 1:
-                AddTask();
-                break;
-            case 2:
-                TaskObjectView();
-                break;
-            case 3:
-                TaskListView();
-                break;
-            case 4:
-                UpdateTask();
-                break;
-            case 5:
-                DeleteTask();
-                break;
+            switch (choose1)
+            {
+                case 0:
+                    break;
+                case 1:
+                    AddTask();
+                    break;
+                case 2:
+                    TaskObjectView();
+                    break;
+                case 3:
+                    TaskListView();
+                    break;
+                case 4:
+                    UpdateTask();
+                    break;
+                case 5:
+                    DeleteTask();
+                    break;
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
         }
     }
     /// <summary>
@@ -386,25 +406,32 @@ internal class Program
     /// <param name="choose1"></param>
     private static void SubMenuDependence(int choose1)
     {
-        switch (choose1)
+        try
         {
-            case 0:
-                break;
-            case 1:
-                AddDependence();
-                break;
-            case 2:
-                DependenceObjectView();
-                break;
-            case 3:
-                DependenceListView();
-                break;
-            case 4:
-                UpdateDependence();
-                break;
-            case 5:
-                DeleteDependence();
-                break;
+            switch (choose1)
+            {
+                case 0:
+                    break;
+                case 1:
+                    AddDependence();
+                    break;
+                case 2:
+                    DependenceObjectView();
+                    break;
+                case 3:
+                    DependenceListView();
+                    break;
+                case 4:
+                    UpdateDependence();
+                    break;
+                case 5:
+                    DeleteDependence();
+                    break;
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
         }
     }
     static void Main(string[] args)
@@ -412,12 +439,16 @@ internal class Program
         try
         {
             Initialization.Do(s_dal);
-
-            Menu();
-            if(!int.TryParse(Console.ReadLine(), out int choose))// the user put his choise
-                throw new WrongInputException("Wrong Input, Try Again");
-
-            while (choose != 0)
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+        Menu();
+            int choose = int.Parse(Console.ReadLine()!);// the user put his choise
+           
+        
+        while (choose != 0)
             {
 
                 switch (choose)
@@ -444,14 +475,13 @@ internal class Program
                         break;
                 }  
                 
+
+
                 Menu();
                 choose = int.Parse(Console.ReadLine()!);                                                                       
             }
-        }
-        catch (Exception Ex)
-        {
-            Console.WriteLine(Ex);
-        }
+        
+        
 
 
     }

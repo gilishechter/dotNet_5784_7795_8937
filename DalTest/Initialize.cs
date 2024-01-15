@@ -16,7 +16,7 @@ public static class Initialization
     /// <summary>
     /// The function create new worker and add to the worker list
     /// </summary>
-    private static void createWorker()
+    private static void CreateWorker()
     {
         string[] workerNames =
         {
@@ -39,7 +39,7 @@ public static class Initialization
     /// <summary>
     /// the function create dependence
     /// </summary>
-    private static void createDependences()
+    private static void CreateDependences()
     {
         Dependencies[] _idDependences = new Dependencies[41];
 
@@ -96,7 +96,7 @@ public static class Initialization
     /// <summary>
     /// the function create task with random details
     /// </summary>
-    private static void createTask()
+    private static void CreateTask()
     {
         int[] _idTasks = new int[20];
         for (int j = 1; j < 21; j++)//build array of id's  
@@ -208,9 +208,9 @@ public static class Initialization
     {
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
 
-        createDependences();
-        createTask();
-        createWorker();
+        CreateDependences();
+        CreateTask();
+        CreateWorker();
     }
 
 }
