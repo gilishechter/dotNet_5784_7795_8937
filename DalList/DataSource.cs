@@ -1,8 +1,10 @@
 ﻿namespace Dal;
-
+/// <summary>
+/// bulid the data
+/// </summary>
 internal static class DataSource
 {
-    internal static List<Do.Task> Tasks { get; } = new();
+    internal static List<Do.Task> Tasks { get; } = new();//build lists of the 3 interfaces
     internal static List<Do.Worker> Workers { get; } = new();
     internal static List<Do.Dependencies> Dependencies { get; } = new();
     internal static class Config
@@ -10,7 +12,7 @@ internal static class DataSource
         static DateTime? start = null;
         static DateTime? end = null;
 
-        internal const int startTaskId = 1;
+        internal const int startTaskId = 1;//build the automatic running numbers
         private static int nextTaskId = startTaskId;
         internal static int NextTaskId { get => nextTaskId++; }
 

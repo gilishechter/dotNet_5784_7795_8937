@@ -386,36 +386,34 @@ internal class Program
 
             while (choose != 0)
             {
-                //int choose1;
+
                 switch (choose)
                 {
                     case 0:
                         break;
                     case 1:
                         SubMenu();
-                        if(!int.TryParse(Console.ReadLine(), out int choose1))
+                        if (!int.TryParse(Console.ReadLine(), out int choose1))
                             throw new WrongInputException("Wrong Input, Try Again");
                         SubMenuWorker(choose1);
                         break;
                     case 2:
                         SubMenu();
-                        if(!int.TryParse(Console.ReadLine(), out int choose2))
+                        if (!int.TryParse(Console.ReadLine(), out int choose2))
                             throw new WrongInputException("Wrong Input, Try Again");
                         SubMenuTask(choose2);
                         break;
                     case 3:
                         SubMenu();
-                        if(!int.TryParse(Console.ReadLine(), out int choose3))
+                        if (!int.TryParse(Console.ReadLine(), out int choose3))
                             throw new WrongInputException("Wrong Input, Try Again");
 
                         SubMenuDependence(choose3);
                         break;
-                }
-
-
-
+                }  
+                
                 Menu();
-                choose = int.Parse(Console.ReadLine()!);
+                choose = int.Parse(Console.ReadLine()!);                                                                       
             }
         }
 
