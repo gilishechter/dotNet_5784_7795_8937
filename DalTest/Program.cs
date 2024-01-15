@@ -44,7 +44,8 @@ internal class Program
     private static void AddWorker()
     {
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
-        int.TryParse(Console.ReadLine(), out int _id);//input the details
+        if (!int.TryParse(Console.ReadLine(), out int _id))//input the details
+            throw new WrongInputException("Wrong Input, Try Again");
         Rank.TryParse(Console.ReadLine(), out Rank _rank);
         double.TryParse(Console.ReadLine(), out double _hourPrice);
         string? _name = Console.ReadLine();

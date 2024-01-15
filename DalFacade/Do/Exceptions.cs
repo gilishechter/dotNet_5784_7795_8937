@@ -12,6 +12,11 @@ public class DalAlreadyExistsException : Exception
     public DalAlreadyExistsException(string? message) : base(message) { }//The id is already exist
 }
 
+[Serializable]
+public class WrongInputException : Exception
+{
+    public WrongInputException(string? message) : base(message) { }//The id is already exist
+}
 
 
 
