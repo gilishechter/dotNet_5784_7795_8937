@@ -1,13 +1,8 @@
-﻿using System.Diagnostics;
-
-namespace DalTest;
-using Do;
-using DalApi;
+﻿namespace DalTest;
 using Dal;
+using DalApi;
+using Do;
 using System;
-using System.ComponentModel;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
 
 internal class Program
 {
@@ -46,9 +41,9 @@ internal class Program
     private static void AddWorker()
     {
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
-        int.TryParse(Console.ReadLine(),out int _id);//input the details
-        Rank.TryParse(Console.ReadLine(),out Rank _rank);
-        double.TryParse(Console.ReadLine(),out double _hourPrice);
+        int.TryParse(Console.ReadLine(), out int _id);//input the details
+        Rank.TryParse(Console.ReadLine(), out Rank _rank);
+        double.TryParse(Console.ReadLine(), out double _hourPrice);
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);//build the worker
@@ -62,7 +57,7 @@ internal class Program
     {
         Console.WriteLine("Enter Id, Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        int.TryParse(Console.ReadLine(),out int Id);//input the details
+        int.TryParse(Console.ReadLine(), out int Id);//input the details
         int.TryParse(Console.ReadLine(), out int IdWorker);
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
@@ -110,7 +105,7 @@ internal class Program
     private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        int.TryParse(Console.ReadLine(),out int _id);
+        int.TryParse(Console.ReadLine(), out int _id);
         Console.WriteLine(s_dal.Task?.Read(_id));
     }
     /// <summary>
@@ -132,21 +127,21 @@ internal class Program
         Console.WriteLine(s_dal.Worker!.Read(_id));
         Worker worker1 = s_dal.Worker.Read(_id)!;
         Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name and email:");
-        
+
         if (!Rank.TryParse(Console.ReadLine(), out Rank _rank))
-            _rank = worker1!.WorkerRank; 
-        
+            _rank = worker1!.WorkerRank;
+
         if (!double.TryParse(Console.ReadLine(), out double _hourPrice))
-            _hourPrice = worker1!.HourPrice; 
-        
+            _hourPrice = worker1!.HourPrice;
+
         string? _name = Console.ReadLine();
         if (_name == "")
-           _name = worker1!.Name; 
-        
+            _name = worker1!.Name;
+
         string? _email = Console.ReadLine();
         if (_email == "")
-          _email = worker1!.Email; 
-        
+            _email = worker1!.Email;
+
         Worker _worker = new(_id, _rank, _hourPrice, _name, _email);
         s_dal.Worker?.Update(_worker);
     }
@@ -154,57 +149,57 @@ internal class Program
     private static void UpdateTask()
     {
         Console.WriteLine("Enter Id:");
-        int.TryParse( Console.ReadLine(),out int Id );
+        int.TryParse(Console.ReadLine(), out int Id);
         Console.WriteLine(s_dal.Task!.Read(Id));
         Task? task1 = s_dal.Task.Read(Id);
         Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        if(!int.TryParse(Console.ReadLine(),out int IdWorker))
+        if (!int.TryParse(Console.ReadLine(), out int IdWorker))
             IdWorker = task1!.IdWorker;
         string? Name = Console.ReadLine();
-        if(Name =="")
+        if (Name == "")
             Name = task1!.Name;
-        
+
         string? Description = Console.ReadLine();
         if (Description == "")
             Description = task1!.Description;
-        
-       bool.TryParse(Console.ReadLine(),out bool MileStone);
+
+        bool.TryParse(Console.ReadLine(), out bool MileStone);
         if (!MileStone)
             MileStone = task1!.MileStone;
         TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
         if (Time == null)
             Time = task1!.Time;
-        
+
         DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
         if (CreateDate == null)
             CreateDate = task1!.CreateDate;
-        
+
         DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
         if (WantedStartDate == null)
             WantedStartDate = task1!.WantedStartDate;
-        
+
         DateTime? StartDate = DateTime.Parse(Console.ReadLine()!);
         if (StartDate == null)
             StartDate = task1!.StartDate;
-        
+
         DateTime? EndingDate = DateTime.Parse(Console.ReadLine()!);
         if (EndingDate == null)
             EndingDate = task1!.EndingDate;
-        
+
         DateTime? DeadLine = DateTime.Parse(Console.ReadLine()!);
         if (DeadLine == null)
             DeadLine = task1!.DeadLine;
-        
+
         string? Product = Console.ReadLine();
         if (Product == "")
             Product = task1!.Product;
-    
+
         string? Notes = Console.ReadLine();
         if (Notes == "")
             Notes = task1!.Notes;
-        
-       
+
+
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             _Rank = task1!.Rank;
         Task _Task = new(Id, IdWorker, Name, Description, MileStone, Time, CreateDate
@@ -221,12 +216,12 @@ internal class Program
         {
             Console.WriteLine("Enter New Details for dependence task and previous task:");
             if (!int.TryParse(Console.ReadLine(), out int _DependenceTask))
-                _DependenceTask=dependence1.DependenceTask;
-              if( !int.TryParse(Console.ReadLine(), out int PrevTask))
-                PrevTask=dependence1.PrevTask;  
+                _DependenceTask = dependence1.DependenceTask;
+            if (!int.TryParse(Console.ReadLine(), out int PrevTask))
+                PrevTask = dependence1.PrevTask;
             Dependencies _Dependence = new(_id, _DependenceTask, PrevTask);
             s_dal.Dependencies?.Update(_Dependence);
-        }       
+        }
     }
     private static void DeleteDependence()
     {
@@ -272,11 +267,11 @@ internal class Program
     {
         Console.WriteLine("dependences list:");
         IEnumerable<Dependencies?> dependenceList = s_dal.Dependencies!.ReadAll();
-        foreach(Dependencies? dep in dependenceList)
+        foreach (Dependencies? dep in dependenceList)
         {
             Console.WriteLine(dep);
         }
-       
+
     }
 
     private static void SubMenuWorker(int choose1)
