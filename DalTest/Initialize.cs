@@ -13,6 +13,9 @@ public static class Initialization
     //private static object _id;
     private static readonly Random s_rand = new();
 
+    /// <summary>
+    /// The function create new worker and add to the worker list
+    /// </summary>
     private static void createWorker()
     {
         string[] workerNames =
@@ -21,7 +24,7 @@ public static class Initialization
         "Eliana Yakobs", "Dana Frider"
     };
         Random rand = new(DateTime.Now.Millisecond);
-        foreach (string _name in workerNames)
+        foreach (string _name in workerNames)//the user input all the details to add the worker
         {
 
             int _id = rand.Next(100000000, 999999999);
@@ -33,7 +36,9 @@ public static class Initialization
         }
     }
 
-
+    /// <summary>
+    /// the function create dependence
+    /// </summary>
     private static void createDependences()
     {
         Dependencies[] _idDependences = new Dependencies[41];
@@ -88,14 +93,17 @@ public static class Initialization
         }
 
     }
+    /// <summary>
+    /// the function create task with random details
+    /// </summary>
     private static void createTask()
     {
         int[] _idTasks = new int[20];
-        for (int j = 1; j < 21; j++)
+        for (int j = 1; j < 21; j++)//build array of id's  
         {
             _idTasks[j - 1] = 0;
         }
-        string[] names =
+        string[] names =//array of names
             {
             "Market Research",//1 depence on 2, 6
             "Destination Analysis",//2
@@ -118,7 +126,7 @@ public static class Initialization
             "Customer Loyalty Program",//19 depence on 3,7,20
             "Performance Analytics"//20 depence on 3,5,6
         };
-        string[] descriptions =
+        string[] descriptions =//array of descriptions
         {
             "Conduct market research to identify emerging travel trends.",
             "Evaluate potential tourist destinations for feasibility and attractiveness. ",
@@ -141,7 +149,7 @@ public static class Initialization
             "Implement a customer loyalty program with rewards. ",
             "Implement analytics to track key performance indicators."
         };
-        string[] proudcts =
+        string[] proudcts =//array of proudcts
         {
             "Detailed report on current market demands and potential opportunities.",
             "List of recommended destinations with pros and cons.",
@@ -167,13 +175,13 @@ public static class Initialization
 
         Random rand = new (DateTime.Now.Millisecond);
         int i = 0;
-        foreach (int _id in _idTasks)
+        foreach (int _id in _idTasks)//go through the id's array 
         {
-            string? _name = names[i];
+            string? _name = names[i];//put the right details from the array's
             string _desc = descriptions[i];
             string _product = proudcts[i];
             i++;
-            bool _mileStone = false;
+            bool _mileStone = false;//put random details
             int _rank = rand.Next(0, 5);
             int _idWorker = 0;
             DateTime tempDate = new (2023, 10, 10);
@@ -185,13 +193,17 @@ public static class Initialization
             int randomSeconds = rand.Next(60); // 0 to 59
 
             TimeSpan _time = new (randomHours, randomMinutes, randomSeconds);
-            Task newTask = new (_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);
-            s_dal?.Task?.Create(newTask);
+            Task newTask = new (_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);//create task
+            s_dal?.Task?.Create(newTask);//add to the list
         }
 
     }
 
-
+    /// <summary>
+    /// create all the lists
+    /// </summary>
+    /// <param name="dal"></param>
+    /// <exception cref="NullReferenceException"></exception>
     public static void Do(IDal dal)
     {
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
