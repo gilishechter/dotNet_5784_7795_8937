@@ -20,7 +20,7 @@ public static class Initialization
         "Gili Shechter", "Ayelet Fridman", "Bibi Netanyahu",
         "Eliana Yakobs", "Dana Frider"
     };
-        Random rand = new Random(DateTime.Now.Millisecond);
+        Random rand = new(DateTime.Now.Millisecond);
         foreach (string _name in workerNames)
         {
 
@@ -165,7 +165,7 @@ public static class Initialization
             " Informed decision-making and continuous improvement."
         };
 
-        Random rand = new Random(DateTime.Now.Millisecond);
+        Random rand = new (DateTime.Now.Millisecond);
         int i = 0;
         foreach (int _id in _idTasks)
         {
@@ -176,7 +176,7 @@ public static class Initialization
             bool _mileStone = false;
             int _rank = rand.Next(0, 5);
             int _idWorker = 0;
-            DateTime tempDate = new DateTime(2023, 10, 10);
+            DateTime tempDate = new (2023, 10, 10);
             int range = (DateTime.Today - tempDate).Days;
             DateTime _createDate = tempDate.AddDays(rand.Next(range));
 
@@ -184,8 +184,8 @@ public static class Initialization
             int randomMinutes = rand.Next(60); // 0 to 59
             int randomSeconds = rand.Next(60); // 0 to 59
 
-            TimeSpan _time = new TimeSpan(randomHours, randomMinutes, randomSeconds);
-            Task newTask = new Task(_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);
+            TimeSpan _time = new (randomHours, randomMinutes, randomSeconds);
+            Task newTask = new (_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);
             s_dal?.Task?.Create(newTask);
         }
 
