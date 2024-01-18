@@ -6,7 +6,7 @@
 public interface IDal
 {
     IWorker Worker { get; }
-    IDependency Dependencies { get; }
+    IDependency Dependency { get; }
     ITask Task { get; }
 }
 

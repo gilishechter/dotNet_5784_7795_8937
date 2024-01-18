@@ -89,7 +89,7 @@ public static class Initialization
         _idDependences[39] = new(40, 20, 6);
         for (int i = 0; i < 40; i++)
         {
-            s_dal?.Dependencies?.Create(_idDependences[i]);
+            s_dal?.Dependency?.Create(_idDependences[i]);
         }
 
     }

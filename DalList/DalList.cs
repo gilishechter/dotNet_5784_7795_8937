@@ -6,7 +6,7 @@ using DalApi;
 sealed public class DalList : IDal
 {
     public IWorker Worker => new WorkerImplementation();
-    public IDependency Dependencies => new DependenceImplementation();
+    public IDependency Dependency => new DependenceImplementation();
     public ITask Task => new TaskImplementation();
 
 }
