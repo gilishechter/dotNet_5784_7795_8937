@@ -10,6 +10,11 @@ internal class WorkerImplementation : IWorker
 {
     readonly string s_workers_xml = "workers";
 
+    public void ClearList()
+    {
+        List<Worker> list = new List<Worker>();
+        XMLTools.SaveListToXMLSerializer(list, s_workers_xml);
+    }
     public int Create(Worker item)
     {
         List<Worker> workers = XMLTools.LoadListFromXMLSerializer<Worker>(s_workers_xml);

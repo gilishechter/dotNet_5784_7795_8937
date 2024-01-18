@@ -11,6 +11,11 @@ internal class TaskImplementation : ITask
 {
     readonly string s_tasks_xml = "tasks";
 
+    public void ClearList()
+    {
+        List<Task> list = new List<Task>();
+        XMLTools.SaveListToXMLSerializer(list, s_tasks_xml);
+    }
     public int Create(Task item)
     {
         List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
