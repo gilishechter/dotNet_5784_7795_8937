@@ -6,7 +6,7 @@ internal static class DataSource
 {
     internal static List<Do.Task> Tasks { get; } = new();//build lists of the 3 interfaces
     internal static List<Do.Worker> Workers { get; } = new();
-    internal static List<Do.Dependencies> Dependencies { get; } = new();
+    internal static List<Do.Dependency> Dependencies { get; } = new();
     internal static class Config
     {
         static DateTime? start = null;

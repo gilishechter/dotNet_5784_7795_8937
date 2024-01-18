@@ -6,13 +6,13 @@
 /// <param name="Id"></param>
 /// <param name="DependenceTask"></param>
 /// <param name="PrevTask"></param>
-public record Dependencies
+public record Dependency
 (
     int Id,
     int DependenceTask,
     int PrevTask
 )
 {
-    Dependencies() : this(0, 0, 0) { }//ctor
+    Dependency() : this(0, 0, 0) { }//ctor
 
 }

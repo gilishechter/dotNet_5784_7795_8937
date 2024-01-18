@@ -9,7 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{CC475DC8-4BDB-4D45-A55E-645290C5D10D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stage0", "stage0\stage0.csproj", "{A374BC19-3240-4691-90AE-AC7036D83415}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "stage0", "stage0\stage0.csproj", "{A374BC19-3240-4691-90AE-AC7036D83415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{02E427A6-05EB-44A1-B00F-3F72755EF789}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{EAB836C5-2127-485B-85BA-DE780B069DB4}"
+	ProjectSection(SolutionItems) = preProject
+		xml\data-config.xml = xml\data-config.xml
+		xml\dependencys.xml = xml\dependencys.xml
+		xml\tasks.xml = xml\tasks.xml
+		xml\workers.xml = xml\workers.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +79,18 @@ Global
 		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x64.Build.0 = Release|Any CPU
 		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x86.ActiveCfg = Release|Any CPU
 		{A374BC19-3240-4691-90AE-AC7036D83415}.Release|x86.Build.0 = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|x64.Build.0 = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Debug|x86.Build.0 = Debug|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|x64.ActiveCfg = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|x64.Build.0 = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|x86.ActiveCfg = Release|Any CPU
+		{02E427A6-05EB-44A1-B00F-3F72755EF789}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

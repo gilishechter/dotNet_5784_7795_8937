@@ -2,6 +2,8 @@
 using DalApi;
 using Do;
 using System.Collections.Generic;
+using System.Linq;
+
 /// <summary>
 /// the implemation of the task interface
 /// </summary
@@ -86,11 +88,7 @@ internal class TaskImplementation : ITask
     /// <returns></returns>
     public Task? Read(Func<Task, bool> filter)
     {
-        foreach (Task task1 in DataSource.Tasks)//go through the list
-        {
-            if(filter(task1))//if the function return true
-                return task1;//return the item
-        }
-        return null;
+        return DataSource.Tasks.FirstOrDefault(filter);
+
     }
 }

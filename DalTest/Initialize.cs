@@ -41,7 +41,7 @@ public static class Initialization
     /// </summary>
     private static void CreateDependences()
     {
-        Dependencies[] _idDependences = new Dependencies[41];
+        Dependency[] _idDependences = new Dependency[41];
 
 
         _idDependences[0] = new(1, 1, 2);

@@ -92,11 +92,7 @@ internal class WorkerImplementation : IWorker
     /// <returns></returns>
     public Worker? Read(Func<Worker, bool> filter)
     {
-        foreach (Worker worker1 in DataSource.Workers)//go through the list
-        {
-            if(filter(worker1))//if the function return true
-                return worker1;//return the item
-        }
-        return null;
+        return DataSource.Workers.FirstOrDefault(filter);
+       
     }
 }

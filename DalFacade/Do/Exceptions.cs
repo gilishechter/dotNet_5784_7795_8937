@@ -17,14 +17,10 @@ public class DalAlreadyExistsException : Exception
 {
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
-
-/// <summary>
-/// The input is wrong
-/// </summary>
 [Serializable]
-public class WrongInputException : Exception
+public class DalXMLFileLoadCreateException : Exception 
 {
-    public WrongInputException(string? message) : base(message) { }
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
 }
 
 

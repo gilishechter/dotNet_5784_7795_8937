@@ -2,6 +2,8 @@
 using DalApi;
 using Do;
 using System.Collections.Generic;
+using System.Linq;
+
 /// <summary>
 /// the implemation of the dependence interface
 /// </summary>
@@ -12,10 +14,10 @@ internal class DependenceImplementation : IDependence
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public int Create(Dependencies item)
+    public int Create(Dependency item)
     {
         int newId = DataSource.Config.NextDependenceId;//the running number
-        Dependencies newItem = item with { Id = newId };//create new item with the new ID
+        Dependency newItem = item with { Id = newId };//create new item with the new ID
         DataSource.Dependencies.Add(newItem);//add to the list
         return newId;
     }
@@ -42,7 +44,7 @@ internal class DependenceImplementation : IDependence
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Dependencies? Read(int id)
+    public Dependency? Read(int id)
     {
       
         return DataSource.Dependencies.FirstOrDefault(d => d.Id == id);//return the first object from
@@ -53,7 +55,7 @@ internal class DependenceImplementation : IDependence
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Dependencies?> ReadAll(Func<Dependencies, bool>? filter = null) 
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null) 
     {
         if (filter == null)//if there is no function to filtering
             return DataSource.Dependencies.Select(item => item);//return all the list
@@ -66,9 +68,9 @@ internal class DependenceImplementation : IDependence
     /// </summary>
     /// <param name="item"></param>
     /// <exception cref="DalDoesNotExistException"></exception>
-    public void Update(Dependencies item)
+    public void Update(Dependency item)
     {
-        foreach (Dependencies dependence1 in DataSource.Dependencies)//go through the list
+        foreach (Dependency dependence1 in DataSource.Dependencies)//go through the list
         {
             if (dependence1.Id == item.Id)//if the ID's equal
             {
@@ -85,13 +87,9 @@ internal class DependenceImplementation : IDependence
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public Dependencies? Read(Func<Dependencies, bool> filter)
+    public Dependency? Read(Func<Dependency, bool> filter)
     {
-        foreach (Dependencies dependence1 in DataSource.Dependencies)//go through the list
-        {
-            if(filter(dependence1))//if the function return true
-                return dependence1;//return the item
-        }
-        return null;
+        return DataSource.Dependencies.FirstOrDefault(filter);
+
     }
 }
