@@ -7,7 +7,7 @@ using System.Linq;
 /// <summary>
 /// the implemation of the dependence interface
 /// </summary>
-internal class DependenceImplementation : IDependence
+internal class DependenceImplementation : IDependency
 {
     /// <summary>
     /// Creates new entity object in DAL

@@ -8,7 +8,7 @@ public static class Initialization
 {
     //private static IWorker? s_dalWorker; //stage 1
     //private static ITask? s_dalTask; //stage 1
-    //private static IDependence? s_dalDependence; //stage 1
+    //private static IDependency? s_dalDependence; //stage 1
     private static IDal? s_dal;
     //private static object _id;
     private static readonly Random s_rand = new();

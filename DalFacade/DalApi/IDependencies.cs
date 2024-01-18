@@ -1,6 +1,6 @@
 ﻿namespace DalApi;
 using Do;
-public interface IDependence: ICrud<Dependency> 
+public interface IDependency: ICrud<Dependency> 
 {
 
 }
