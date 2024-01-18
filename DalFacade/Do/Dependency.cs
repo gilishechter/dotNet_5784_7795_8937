@@ -13,6 +13,6 @@ public record Dependency
     int PrevTask
 )
 {
-    Dependency() : this(0, 0, 0) { }//ctor
+    public Dependency() : this(0, 0, 0) { }//ctor
 
 }

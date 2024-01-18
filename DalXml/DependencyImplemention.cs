@@ -13,6 +13,22 @@ internal class DependencyImplementation : IDependency
     readonly string s_dependencys_xml = "dependencys";
 
 
+    static Dependency GetDependency(XElement dep)
+    {
+        return new Dependency()
+        {
+            Id = dep.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id"),
+            DependenceTask = dep.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id"),
+            PrevTask = dep.ToIntNullable("Id") ?? throw new FormatException("Can't convert Id")
+        };
+    }
+
+    public void ClearList(this List<Dependency> list)
+    {
+        list = new List<Dependency>();
+        XMLTools.SaveListToXMLSerializer(list, s_dependencys_xml);
+    }
+
     public int Create(Dependency item)
     {
         XElement? dependencys = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
@@ -40,56 +56,33 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(int id)
     {
 
-        XElement? dependencys = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
-        XElement? toRead = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == id);
-        if(toRead != null)
-        {
-            int _DependenceTask = int.TryParse((string?)dependencys.Element("DependenceTask"), out var result) ? (int)result : throw new FormatException("can't convert");
-            int _PrevTask = int.TryParse((string?)dependencys.Element("PrevTask"), out var result1) ? (int)result1 : throw new FormatException("can't convert");
-
-            return new Dependency(id, _DependenceTask, _PrevTask);
-       }
-        return null;
+        XElement? tempDependency = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().FirstOrDefault(c => (int?)c.Element("Id") == id);
+        return tempDependency is null ? null : GetDependency(tempDependency);
     }
 
     public Dependency? Read(Func<Dependency, bool> filter)
     {
-        XElement? dependencys = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
-        XElement? toRead = dependencys.Elements().FirstOrDefault(filter);
-        if (toRead != null)
-        {
-            int _Id = int.TryParse((string?)dependencys.Element("Id"), out var result1) ? (int)result1 : throw new FormatException("can't convert");
-            int _DependenceTask = int.TryParse((string?)dependencys.Element("DependenceTask"), out var result) ? (int)result : throw new FormatException("can't convert");
-            int _PrevTask = int.TryParse((string?)dependencys.Element("PrevTask"), out var result2) ? (int)result2 : throw new FormatException("can't convert");
-
-            return new Dependency(_Id, _DependenceTask, _PrevTask);
-        }
-        return null;
+        return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(dep => GetDependency(dep)).FirstOrDefault(filter);
     }
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        List<Dependency> dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
-        if (filter == null)//if there is no function to filtering
-            return dependencys.Select(item => item);//return all the list
+        if (filter == null)
+            return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(dep => GetDependency(dep));
         else
-            return dependencys.Where(filter);//return the list after the filtering by the function
+            return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(dep => GetDependency(dep)).Where(filter);
+
     }
 
     public void Update(Dependency item)
     {
-        List<Dependency> dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
-        foreach (Dependency tempDependency in dependencys)
-        {
-            if (tempDependency.Id == item.Id)
-            {
-                dependencys.Remove(tempDependency);
-                dependencys.Add(item);
-                XMLTools.SaveListToXMLSerializer(dependencys, s_dependencys_xml);
-                return;
-            }
-        }
-        throw new DalDoesNotExistException($"this dependency with id={item.Id} is not exist");//throw exception
+        XElement? dependencys = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        XElement? tempDependency = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
+        if (tempDependency is null)
+            throw new DalDoesNotExistException($"this dependence with id={item.Id} is not exist");//throw exception
+        tempDependency.Remove();
+        dependencys.Add(item);
+        XMLTools.SaveListToXMLElement(dependencys, s_dependencys_xml);                    
     }
 }
 
