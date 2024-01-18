@@ -23,9 +23,9 @@ internal class DependencyImplementation : IDependency
         };
     }
 
-    public void ClearList(this List<Dependency> list)
+    public void ClearList( )
     {
-        list = new List<Dependency>();
+        List<Dependency>list = new List<Dependency>();
         XMLTools.SaveListToXMLSerializer(list, s_dependencys_xml);
     }
 
