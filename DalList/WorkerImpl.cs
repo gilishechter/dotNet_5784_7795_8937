@@ -95,4 +95,9 @@ internal class WorkerImplementation : IWorker
         return DataSource.Workers.FirstOrDefault(filter);
        
     }
+
+    public void ClearList()
+    {
+        DataSource.Workers.Clear();
+    }
 }

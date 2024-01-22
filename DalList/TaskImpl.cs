@@ -91,4 +91,9 @@ internal class TaskImplementation : ITask
         return DataSource.Tasks.FirstOrDefault(filter);
 
     }
+
+    public void ClearList()
+    {
+        DataSource.Tasks.Clear();
+    }
 }

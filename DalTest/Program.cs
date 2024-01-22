@@ -22,6 +22,7 @@ internal class Program
         Console.WriteLine("1 - Worker");
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - Dependence");
+        Console.WriteLine("4 - to intilize the data");
         //string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
         //if (ans == "Y")
         //{  //stage 3
@@ -53,9 +54,9 @@ internal class Program
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
         if (!int.TryParse(Console.ReadLine(), out int _id))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
-        if(!Rank.TryParse(Console.ReadLine(), out Rank _rank))
+        if (!Rank.TryParse(Console.ReadLine(), out Rank _rank))
             throw new FormatException("Wrong Input, Try Again");
-        if(!double.TryParse(Console.ReadLine(), out double _hourPrice))
+        if (!double.TryParse(Console.ReadLine(), out double _hourPrice))
             throw new FormatException("Wrong Input, Try Again");
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
@@ -72,28 +73,28 @@ internal class Program
         Console.WriteLine("Enter Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
         //if(!int.TryParse(Console.ReadLine(), out int Id))
-           // throw new WrongInputException("Wrong Input, Try Again");
+        // throw new WrongInputException("Wrong Input, Try Again");
         if (!int.TryParse(Console.ReadLine(), out int IdWorker))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
-        if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
             throw new FormatException("Wrong Input, Try Again");
-        if(!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
+        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime StartDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime StartDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate))
             throw new FormatException("Wrong Input, Try Again");
         if (!DateTime.TryParse(Console.ReadLine(), out DateTime DeadLine))
             throw new FormatException("Wrong Input, Try Again");
         string? Product = Console.ReadLine();
         string? Notes = Console.ReadLine();
-        if(!int.TryParse(Console.ReadLine(), out int Rank))
+        if (!int.TryParse(Console.ReadLine(), out int Rank))
             throw new FormatException("Wrong Input, Try Again");
         Task _Task = new(0, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
@@ -108,10 +109,10 @@ internal class Program
     {
         Console.WriteLine("Enter dependence task and previous task");
         //if(!int.TryParse(Console.ReadLine(), out int _id))
-            //throw new WrongInputException("Wrong Input, Try Again");
-        if(!int.TryParse(Console.ReadLine(), out int _DependenceTask))//input the details
+        //throw new WrongInputException("Wrong Input, Try Again");
+        if (!int.TryParse(Console.ReadLine(), out int _DependenceTask))//input the details
             throw new FormatException("Wrong Input, Try Again");
-        if(!int.TryParse(Console.ReadLine(), out int _PrevTask))
+        if (!int.TryParse(Console.ReadLine(), out int _PrevTask))
             throw new FormatException("Wrong Input, Try Again");
         Dependency _Dependence = new(0, _DependenceTask, _PrevTask);//build the dependence
         Console.WriteLine(s_dal.Dependency?.Create(_Dependence));//add to the list and print the ID
@@ -123,7 +124,7 @@ internal class Program
     private static void WorkerObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         if (s_dal.Worker?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID worker={_id} doesn't exist");
@@ -135,9 +136,9 @@ internal class Program
     private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
-        if(s_dal.Task?.Read(_id)==null)
+        if (s_dal.Task?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID task={_id} doesn't exist");
         Console.WriteLine(s_dal.Task?.Read(_id));
     }
@@ -147,9 +148,9 @@ internal class Program
     private static void DependenceObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
-        if(s_dal.Dependency?.Read(_id)==null)
+        if (s_dal.Dependency?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID dependence={_id} doesn't exist");
         Console.WriteLine(s_dal.Dependency?.Read(_id));
     }
@@ -159,7 +160,7 @@ internal class Program
     private static void UpdateWorker()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int _id))//check if the user put right input and throw exception if he put wrong input
+        if (!int.TryParse(Console.ReadLine(), out int _id))//check if the user put right input and throw exception if he put wrong input
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Worker!.Read(_id));
         Worker worker1 = s_dal.Worker.Read(_id)!;
@@ -189,7 +190,7 @@ internal class Program
     private static void UpdateTask()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int Id))
+        if (!int.TryParse(Console.ReadLine(), out int Id))
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Task!.Read(Id));
         Task? task1 = s_dal.Task.Read(Id);
@@ -205,7 +206,7 @@ internal class Program
         if (Description == "")
             Description = task1!.Description;
 
-       if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
             throw new FormatException("Wrong Input, Try Again");
         if (!MileStone)
             MileStone = task1!.MileStone;
@@ -255,7 +256,7 @@ internal class Program
     private static void UpdateDependence()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Dependency!.Read(_id));
         Dependency? dependence1 = s_dal.Dependency.Read(_id);
@@ -277,7 +278,7 @@ internal class Program
     private static void DeleteDependence()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Dependency?.Delete(_id);
     }
@@ -288,7 +289,7 @@ internal class Program
     private static void DeleteTask()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Task?.Delete(_id);
     }
@@ -299,7 +300,7 @@ internal class Program
     private static void DeleteWorker()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Worker?.Delete(_id);
     }
@@ -336,9 +337,30 @@ internal class Program
         IEnumerable<Dependency?> dependenceList = s_dal.Dependency!.ReadAll();
         foreach (Dependency? dep in dependenceList)//The for goes through all the elements in the list and prints them to the user
             Console.WriteLine(dep);
-        
+
 
     }
+
+    private static void ClearAll()
+    {
+        try
+        {
+            Console.WriteLine("Are you sure you want to create Initial data? (Y/N)"); //stage 3
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+            if (ans == "Y") //stage 3
+            {
+                s_dal.Worker.ClearList();
+                s_dal.Dependency.ClearList();
+                s_dal.Task.ClearList();
+                Initialization.Do(s_dal);
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+    }
+
     /// <summary>
     /// the action menu for the worker entity
     /// </summary>
@@ -443,61 +465,49 @@ internal class Program
     }
     static void Main(string[] args)
     {
-        try
+       
+        Menu();
+        int choose = int.Parse(Console.ReadLine()!);// the user put his choise
+
+
+        while (choose != 0)
         {
-            Console.WriteLine("Would you like to create Initial data? (Y/N)"); //stage 3
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-            if (ans == "Y") //stage 3
+
+            switch (choose)
             {
-                
-                Initialization.Do(s_dal); //stage 2
+                case 0://exit
+                    break;
+                case 1://if the user choose worker(1) the worker's sub menu opens for him
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose1))
+                        throw new FormatException("Wrong Input, Try Again");
+                    SubMenuWorker(choose1);
+                    break;
+                case 2://if the user choose task(2) the task's sub menu opens for him
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose2))
+                        throw new FormatException("Wrong Input, Try Again");
+                    SubMenuTask(choose2);
+                    break;
+                case 3://if the user choose dependence(3) the dependence's sub menu opens for him
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose3))
+                        throw new FormatException("Wrong Input, Try Again");
+                    SubMenuDependence(choose3);
+                    break;
+                case 4:
+                    ClearAll();
+                    break;
+
             }
 
 
-        }
-        catch (Exception Ex)
-        {
-            Console.WriteLine(Ex);
-        }
+
             Menu();
-            int choose = int.Parse(Console.ReadLine()!);// the user put his choise
-           
-        
-        while (choose != 0)
-            {
-
-                switch (choose)
-                {
-                    case 0://exit
-                        break;
-                    case 1://if the user choose worker(1) the worker's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose1))
-                            throw new FormatException("Wrong Input, Try Again");
-                        SubMenuWorker(choose1);
-                        break;
-                    case 2://if the user choose task(2) the task's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose2))
-                            throw new FormatException("Wrong Input, Try Again");
-                        SubMenuTask(choose2);
-                        break;
-                    case 3://if the user choose dependence(3) the dependence's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose3))
-                            throw new FormatException("Wrong Input, Try Again");
-                        SubMenuDependence(choose3);
-                        break;
-                
-                }  
-                
-
-
-                Menu();
-                choose = int.Parse(Console.ReadLine()!);                                                                       
+            choose = int.Parse(Console.ReadLine()!);
         }
-        
-        
+
+
 
 
     }
