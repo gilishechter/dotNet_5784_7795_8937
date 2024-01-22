@@ -509,9 +509,7 @@ internal class Program
             Menu();
                 choose = int.Parse(Console.ReadLine()!);                                                                       
         }
-
-
-
+       
 
     }
 }
