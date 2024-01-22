@@ -361,6 +361,26 @@ internal class Program
         }
     }
 
+    private static void ClearAll()
+    {
+        try
+        {
+            Console.WriteLine("Are you sure you want to create Initial data? (Y/N)"); //stage 3
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+            if (ans == "Y") //stage 3
+            {
+                s_dal.Worker.ClearList();
+                s_dal.Dependency.ClearList();
+                s_dal.Task.ClearList();
+                Initialization.Do(s_dal);
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+    }
+
     /// <summary>
     /// the action menu for the worker entity
     /// </summary>
@@ -467,44 +487,46 @@ internal class Program
     {
        
         Menu();
-        int choose = int.Parse(Console.ReadLine()!);// the user put his choise
-
-
+            int choose = int.Parse(Console.ReadLine()!);// the user put his choise
+           
+        
         while (choose != 0)
         {
 
-            switch (choose)
-            {
-                case 0://exit
-                    break;
-                case 1://if the user choose worker(1) the worker's sub menu opens for him
-                    SubMenu();
-                    if (!int.TryParse(Console.ReadLine(), out int choose1))
-                        throw new FormatException("Wrong Input, Try Again");
-                    SubMenuWorker(choose1);
-                    break;
-                case 2://if the user choose task(2) the task's sub menu opens for him
-                    SubMenu();
-                    if (!int.TryParse(Console.ReadLine(), out int choose2))
-                        throw new FormatException("Wrong Input, Try Again");
-                    SubMenuTask(choose2);
-                    break;
-                case 3://if the user choose dependence(3) the dependence's sub menu opens for him
-                    SubMenu();
-                    if (!int.TryParse(Console.ReadLine(), out int choose3))
-                        throw new FormatException("Wrong Input, Try Again");
-                    SubMenuDependence(choose3);
-                    break;
-                case 4:
-                    ClearAll();
-                    break;
+                switch (choose)
+                {
+                    case 0://exit
+                        break;
+                    case 1://if the user choose worker(1) the worker's sub menu opens for him 
+                        SubMenu();
+                        if (!int.TryParse(Console.ReadLine(), out int choose1))
+                            throw new FormatException("Wrong Input, Try Again");
+                        SubMenuWorker(choose1);
+                        break;
+                    case 2://if the user choose task(2) the task's sub menu opens for him 
+                        SubMenu();
+                        if (!int.TryParse(Console.ReadLine(), out int choose2))
+                            throw new FormatException("Wrong Input, Try Again");
+                        SubMenuTask(choose2);
+                        break;
+                    case 3://if the user choose dependence(3) the dependence's sub menu opens for him 
+                        SubMenu();
+                        if (!int.TryParse(Console.ReadLine(), out int choose3))
+                            throw new FormatException("Wrong Input, Try Again");
+                        SubMenuDependence(choose3);
+                        break;
 
-            }
+                    case 4:
+                       ClearAll();
+                       break;
+
+
+                }
 
 
 
             Menu();
-            choose = int.Parse(Console.ReadLine()!);
+                choose = int.Parse(Console.ReadLine()!);                                                                       
         }
 
 
