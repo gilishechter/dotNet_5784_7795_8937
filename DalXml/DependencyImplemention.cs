@@ -6,11 +6,14 @@ using Do;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class DependencyImplementation : IDependency
 {
-    private const string _dependencys_xml = "dependencys";
+    readonly string _dependencys_xml = "dependencys";
+    //static readonly string s_data_config_xml = "data-config";
+
     private const string _entity_name = nameof(Dependency);
     private const string _id = nameof(Dependency.Id);
     private const string _dependenceTask = nameof(Dependency.DependenceTask);
@@ -34,9 +37,10 @@ internal class DependencyImplementation : IDependency
 
     public void ClearList()
     {
-        List<Dependency> list = new();
-        XMLTools.SaveListToXMLSerializer(list, _dependencys_xml);
-        //XMLTools.SaveListToXMLElement(new XElement("config", new XElement("NextTaskId", 0), new XElement("NextDependencyId", 0)), Config.s_data_config_xml);
+        List<Dependency> dependencies = XMLTools.LoadListFromXMLSerializer<Dependency>(_dependencys_xml);
+        dependencies.Clear();
+        XMLTools.SaveListToXMLSerializer(dependencies, _dependencys_xml);
+        //XMLTools.SaveListToXMLElement(new XElement("config", new XElement("NextTaskId", 0), new XElement("NextDependencyId", 0)), s_data_config_xml);
     }
 
     public int Create(Dependency item)
