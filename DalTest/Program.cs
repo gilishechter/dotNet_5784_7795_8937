@@ -341,25 +341,6 @@ internal class Program
 
     }
 
-    private static void ClearAll()
-    {
-        try
-        {
-            Console.WriteLine("Are you sure you want to create Initial data? (Y/N)"); //stage 3
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-            if (ans == "Y") //stage 3
-            {
-                s_dal.Worker.ClearList();
-                s_dal.Dependency.ClearList();
-                s_dal.Task.ClearList();
-                Initialization.Do(s_dal);
-            }
-        }
-        catch (Exception Ex)
-        {
-            Console.WriteLine(Ex);
-        }
-    }
 
     private static void ClearAll()
     {
