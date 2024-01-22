@@ -35,4 +35,11 @@
     <Name>Dana Frider</Name>
     <Email>Dana Frider@gmail.com</Email>
   </Worker>
+  <Worker>
+    <Id>1234</Id>
+    <WorkerRank>Advanced</WorkerRank>
+    <HourPrice>45</HourPrice>
+    <Name>sf</Name>
+    <Email>sd</Email>
+  </Worker>
 </ArrayOfWorker>
