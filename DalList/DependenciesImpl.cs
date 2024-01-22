@@ -92,4 +92,9 @@ internal class DependenceImplementation : IDependency
         return DataSource.Dependencies.FirstOrDefault(filter);
 
     }
+
+    public void ClearList()
+    {
+        DataSource.Dependencies.Clear();
+    }
 }

@@ -22,6 +22,7 @@ internal class Program
         Console.WriteLine("1 - Worker");
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - Dependence");
+        Console.WriteLine("4 - to intilize the data");
         //string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
         //if (ans == "Y")
         //{  //stage 3
@@ -339,6 +340,27 @@ internal class Program
         
 
     }
+
+    private static void ClearAll()
+    {
+        try
+        {
+            Console.WriteLine("Are you sure you want to create Initial data? (Y/N)"); //stage 3
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+            if (ans == "Y") //stage 3
+            {
+                s_dal.Worker.ClearList();
+                s_dal.Dependency.ClearList();
+                s_dal.Task.ClearList();
+                Initialization.Do(s_dal);
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+    }
+
     /// <summary>
     /// the action menu for the worker entity
     /// </summary>
@@ -443,22 +465,7 @@ internal class Program
     }
     static void Main(string[] args)
     {
-        try
-        {
-            Console.WriteLine("Would you like to create Initial data? (Y/N)"); //stage 3
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-            if (ans == "Y") //stage 3
-            {
-                
-                Initialization.Do(s_dal); //stage 2
-            }
-
-
-        }
-        catch (Exception Ex)
-        {
-            Console.WriteLine(Ex);
-        }
+       
         Menu();
             int choose = int.Parse(Console.ReadLine()!);// the user put his choise
            
@@ -488,12 +495,17 @@ internal class Program
                             throw new FormatException("Wrong Input, Try Again");
                         SubMenuDependence(choose3);
                         break;
-                
-                }  
-                
+
+                    case 4:
+                       ClearAll();
+                       break;
 
 
-                Menu();
+                }
+
+
+
+            Menu();
                 choose = int.Parse(Console.ReadLine()!);                                                                       
         }
         

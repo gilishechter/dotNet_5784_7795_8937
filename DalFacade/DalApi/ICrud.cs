@@ -11,6 +11,6 @@ public interface ICrud<T> where T : class
     void Delete(int Id); //Deletes an object by its Id
 
     T? Read(Func<T, bool> filter); // stage 2
-
+    void ClearList();
 
 }

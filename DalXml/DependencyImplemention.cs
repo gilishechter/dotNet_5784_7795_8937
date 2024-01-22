@@ -86,11 +86,11 @@ internal class DependencyImplementation : IDependency
     public void Update(Dependency item)
     {
         XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
-        XElement? tempDependency = XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
+        XElement? tempDependency = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
         if (tempDependency is null)
             throw new DalDoesNotExistException($"this dependence with id={item.Id} is not exist");//throw exception
         tempDependency.Remove();
-        dependencys.Add(item);
+        dependencys.Add(getXElementFromDependency(item));
         XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);
     }
 }
