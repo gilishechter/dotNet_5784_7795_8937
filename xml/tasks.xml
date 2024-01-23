@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>226</Id>
+    <Id>1</Id>
     <IdWorker>0</IdWorker>
     <Name>Market Research</Name>
     <Description>Conduct market research to identify emerging travel trends.</Description>
     <MileStone>false</MileStone>
-    <Time>PT8H51M18S</Time>
-    <CreateDate>2023-11-10T00:00:00</CreateDate>
+    <Time>PT10H7M42S</Time>
+    <CreateDate>2023-12-09T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Detailed report on current market demands and potential opportunities.</Product>
-    <Rank>3</Rank>
+    <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>227</Id>
+    <Id>2</Id>
     <IdWorker>0</IdWorker>
     <Name>Destination Analysis</Name>
     <Description>Evaluate potential tourist destinations for feasibility and attractiveness. </Description>
     <MileStone>false</MileStone>
-    <Time>PT11H10M40S</Time>
-    <CreateDate>2024-01-10T00:00:00</CreateDate>
+    <Time>PT2M38S</Time>
+    <CreateDate>2023-11-04T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>List of recommended destinations with pros and cons.</Product>
-    <Rank>0</Rank>
+    <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>228</Id>
+    <Id>3</Id>
     <IdWorker>0</IdWorker>
     <Name>Package Development</Name>
     <Description>Create diverse travel packages catering to different customer preferences. </Description>
     <MileStone>false</MileStone>
-    <Time>PT15H30M27S</Time>
-    <CreateDate>2024-01-04T00:00:00</CreateDate>
+    <Time>PT8H21M58S</Time>
+    <CreateDate>2024-01-13T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Portfolio of well-designed travel packages.</Product>
-    <Rank>2</Rank>
+    <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>229</Id>
+    <Id>4</Id>
     <IdWorker>0</IdWorker>
     <Name>Price Structuring</Name>
     <Description>Develop competitive pricing strategies for each travel package.</Description>
     <MileStone>false</MileStone>
-    <Time>PT7H26M36S</Time>
-    <CreateDate>2023-11-30T00:00:00</CreateDate>
+    <Time>PT19H52M57S</Time>
+    <CreateDate>2023-12-31T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Price list for various tour packages.</Product>
-    <Rank>2</Rank>
+    <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>230</Id>
+    <Id>5</Id>
     <IdWorker>0</IdWorker>
     <Name>Marketing Campaign</Name>
     <Description>Design and implement a marketing campaign to promote new packages.</Description>
     <MileStone>false</MileStone>
-    <Time>PT15H41M22S</Time>
-    <CreateDate>2023-11-13T00:00:00</CreateDate>
+    <Time>PT10H48M1S</Time>
+    <CreateDate>2023-11-06T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -76,43 +76,43 @@
     <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>231</Id>
+    <Id>6</Id>
     <IdWorker>0</IdWorker>
     <Name>Online Presence Enhancement</Name>
     <Description>Optimize the company's website and social media for better online visibility.</Description>
     <MileStone>false</MileStone>
-    <Time>PT15H16M59S</Time>
-    <CreateDate>2023-12-13T00:00:00</CreateDate>
+    <Time>PT8H27M54S</Time>
+    <CreateDate>2023-11-05T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Improved website traffic and engagement on social media.</Product>
-    <Rank>0</Rank>
+    <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>232</Id>
+    <Id>7</Id>
     <IdWorker>0</IdWorker>
     <Name>Customer Service Training</Name>
     <Description>Train staff in providing excellent customer service. </Description>
     <MileStone>false</MileStone>
-    <Time>PT5H55M8S</Time>
-    <CreateDate>2023-11-28T00:00:00</CreateDate>
+    <Time>PT30M21S</Time>
+    <CreateDate>2023-10-11T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Improved customer satisfaction and positive reviews.</Product>
-    <Rank>4</Rank>
+    <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>233</Id>
+    <Id>8</Id>
     <IdWorker>0</IdWorker>
     <Name>Collaboration with Local Businesses</Name>
     <Description>Establish partnerships with local businesses for mutual benefits. </Description>
     <MileStone>false</MileStone>
-    <Time>PT22H2M29S</Time>
-    <CreateDate>2024-01-19T00:00:00</CreateDate>
+    <Time>PT2H34M</Time>
+    <CreateDate>2023-12-19T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -121,43 +121,43 @@
     <Rank>2</Rank>
   </Task>
   <Task>
-    <Id>234</Id>
+    <Id>9</Id>
     <IdWorker>0</IdWorker>
     <Name>Digital Booking System Implementation</Name>
     <Description>Integrate a user-friendly digital booking system. </Description>
     <MileStone>false</MileStone>
-    <Time>PT15H49M19S</Time>
-    <CreateDate>2024-01-15T00:00:00</CreateDate>
+    <Time>PT15H44M10S</Time>
+    <CreateDate>2023-10-28T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Streamlined booking process and improved efficiency.</Product>
-    <Rank>4</Rank>
+    <Rank>2</Rank>
   </Task>
   <Task>
-    <Id>235</Id>
+    <Id>10</Id>
     <IdWorker>0</IdWorker>
     <Name>Travel Insurance Options</Name>
     <Description>Provide information and options for travel insurance. </Description>
     <MileStone>false</MileStone>
-    <Time>PT18H32M9S</Time>
-    <CreateDate>2023-12-16T00:00:00</CreateDate>
+    <Time>PT18H21M9S</Time>
+    <CreateDate>2023-10-11T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Increased customer confidence and risk mitigation.</Product>
-    <Rank>2</Rank>
+    <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>236</Id>
+    <Id>11</Id>
     <IdWorker>0</IdWorker>
     <Name>Crisis Management Plan</Name>
     <Description>Develop a crisis management plan for unexpected events.</Description>
     <MileStone>false</MileStone>
-    <Time>PT14H53M24S</Time>
-    <CreateDate>2023-10-21T00:00:00</CreateDate>
+    <Time>PT17H45M16S</Time>
+    <CreateDate>2024-01-18T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -166,28 +166,28 @@
     <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>237</Id>
+    <Id>12</Id>
     <IdWorker>0</IdWorker>
     <Name>Customer Feedback Collection</Name>
     <Description>Implement a system for collecting and analyzing customer feedback. </Description>
     <MileStone>false</MileStone>
-    <Time>PT15H28M16S</Time>
-    <CreateDate>2023-12-18T00:00:00</CreateDate>
+    <Time>PT14H6M30S</Time>
+    <CreateDate>2023-10-23T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Insights for continuous improvement and enhanced customer satisfaction.</Product>
-    <Rank>2</Rank>
+    <Rank>0</Rank>
   </Task>
   <Task>
-    <Id>238</Id>
+    <Id>13</Id>
     <IdWorker>0</IdWorker>
     <Name>Sustainable Tourism Practices</Name>
     <Description>Integrate eco-friendly and sustainable practices. </Description>
     <MileStone>false</MileStone>
-    <Time>PT4H11M41S</Time>
-    <CreateDate>2023-11-05T00:00:00</CreateDate>
+    <Time>PT13H8M56S</Time>
+    <CreateDate>2024-01-11T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -196,43 +196,43 @@
     <Rank>2</Rank>
   </Task>
   <Task>
-    <Id>239</Id>
+    <Id>14</Id>
     <IdWorker>0</IdWorker>
     <Name>Mobile App Development</Name>
     <Description>Create a mobile app for easier access and bookings. </Description>
     <MileStone>false</MileStone>
-    <Time>PT17H21M2S</Time>
-    <CreateDate>2023-12-09T00:00:00</CreateDate>
+    <Time>PT20H59M28S</Time>
+    <CreateDate>2024-01-11T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Increased user engagement and bookings through the app.</Product>
-    <Rank>4</Rank>
+    <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>240</Id>
+    <Id>15</Id>
     <IdWorker>0</IdWorker>
     <Name>Customized Itinerary Planning</Name>
     <Description>Offer personalized itinerary planning services. </Description>
     <MileStone>false</MileStone>
-    <Time>PT6H56M39S</Time>
-    <CreateDate>2023-12-05T00:00:00</CreateDate>
+    <Time>PT5H52M26S</Time>
+    <CreateDate>2023-12-21T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product> Increased customer satisfaction and loyalty.</Product>
-    <Rank>2</Rank>
+    <Rank>3</Rank>
   </Task>
   <Task>
-    <Id>241</Id>
+    <Id>16</Id>
     <IdWorker>0</IdWorker>
     <Name>Cross-promotions with Airlines</Name>
     <Description>Establish partnerships with airlines for joint promotions. </Description>
     <MileStone>false</MileStone>
-    <Time>PT19H21M47S</Time>
-    <CreateDate>2023-12-22T00:00:00</CreateDate>
+    <Time>PT16H38M48S</Time>
+    <CreateDate>2023-12-13T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -241,28 +241,28 @@
     <Rank>2</Rank>
   </Task>
   <Task>
-    <Id>242</Id>
+    <Id>17</Id>
     <IdWorker>0</IdWorker>
     <Name>Guided Tour Services</Name>
     <Description>Provide experienced guides for specific destinations. </Description>
     <MileStone>false</MileStone>
-    <Time>PT2H7M16S</Time>
-    <CreateDate>2024-01-04T00:00:00</CreateDate>
+    <Time>PT23H18M59S</Time>
+    <CreateDate>2023-11-28T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product>Enhanced customer experience and cultural immersion.</Product>
-    <Rank>1</Rank>
+    <Rank>0</Rank>
   </Task>
   <Task>
-    <Id>243</Id>
+    <Id>18</Id>
     <IdWorker>0</IdWorker>
     <Name>Online Travel Resources</Name>
     <Description>Create informative content and resources on the company website.</Description>
     <MileStone>false</MileStone>
-    <Time>PT8H31M43S</Time>
-    <CreateDate>2024-01-09T00:00:00</CreateDate>
+    <Time>PT6H14M16S</Time>
+    <CreateDate>2023-11-09T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
@@ -271,28 +271,28 @@
     <Rank>4</Rank>
   </Task>
   <Task>
-    <Id>244</Id>
+    <Id>19</Id>
     <IdWorker>0</IdWorker>
     <Name>Customer Loyalty Program</Name>
     <Description>Implement a customer loyalty program with rewards. </Description>
     <MileStone>false</MileStone>
-    <Time>PT11H45M56S</Time>
-    <CreateDate>2023-11-11T00:00:00</CreateDate>
+    <Time>PT23H3M34S</Time>
+    <CreateDate>2023-10-15T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />
     <DeadLine xsi:nil="true" />
     <Product> Increased customer retention and repeat business.</Product>
-    <Rank>3</Rank>
+    <Rank>1</Rank>
   </Task>
   <Task>
-    <Id>245</Id>
+    <Id>20</Id>
     <IdWorker>0</IdWorker>
     <Name>Performance Analytics</Name>
     <Description>Implement analytics to track key performance indicators.</Description>
     <MileStone>false</MileStone>
-    <Time>PT10H7M23S</Time>
-    <CreateDate>2023-12-24T00:00:00</CreateDate>
+    <Time>PT12H48M23S</Time>
+    <CreateDate>2023-12-14T00:00:00</CreateDate>
     <WantedStartDate xsi:nil="true" />
     <StartDate xsi:nil="true" />
     <EndingDate xsi:nil="true" />

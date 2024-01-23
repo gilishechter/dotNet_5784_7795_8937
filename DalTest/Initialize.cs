@@ -173,9 +173,9 @@ public static class Initialization
             " Informed decision-making and continuous improvement."
         };
 
-        Random rand = new (DateTime.Now.Millisecond);
+        Random rand = new(DateTime.Now.Millisecond);
         int i = 0;
-        foreach (int _id in _idTasks)//go through the id's array 
+        foreach (int _id in _idTasks)//go through the id's array
         {
             string? _name = names[i];//put the right details from the array's
             string _desc = descriptions[i];
@@ -184,7 +184,7 @@ public static class Initialization
             bool _mileStone = false;//put random details
             int _rank = rand.Next(0, 5);
             int _idWorker = 0;
-            DateTime tempDate = new (2023, 10, 10);
+            DateTime tempDate = new(2023, 10, 10);
             int range = (DateTime.Today - tempDate).Days;
             DateTime _createDate = tempDate.AddDays(rand.Next(range));
 
@@ -192,8 +192,8 @@ public static class Initialization
             int randomMinutes = rand.Next(60); // 0 to 59
             int randomSeconds = rand.Next(60); // 0 to 59
 
-            TimeSpan _time = new (randomHours, randomMinutes, randomSeconds);
-            Task newTask = new (_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);//create task
+            TimeSpan _time = new(randomHours, randomMinutes, randomSeconds);
+            Task newTask = new(_id, _idWorker, _name, _desc, _mileStone, _time, _createDate, null, null, null, null, _product, null, _rank);//create task
             s_dal?.Task?.Create(newTask);//add to the list
         }
 

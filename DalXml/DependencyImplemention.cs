@@ -6,11 +6,15 @@ using Do;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-
+/// <summary>
+/// XMLElement method
+/// </summary>
 internal class DependencyImplementation : IDependency
 {
-    private const string _dependencys_xml = "dependencys";
+    readonly string _dependencys_xml = "dependencys";
+
     private const string _entity_name = nameof(Dependency);
     private const string _id = nameof(Dependency.Id);
     private const string _dependenceTask = nameof(Dependency.DependenceTask);
@@ -31,13 +35,22 @@ internal class DependencyImplementation : IDependency
             new XElement(_id, dependency.Id),
             new XElement(_dependenceTask, dependency.DependenceTask),
             new XElement(_prevTask, dependency.PrevTask));
-
+    /// <summary>
+    /// clear the xml file
+    /// </summary>
     public void ClearList()
     {
-        List<Dependency> list = new();
-        XMLTools.SaveListToXMLSerializer(list, _dependencys_xml);
+        XElement dependencies = XMLTools.LoadListFromXMLElement(_dependencys_xml);
+        dependencies.RemoveAll();
+        Config.NextDependenceId = 1;
+        XMLTools.SaveListToXMLElement(dependencies, _dependencys_xml);
+       
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int Create(Dependency item)
     {
         XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
@@ -89,6 +102,7 @@ internal class DependencyImplementation : IDependency
         XElement? tempDependency = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
         if (tempDependency is null)
             throw new DalDoesNotExistException($"this dependence with id={item.Id} is not exist");//throw exception
+    
         tempDependency.Remove();
         dependencys.Add(getXElementFromDependency(item));
         XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);

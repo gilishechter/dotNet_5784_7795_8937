@@ -36,7 +36,16 @@ static class XMLTools
         SaveListToXMLElement(root, data_config_xml);
         return nextId;
     }
+
+    public static void SetNextId(string data_config_xml, string elemName, int value)
+    {
+        XElement root =LoadListFromXMLElement(data_config_xml);
+        root.Element(elemName)?.SetValue((value).ToString());
+        SaveListToXMLElement(root, data_config_xml);
+    }
     #endregion
+
+
 
     #region SaveLoadWithXElement
     public static void SaveListToXMLElement(XElement rootElem, string entity)

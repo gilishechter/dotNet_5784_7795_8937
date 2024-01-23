@@ -54,9 +54,9 @@ internal class Program
         Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
         if (!int.TryParse(Console.ReadLine(), out int _id))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
-        if(!Rank.TryParse(Console.ReadLine(), out Rank _rank))
+        if (!Rank.TryParse(Console.ReadLine(), out Rank _rank))
             throw new FormatException("Wrong Input, Try Again");
-        if(!double.TryParse(Console.ReadLine(), out double _hourPrice))
+        if (!double.TryParse(Console.ReadLine(), out double _hourPrice))
             throw new FormatException("Wrong Input, Try Again");
         string? _name = Console.ReadLine();
         string? _email = Console.ReadLine();
@@ -73,28 +73,28 @@ internal class Program
         Console.WriteLine("Enter Id worker, name, description, mile stone, time, create date, " +
             "wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
         //if(!int.TryParse(Console.ReadLine(), out int Id))
-           // throw new WrongInputException("Wrong Input, Try Again");
+        // throw new WrongInputException("Wrong Input, Try Again");
         if (!int.TryParse(Console.ReadLine(), out int IdWorker))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
         string? Name = Console.ReadLine();
         string? Description = Console.ReadLine();
-        if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
             throw new FormatException("Wrong Input, Try Again");
-        if(!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
+        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime CreateDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime WantedStartDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime StartDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime StartDate))
             throw new FormatException("Wrong Input, Try Again");
-        if(!DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate))
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime EndingDate))
             throw new FormatException("Wrong Input, Try Again");
         if (!DateTime.TryParse(Console.ReadLine(), out DateTime DeadLine))
             throw new FormatException("Wrong Input, Try Again");
         string? Product = Console.ReadLine();
         string? Notes = Console.ReadLine();
-        if(!int.TryParse(Console.ReadLine(), out int Rank))
+        if (!int.TryParse(Console.ReadLine(), out int Rank))
             throw new FormatException("Wrong Input, Try Again");
         Task _Task = new(0, IdWorker, Name, Description, MileStone, Time, CreateDate
             , WantedStartDate, StartDate, EndingDate, DeadLine, Product, Notes, Rank);//build the task object
@@ -109,10 +109,10 @@ internal class Program
     {
         Console.WriteLine("Enter dependence task and previous task");
         //if(!int.TryParse(Console.ReadLine(), out int _id))
-            //throw new WrongInputException("Wrong Input, Try Again");
-        if(!int.TryParse(Console.ReadLine(), out int _DependenceTask))//input the details
+        //throw new WrongInputException("Wrong Input, Try Again");
+        if (!int.TryParse(Console.ReadLine(), out int _DependenceTask))//input the details
             throw new FormatException("Wrong Input, Try Again");
-        if(!int.TryParse(Console.ReadLine(), out int _PrevTask))
+        if (!int.TryParse(Console.ReadLine(), out int _PrevTask))
             throw new FormatException("Wrong Input, Try Again");
         Dependency _Dependence = new(0, _DependenceTask, _PrevTask);//build the dependence
         Console.WriteLine(s_dal.Dependency?.Create(_Dependence));//add to the list and print the ID
@@ -124,7 +124,7 @@ internal class Program
     private static void WorkerObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         if (s_dal.Worker?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID worker={_id} doesn't exist");
@@ -136,9 +136,9 @@ internal class Program
     private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
-        if(s_dal.Task?.Read(_id)==null)
+        if (s_dal.Task?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID task={_id} doesn't exist");
         Console.WriteLine(s_dal.Task?.Read(_id));
     }
@@ -148,9 +148,9 @@ internal class Program
     private static void DependenceObjectView()
     {
         Console.WriteLine("Enter Id for print");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
-        if(s_dal.Dependency?.Read(_id)==null)
+        if (s_dal.Dependency?.Read(_id) == null)
             throw new DalDoesNotExistException($"this ID dependence={_id} doesn't exist");
         Console.WriteLine(s_dal.Dependency?.Read(_id));
     }
@@ -160,7 +160,7 @@ internal class Program
     private static void UpdateWorker()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int _id))//check if the user put right input and throw exception if he put wrong input
+        if (!int.TryParse(Console.ReadLine(), out int _id))//check if the user put right input and throw exception if he put wrong input
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Worker!.Read(_id));
         Worker worker1 = s_dal.Worker.Read(_id)!;
@@ -190,7 +190,7 @@ internal class Program
     private static void UpdateTask()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int Id))
+        if (!int.TryParse(Console.ReadLine(), out int Id))
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Task!.Read(Id));
         Task? task1 = s_dal.Task.Read(Id);
@@ -206,7 +206,7 @@ internal class Program
         if (Description == "")
             Description = task1!.Description;
 
-       if(!bool.TryParse(Console.ReadLine(), out bool MileStone))
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
             throw new FormatException("Wrong Input, Try Again");
         if (!MileStone)
             MileStone = task1!.MileStone;
@@ -256,7 +256,7 @@ internal class Program
     private static void UpdateDependence()
     {
         Console.WriteLine("Enter Id:");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         Console.WriteLine(s_dal.Dependency!.Read(_id));
         Dependency? dependence1 = s_dal.Dependency.Read(_id);
@@ -278,7 +278,7 @@ internal class Program
     private static void DeleteDependence()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Dependency?.Delete(_id);
     }
@@ -289,7 +289,7 @@ internal class Program
     private static void DeleteTask()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Task?.Delete(_id);
     }
@@ -300,7 +300,7 @@ internal class Program
     private static void DeleteWorker()
     {
         Console.WriteLine("Enter Id to delete");
-        if(!int.TryParse(Console.ReadLine(), out int _id))
+        if (!int.TryParse(Console.ReadLine(), out int _id))
             throw new FormatException("Wrong Input, Try Again");
         s_dal.Worker?.Delete(_id);
     }
@@ -337,9 +337,10 @@ internal class Program
         IEnumerable<Dependency?> dependenceList = s_dal.Dependency!.ReadAll();
         foreach (Dependency? dep in dependenceList)//The for goes through all the elements in the list and prints them to the user
             Console.WriteLine(dep);
-        
+
 
     }
+
 
     private static void ClearAll()
     {
@@ -471,7 +472,7 @@ internal class Program
            
         
         while (choose != 0)
-            {
+        {
 
                 switch (choose)
                 {
