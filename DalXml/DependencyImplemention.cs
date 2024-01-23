@@ -47,65 +47,87 @@ internal class DependencyImplementation : IDependency
        
     }
     /// <summary>
-    /// 
+    /// Creates new entity object in XML
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
     public int Create(Dependency item)
     {
-        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
-        int nextId = Config.NextDependenceId;
-        Dependency newDependency = item with { Id = nextId };
-        dependencys.Add(getXElementFromDependency(newDependency));
-        XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);
+        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);//load the list as XML element
+        int nextId = Config.NextDependenceId;//run id
+        Dependency newDependency = item with { Id = nextId };//build new dependency
+        dependencys.Add(getXElementFromDependency(newDependency));//add to the list
+        XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);//save in the file
         return nextId;
     }
-
+    /// <summary>
+    /// Deletes an object by its Id
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int Id)
     {
-        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
-        XElement? toDelete = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == Id);
+        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);//load the list as XML element
+        XElement? toDelete = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == Id);//return the element that it's id is equl to the wanted one
         if (toDelete != null)
         {
-            toDelete.Remove();
-            XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);
+            toDelete.Remove();//delete the element
+            XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);//save the updated list in the file
             return;
         }
         throw new DalDoesNotExistException($"this dependency with id={Id} is not exist");//throw exception
     }
 
-
+    /// <summary>
+    ///  Reads entity object by its ID 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Dependency? Read(int id)
     {
 
         XElement? tempDependency = XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().FirstOrDefault(c => (int?)c.Element("Id") == id);
-        return tempDependency is null ? null : getDependencyFromXElement(tempDependency);
+        //load from the list the wanted element by it's id
+        return tempDependency is null ? null : getDependencyFromXElement(tempDependency);//if it's exist return the element, else return null
     }
-
+    /// <summary>
+    ///  Reads entity object by the function
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Dependency? Read(Func<Dependency, bool> filter)
     {
         return XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().Select(dep => getDependencyFromXElement(dep)).FirstOrDefault(filter);
+        //load from the list the wanted element by the function
     }
-
+    /// <summary>
+    ///  return all the list or according to the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         if (filter == null)
-            return XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().Select(dep => getDependencyFromXElement(dep));
+            return XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().Select(dep => getDependencyFromXElement(dep));////return all the list
         else
-            return XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().Select(dep => getDependencyFromXElement(dep)).Where(filter);
+            return XMLTools.LoadListFromXMLElement(_dependencys_xml).Elements().Select(dep => getDependencyFromXElement(dep)).Where(filter);////return the list after the filtering by the function
 
     }
-
+    /// <summary>
+    /// updates entity object
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Dependency item)
     {
-        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
-        XElement? tempDependency = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);
+        XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);//load the list as XMl element from the file
+        XElement? tempDependency = dependencys.Elements().FirstOrDefault(c => (int?)c.Element("Id") == item.Id);//return the element that it's id is equl to the wanted one
         if (tempDependency is null)
             throw new DalDoesNotExistException($"this dependence with id={item.Id} is not exist");//throw exception
     
-        tempDependency.Remove();
-        dependencys.Add(getXElementFromDependency(item));
-        XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);
+        tempDependency.Remove();//if it exist, remove it
+        dependencys.Add(getXElementFromDependency(item));//add the updated dependence 
+        XMLTools.SaveListToXMLElement(dependencys, _dependencys_xml);//save te new list as XML element
     }
 }
 
