@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>266711238</Id>
-    <WorkerRank>AdvancedBeginner</WorkerRank>
-    <HourPrice>529</HourPrice>
-    <Name>Ayelet Fridman</Name>
-    <Email>Ayelet Fridman@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>205053391</Id>
+    <Id>240098818</Id>
     <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>488</HourPrice>
-    <Name>Bibi Netanyahu</Name>
-    <Email>Bibi Netanyahu@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>954438592</Id>
-    <WorkerRank>AdvancedBeginner</WorkerRank>
-    <HourPrice>195</HourPrice>
-    <Name>Eliana Yakobs</Name>
-    <Email>Eliana Yakobs@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>417436381</Id>
-    <WorkerRank>AdvancedBeginner</WorkerRank>
-    <HourPrice>869</HourPrice>
-    <Name>Dana Frider</Name>
-    <Email>Dana Frider@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>505481997</Id>
-    <WorkerRank>AdvancedBeginner</WorkerRank>
-    <HourPrice>100</HourPrice>
+    <HourPrice>499</HourPrice>
     <Name>Gili Shechter</Name>
     <Email>Gili Shechter@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>123</Id>
+    <Id>560824067</Id>
+    <WorkerRank>Intermediate</WorkerRank>
+    <HourPrice>723</HourPrice>
+    <Name>Ayelet Fridman</Name>
+    <Email>Ayelet Fridman@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>419991958</Id>
+    <WorkerRank>AdvancedBeginner</WorkerRank>
+    <HourPrice>478</HourPrice>
+    <Name>Bibi Netanyahu</Name>
+    <Email>Bibi Netanyahu@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>296014266</Id>
     <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>15</HourPrice>
-    <Name>mm</Name>
-    <Email>bj</Email>
+    <HourPrice>943</HourPrice>
+    <Name>Eliana Yakobs</Name>
+    <Email>Eliana Yakobs@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>149532632</Id>
+    <WorkerRank>AdvancedBeginner</WorkerRank>
+    <HourPrice>251</HourPrice>
+    <Name>Dana Frider</Name>
+    <Email>Dana Frider@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>

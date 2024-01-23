@@ -13,10 +13,10 @@ internal class TaskImplementation : ITask
 
     public void ClearList()
     {
-        List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
-        tasks.Clear();
+        List<Task> tasks = new();
+        Config.NextTaskId = 1;
         XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
-
+        
     }
     public int Create(Task item)
     {

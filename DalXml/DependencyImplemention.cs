@@ -37,10 +37,11 @@ internal class DependencyImplementation : IDependency
 
     public void ClearList()
     {
-        List<Dependency> dependencies = XMLTools.LoadListFromXMLSerializer<Dependency>(_dependencys_xml);
-        dependencies.Clear();
-        XMLTools.SaveListToXMLSerializer(dependencies, _dependencys_xml);
-        //XMLTools.SaveListToXMLElement(new XElement("config", new XElement("NextTaskId", 0), new XElement("NextDependencyId", 0)), s_data_config_xml);
+        XElement dependencies = XMLTools.LoadListFromXMLElement(_dependencys_xml);
+        dependencies.RemoveAll();
+        Config.NextDependenceId = 1;
+        XMLTools.SaveListToXMLElement(dependencies, _dependencys_xml);
+       
     }
 
     public int Create(Dependency item)
