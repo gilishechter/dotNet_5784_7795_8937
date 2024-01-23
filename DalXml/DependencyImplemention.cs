@@ -8,11 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
+/// <summary>
+/// XMLElement method
+/// </summary>
 internal class DependencyImplementation : IDependency
 {
     readonly string _dependencys_xml = "dependencys";
-    //static readonly string s_data_config_xml = "data-config";
 
     private const string _entity_name = nameof(Dependency);
     private const string _id = nameof(Dependency.Id);
@@ -34,7 +35,9 @@ internal class DependencyImplementation : IDependency
             new XElement(_id, dependency.Id),
             new XElement(_dependenceTask, dependency.DependenceTask),
             new XElement(_prevTask, dependency.PrevTask));
-
+    /// <summary>
+    /// clear the xml file
+    /// </summary>
     public void ClearList()
     {
         XElement dependencies = XMLTools.LoadListFromXMLElement(_dependencys_xml);
@@ -43,7 +46,11 @@ internal class DependencyImplementation : IDependency
         XMLTools.SaveListToXMLElement(dependencies, _dependencys_xml);
        
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int Create(Dependency item)
     {
         XElement? dependencys = XMLTools.LoadListFromXMLElement(_dependencys_xml);
