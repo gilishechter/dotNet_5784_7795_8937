@@ -17,8 +17,7 @@ internal class TaskImplementation : ITask
     {
         List<Task> tasks = new();
         Config.NextTaskId = 1;// update the run number to start from 1
-        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);// save the list in XML
-        
+        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);// save the list in XML       
     }
     /// <summary>
     /// Creates new entity object in XML file
