@@ -10,8 +10,7 @@ using System;
 internal class Program
 {
 
-    //static readonly IDal s_dal = new DalList();
-    static readonly IDal s_dal = new DalXml();
+    static readonly IDal s_dal = Factory.Get;
     /// <summary>
     /// the main menu
     /// </summary>
@@ -353,7 +352,7 @@ internal class Program
                 s_dal.Worker.ClearList();
                 s_dal.Dependency.ClearList();
                 s_dal.Task.ClearList();
-                Initialization.Do(s_dal);
+                Initialization.Do();
             }
         }
         catch (Exception Ex)
