@@ -18,8 +18,8 @@ public class Task
     public string? Product { get; init; }
     public string? Notes { get; set; }
     public int Rank { get; init;}
-    public string? Status { get; set; }
-    public List<Task>? DependenceTasks { get; set;}
+    public Status Status { get; set; }
+    public IEnumerable<BO.TaskList>? DependenceTasks { get; set;}
     //public override string ToString() => this.ToStringProperty();
 
 }
