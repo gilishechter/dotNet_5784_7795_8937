@@ -20,6 +20,6 @@ public class Task
     public int Rank { get; init;}
     public Status Status { get; set; }
     public IEnumerable<BO.TaskList>? DependenceTasks { get; set;}
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 
 }

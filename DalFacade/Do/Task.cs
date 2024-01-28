@@ -19,7 +19,7 @@
 /// <param name="Rank"></param>
 public record Task(
     int Id,
-    int IdWorker,
+    int? IdWorker,
     string? Name = null,
     string? Description = null,
     bool MileStone = false,

@@ -6,6 +6,5 @@ public enum Rank
 
 public enum Status
 {
-    Unscheduled, Scheduled, OnTrack_Started, Done
-
+    Unscheduled, Scheduled, OnTrackStarted, Done
 }

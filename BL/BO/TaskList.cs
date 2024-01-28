@@ -8,4 +8,5 @@ public class TaskList
     public string? Description { get; set; }
     public string? Name { get; init; }
     public BO.Status Status { get; set; }
+    public override string ToString() => this.ToStringProperty();
 }
