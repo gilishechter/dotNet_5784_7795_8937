@@ -5,7 +5,7 @@
 public class Task
 {
     public int Id {get;init; }
-    public int IdWorker { get;set;}
+    public int? IdWorker { get;set;}
     public string? Name { get;init;} 
     public string? Description { get;set;}
     public bool MileStone { get;set;}

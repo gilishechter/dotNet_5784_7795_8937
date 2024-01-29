@@ -55,7 +55,7 @@ internal class WorkerImplementation : IWorker
         }
     }
 
-    private BO.Status getStatus(Do.Task task)
+    public static BO.Status getStatus(Do.Task task)
     {
         var dateTimeNow = DateTime.Now;
         
@@ -75,7 +75,7 @@ internal class WorkerImplementation : IWorker
         if (doWorker == null)
             throw new BlDoesNotExistException($"worker with ID={id} doesnt exists");
 
-        var dateNow = DateTime.Now;
+      
         var task = _dal.Task.Read(tmpTask => tmpTask.IdWorker == id && getStatus(tmpTask) is Status.OnTrackStarted) ;
 
         return new BO.Worker()
@@ -87,7 +87,7 @@ internal class WorkerImplementation : IWorker
             Email = doWorker.Email,
             WorkerTask = new WorkerTask
             {
-                Id = task.Id,
+                Id = task!.Id,
                 Name = task.Name,
             }
         };

@@ -1,6 +1,4 @@
-﻿
-
-namespace BO;
+﻿namespace BO;
 
 public static class Tools
 {
@@ -16,4 +14,5 @@ public static class Tools
 
         return result;
     }
+
 }
