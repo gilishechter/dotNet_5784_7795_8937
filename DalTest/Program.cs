@@ -22,12 +22,6 @@ internal class Program
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - Dependence");
         Console.WriteLine("4 - to intilize the data");
-        //string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-        //if (ans == "Y")
-        //{  //stage 3
-        //    Initialization.Do(s_dal); //stage 2
-        //    Menu();
-        //}
     }
 
     /// <summary>
@@ -195,7 +189,9 @@ internal class Program
         Task? task1 = s_dal.Task.Read(Id);
         Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-        if (!int.TryParse(Console.ReadLine(), out int IdWorker))
+    
+        int? IdWorker=int.Parse(Console.ReadLine());
+        if(IdWorker == null)
             IdWorker = task1!.IdWorker;
         string? Name = Console.ReadLine();
         if (Name == "")
@@ -481,19 +477,27 @@ internal class Program
                         SubMenu();
                         if (!int.TryParse(Console.ReadLine(), out int choose1))
                             throw new FormatException("Wrong Input, Try Again");
+
                         SubMenuWorker(choose1);
+
                         break;
+
                     case 2://if the user choose task(2) the task's sub menu opens for him 
                         SubMenu();
                         if (!int.TryParse(Console.ReadLine(), out int choose2))
                             throw new FormatException("Wrong Input, Try Again");
+
                         SubMenuTask(choose2);
+
                         break;
+
                     case 3://if the user choose dependence(3) the dependence's sub menu opens for him 
                         SubMenu();
                         if (!int.TryParse(Console.ReadLine(), out int choose3))
                             throw new FormatException("Wrong Input, Try Again");
+
                         SubMenuDependence(choose3);
+
                         break;
 
                     case 4:
