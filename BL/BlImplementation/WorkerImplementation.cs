@@ -39,7 +39,7 @@ internal class WorkerImplementation : IWorker
             if (doTask is not null)
             {
                 if (getStatus(doTask) == BO.Status.OnTrackStarted || getStatus(doTask) == BO.Status.Done)
-                    throw new Exception($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
+                    throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
                 _dal.Task.Update(doTask with { IdWorker = null });
             }
 
@@ -58,12 +58,12 @@ internal class WorkerImplementation : IWorker
     public static BO.Status getStatus(Do.Task task)
     {
         var dateTimeNow = DateTime.Now;
-        
+
         return task switch
         {
             Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
-            Do.Task t when  t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
+            Do.Task t when t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
         };
     }
@@ -75,8 +75,8 @@ internal class WorkerImplementation : IWorker
         if (doWorker == null)
             throw new BlDoesNotExistException($"worker with ID={id} doesnt exists");
 
-      
-        var task = _dal.Task.Read(tmpTask => tmpTask.IdWorker == id && getStatus(tmpTask) is Status.OnTrackStarted) ;
+
+        var task = _dal.Task.Read(tmpTask => tmpTask.IdWorker == id && getStatus(tmpTask) is Status.OnTrackStarted);
 
         return new BO.Worker()
         {
@@ -95,7 +95,7 @@ internal class WorkerImplementation : IWorker
 
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
-         var result = (from Do.Worker doWorker in ReadAll(filter)
+        var result = (from Do.Worker doWorker in ReadAll(filter)
                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id)
                       select new BO.Worker()
                       {
@@ -109,8 +109,11 @@ internal class WorkerImplementation : IWorker
                               Id = task.Id,
                               Name = task.Name,
                           }
-                      } ) ;
-        return result;
+                      });
+        var orderResult = (from BO.Worker doWorker in result
+                           orderby doWorker.Name
+                           select doWorker);
+        return orderResult;
     }
 
     public void Update(BO.Worker boWorker)
@@ -135,12 +138,12 @@ internal class WorkerImplementation : IWorker
         if (boWorker.WorkerTask.Id is int taskId)
         {
             var doTask = _dal.Task.Read(taskId);
-            if(doTask is not null)
+            if (doTask is not null)
             {
                 doTask = doTask with { IdWorker = boWorker.Id };
                 _dal.Task.Update(doTask);
             }
-        } 
+        }
         Do.Worker Doworker = new Do.Worker(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
             boWorker.Name, boWorker.Email);
         try
@@ -153,6 +156,28 @@ internal class WorkerImplementation : IWorker
         }
     }
 
+    public IEnumerable<BO.Worker> RankGroup(Rank rank)
+    {
+        var result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
+                      group doWorker by rank into rankList
+                      select rankList);
 
+        var result1 = (from Do.Worker doWorker in result
+                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id)
+                       select new BO.Worker
+                       {
+                           Id = doWorker.Id,
+                           WorkerRank = (BO.Rank)doWorker.WorkerRank,
+                           HourPrice = doWorker.HourPrice,
+                           Name = doWorker.Name,
+                           Email = doWorker.Email,
+                           WorkerTask = new WorkerTask
+                           {
+                               Id = task.Id,
+                               Name = task.Name,
+                           }
+                       });
 
+        return result1;
+    }
 }

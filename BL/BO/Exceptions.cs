@@ -20,3 +20,14 @@ public class BlAlreadyExistsException : Exception
                    : base(message, innerException) { }
 }
 
+[Serializable]
+public class BlCantBeDeleted : Exception
+{
+    public BlCantBeDeleted(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlCantBeUpdated : Exception
+{
+    public BlCantBeUpdated(string? message) : base(message) { }
+}
