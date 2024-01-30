@@ -1,6 +1,5 @@
 ﻿namespace BlImplementation;
 using BlApi;
-using System.Security.Cryptography;
 
 //using BO;
 //using DalApi;
@@ -19,30 +18,13 @@ internal class TaskImplementation : ITask
                       where doTask.Id == dependency.DependenceTask
                       select new BO.TaskList
                       {
-                          TaskDetails = new BO.WorkerTask
-                          {
-                              Id = dependency.PrevTask,
-                              Name = _dal.Task.Read(dependency.PrevTask)!.Name
-                          },                        
+                          Id = dependency.PrevTask,
+                          Name = _dal.Task.Read(dependency.PrevTask)!.Name,
                           Description = _dal.Task.Read(dependency.PrevTask)!.Description,
-                          Status = getStatus(doTask)
+                          Status = WorkerImplementation.getStatus(doTask)
 
-                      }) ;
+                      });
         return result;
-    }
-    private BO.Status getStatus(Do.Task task)
-    {
-       
-
-        var dateTimeNow = DateTime.Now;
-
-        return task switch
-        {
-            Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
-            Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
-            Do.Task t when t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
-            _ => BO.Status.Done,
-        };
     }
 
     public int Create(BO.Task boTask)
@@ -50,7 +32,7 @@ internal class TaskImplementation : ITask
         if (boTask.Id < 0)
             throw new FormatException("ID can't be negetive number");
 
-        if(boTask.Name == "")
+        if (boTask.Name == "")
             throw new FormatException("you must enter a name");
 
         var result = (from BO.TaskList temp in boTask.DependenceTasks
@@ -58,18 +40,20 @@ internal class TaskImplementation : ITask
                       {
                           Id = 0,
                           DependenceTask = boTask.Id,
-                          PrevTask = temp.TaskDetails.Id,
+                          PrevTask = temp.Id,
                       });
 
         var result1 = (from Do.Dependency dep in result
-                       select _dal.Dependency.Create(dep)); 
+                       select _dal.Dependency.Create(dep));
 
-        Do.Task DoTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
-                                     boTask.Time,boTask.CreateDate,boTask.WantedStartDate,boTask.StartDate, boTask.EndingDate,
+        Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
+                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                      boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
+        boTask.Status=WorkerImplementation.getStatus(doTask);
+        boTask.DependenceTasks = getDependenceList(doTask);
         try
         {
-            int idTask = _dal.Task.Create(DoTask);
+            int idTask = _dal.Task.Create(doTask);
             return idTask;
         }
         catch (Do.DalAlreadyExistsException ex)
@@ -81,8 +65,8 @@ internal class TaskImplementation : ITask
     public void Delete(int id)
     {
         var result = (from Do.Dependency dep in _dal.Dependency.ReadAll()
-                      where dep.PrevTask == id && _dal.Task.Read(dep.Id) != null&& getStatus(_dal.Task.Read(dep.Id)!) == BO.Status.Done
-                      select dep) ;
+                      where dep.PrevTask == id && _dal.Task.Read(dep.Id) != null && WorkerImplementation.getStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done
+                      select dep);
         if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
 
@@ -108,26 +92,26 @@ internal class TaskImplementation : ITask
         return new BO.Task()
         {
             Id = id,
-            IdWorker=doTask.IdWorker,
-            Name=doTask.Name,
-            Description=doTask.Description,
-            MileStone=doTask.MileStone,
-            Time=doTask.Time,
-            CreateDate=doTask.CreateDate,
-            WantedStartDate=doTask.WantedStartDate,
-            StartDate=doTask?.StartDate,
-            EndingDate=doTask?.EndingDate,
-            DeadLine=doTask!.DeadLine,
-            Product=doTask.Product,
-            Notes=doTask.Notes,
-            Rank =doTask.Rank,
-            Status =getStatus(doTask),
-            DependenceTasks=getDependenceList(doTask)
+            IdWorker = doTask.IdWorker,
+            Name = doTask.Name,
+            Description = doTask.Description,
+            MileStone = doTask.MileStone,
+            Time = doTask.Time,
+            CreateDate = doTask.CreateDate,
+            WantedStartDate = doTask.WantedStartDate,
+            StartDate = doTask?.StartDate,
+            EndingDate = doTask?.EndingDate,
+            DeadLine = doTask!.DeadLine,
+            Product = doTask.Product,
+            Notes = doTask.Notes,
+            Rank = doTask.Rank,
+            Status = WorkerImplementation.getStatus(doTask),
+            DependenceTasks = getDependenceList(doTask)
 
         };
 
     }
-    public IEnumerable<BO.Task> ReadAll(Func<System.Threading.Tasks.Task, bool>? filter = null)
+    public IEnumerable<BO.Task> ReadAll(Func<Task, bool>? filter = null)
     {
         var result = (from Do.Task doTask in _dal.Task.ReadAll()
                       select new BO.Task()
@@ -146,9 +130,9 @@ internal class TaskImplementation : ITask
                           Product = doTask.Product,
                           Notes = doTask.Notes,
                           Rank = doTask.Rank,
-                          Status = getStatus(doTask),
+                          Status = WorkerImplementation.getStatus(doTask),
                           DependenceTasks = getDependenceList(doTask)
-                      } );
+                      });
         var orderResult = (from BO.Task doTask in result
                            orderby doTask.Name
                            select doTask);
@@ -166,7 +150,8 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
-
+        boTask.Status = WorkerImplementation.getStatus(doTask);
+        boTask.DependenceTasks = getDependenceList(doTask);
         try
         {
             CheckUpdateDate(boTask.Id, boTask.StartDate);

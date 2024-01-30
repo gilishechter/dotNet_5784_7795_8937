@@ -1,8 +1,4 @@
-﻿using BO;
-using DalApi;
-using DalTest;
-using Do;
-using System.Collections;
+﻿using Do;
 
 namespace BlTest;
 internal class Programe
@@ -48,7 +44,7 @@ internal class Programe
     /// </summary>
     private static void AddWorker()
     {
-        Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email");
+        Console.WriteLine("Enter Id, level (number between 0 - 4), hoour price, name and email:");
 
         if (!int.TryParse(Console.ReadLine(), out int _id))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
@@ -63,19 +59,14 @@ internal class Programe
 
         string? _email = Console.ReadLine();
 
-        int? _idTask=int.Parse(Console.ReadLine()!);
-        string? _nameTask = Console.ReadLine();
         BO.Worker _worker = new()
-        { Id = _id,
+        {
+            Id = _id,
             WorkerRank = _rank,
             HourPrice = _hourPrice,
             Name = _name,
             Email = _email,
-            WorkerTask = new WorkerTask
-            {
-                Id = _idTask,
-                Name=_nameTask,
-            }
+
         };//build the worker
         Console.WriteLine(s_bl.Worker?.Create(_worker));//add to the list and print the ID's worker
 
@@ -109,7 +100,7 @@ internal class Programe
         Console.WriteLine(s_bl.Worker!.Read(_id));
         BO.Worker? worker1 = s_bl.Worker.Read(_id)!;
 
-        Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name, email and current task:");
+        Console.WriteLine("Enter New Details for level (number between 0 - 4), hour price, name, email:");
 
         if (!BO.Rank.TryParse(Console.ReadLine(), out BO.Rank _rank))//if the user doesnt put input we take the old input
             _rank = worker1!.WorkerRank;
@@ -125,18 +116,6 @@ internal class Programe
         if (_email == "")
             _email = worker1!.Email;
 
-
-        int? _idTask = int.Parse(Console.ReadLine()!);
-        string? _nameTask = Console.ReadLine(); 
-        if(_idTask!=null&&_nameTask!=null)
-        {
-            worker1.WorkerTask=new WorkerTask 
-            { Name = _nameTask,
-                Id=_idTask 
-            };
-       
-        }
-
         BO.Worker _worker = new()
         {
             Id = _id,
@@ -144,13 +123,8 @@ internal class Programe
             HourPrice = _hourPrice,
             Name = _name,
             Email = _email,
-            WorkerTask = new WorkerTask
-            {
-                Id = _idTask,
-                Name = _nameTask,
-            }
         };//update the worker 
-       
+
         s_bl.Worker?.Update(_worker);
     }
 
@@ -196,13 +170,190 @@ internal class Programe
         IEnumerable<BO.Worker> group = s_bl.Worker.RankGroup(_rank);
         return group;
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    private static void AddTask()
+    {
+        //the user input the details that he want to add
+        Console.WriteLine("Enter Id worker, name, description, mile stone, time, create date, " +
+            "wanted start date, start date, end date, product, notes and level between 0 - 4");
+
+        if (!int.TryParse(Console.ReadLine(), out int _IdWorker))//input the details and check if is right details
+            throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
+
+        string? _Name = Console.ReadLine();
+
+        string? _Description = Console.ReadLine();
+
+        if (!bool.TryParse(Console.ReadLine(), out bool _MileStone))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan _Time))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _CreateDate))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _WantedStartDate))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _StartDate))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
+            throw new FormatException("Wrong Input, Try Again");
+
+        ?DateTime _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
+
+        string? _Product = Console.ReadLine();
+
+        string? _Notes = Console.ReadLine();
+
+        if (!int.TryParse(Console.ReadLine(), out int _Rank))
+            throw new FormatException("Wrong Input, Try Again");
+
+        BO.Task Task = new BO.Task()
+        {
+            IdWorker = _IdWorker,
+            Name = _Name,
+            Description = _Description,
+            MileStone = _MileStone,
+            Time = _Time,
+            CreateDate = _CreateDate,
+            WantedStartDate = _WantedStartDate,
+            StartDate = _StartDate,
+            EndingDate = _EndingDate,
+            DeadLine = _DeadLine,
+            Product = _Product,
+            Notes = _Notes,
+            Rank = _Rank,
+
+        };//build the task object
+        Console.WriteLine(s_bl.Task?.Create(Task));//add to the list and print the Id's task
+    }
+
+    private static void TaskObjectView()
+    {
+        Console.WriteLine("Enter Id for print");
+        if (!int.TryParse(Console.ReadLine(), out int _id))
+            throw new FormatException("Wrong Input, Try Again");
+
+        if (s_bl.Task?.Read(_id) == null)
+            throw new DalDoesNotExistException($"this ID task={_id} doesn't exist");
+        Console.WriteLine(s_bl.Task?.Read(_id));
+    }
+
+    /// <summary>
+    /// this function input the wanted details to update and build new task
+    /// </summary>
+    /// <exception cref="WrongInputException"></exception>
+    private static void UpdateTask()
+    {
+        Console.WriteLine("Enter Id:");
+        if (!int.TryParse(Console.ReadLine(), out int Id))
+            throw new FormatException("Wrong Input, Try Again");
+
+        Console.WriteLine(s_bl.Task!.Read(Id));
+        BO.Task? task1 = s_bl.Task.Read(Id);
+
+        Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
+        Console.WriteLine("wanted start date, start date, end date, product, notes and level between 0 - 4");
+
+        int? IdWorker = int.Parse(Console.ReadLine());
+        if (IdWorker == null)
+            IdWorker = task1!.IdWorker;
+
+        string? Name = Console.ReadLine();
+        if (Name == "")
+            Name = task1!.Name;
+
+        string? Description = Console.ReadLine();
+        if (Description == "")
+            Description = task1!.Description;
+
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
+            throw new FormatException("Wrong Input, Try Again");
+        if (!MileStone)
+            MileStone = task1!.MileStone;
+
+        TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
+        if (Time == null)
+            Time = task1!.Time;
+
+        DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
+        if (CreateDate == null)
+            CreateDate = task1!.CreateDate;
+
+        DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
+        if (WantedStartDate == null)
+            WantedStartDate = task1!.WantedStartDate;
+
+        DateTime? StartDate = DateTime.Parse(Console.ReadLine()!);
+        if (StartDate == null)
+            StartDate = task1!.StartDate;
+
+        DateTime? EndingDate = DateTime.Parse(Console.ReadLine()!);
+        if (EndingDate == null)
+            EndingDate = task1!.EndingDate;
+
+        DateTime? DeadLine = StartDate > WantedStartDate ? StartDate + Time : WantedStartDate + Time;
+
+        string? Product = Console.ReadLine();
+        if (Product == "")
+            Product = task1!.Product;
+
+        string? Notes = Console.ReadLine();
+        if (Notes == "")
+            Notes = task1!.Notes;
+
+
+        if (!int.TryParse(Console.ReadLine(), out int _Rank))
+            _Rank = task1!.Rank;
+
+        BO.Task Task = new BO.Task()
+        {
+            IdWorker = IdWorker,
+            Name = Name,
+            Description = Description,
+            MileStone = MileStone,
+            Time = Time,
+            CreateDate = CreateDate,
+            WantedStartDate = WantedStartDate,
+            StartDate = StartDate,
+            EndingDate = EndingDate,
+            DeadLine = DeadLine,
+            Product = Product,
+            Notes = Notes,
+            Rank = _Rank,
+
+        };//build the task object
+        s_bl.Task?.Update(Task);
+    }
+    private static void DeleteTask()
+    {
+        Console.WriteLine("Enter Id to delete");
+
+        if (!int.TryParse(Console.ReadLine(), out int _id))
+            throw new FormatException("Wrong Input, Try Again");
+
+        s_bl.Task?.Delete(_id);
+    }
+
+    private static void TaskListView()
+    {
+        Console.WriteLine("tasks list:");
+        IEnumerable<BO.Task?> taskList = s_bl.Task!.ReadAll();
+        foreach (BO.Task? task in taskList)//The for goes through all the elements in the list and prints them to the user
+        {
+            Console.WriteLine(task);
+        }
+    }
     /// <summary>
     /// the action menu for the worker entity
     /// </summary>
     /// <param name="choose1"></param>
-    private static void SubMenuWorkerAction(int choose1)
+    private static void SubMenuWorkerActions(int choose1)
     {
         try
         {
@@ -227,6 +378,41 @@ internal class Programe
                     break;
                 case 6:
                     GroupByRank();
+                    break;
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+    }
+
+    /// <summary>
+    /// the action menu for the task entity
+    /// </summary>
+    /// <param name="choose1"></param>
+    private static void SubMenuTaskActions(int choose1)
+    {
+        try
+        {
+            switch (choose1)
+            {
+                case 0:
+                    break;
+                case 1:
+                    AddTask();
+                    break;
+                case 2:
+                    TaskObjectView();
+                    break;
+                case 3:
+                    TaskListView();
+                    break;
+                case 4:
+                    UpdateTask();
+                    break;
+                case 5:
+                    DeleteTask();
                     break;
             }
         }

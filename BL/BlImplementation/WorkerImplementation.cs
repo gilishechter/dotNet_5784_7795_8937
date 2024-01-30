@@ -5,18 +5,19 @@ using BO;
 internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
-    public int Create(BO.Worker Boworker)
+    public int Create(BO.Worker boWorker)
     {
-        if (Boworker.Id <= 0)
+        if (boWorker.Id <= 0)
             throw new FormatException("ID can't be negetive number");
-        if (Boworker.Name == "")
+        if (boWorker.Name == "")
             throw new FormatException("you must enter a name");
-        if (Boworker.HourPrice <= 0)
+        if (boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
-        if (Boworker.Email == "")
+        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com")))
             throw new FormatException("you must enter an email");
-
-        Do.Worker Doworker = new Do.Worker(Boworker.Id, (Do.Rank)Boworker.WorkerRank, Boworker.HourPrice, Boworker.Name, Boworker.Email);
+      
+        Do.Worker Doworker = new Do.Worker(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
+        boWorker.WorkerTask = GetWorkerTask(Doworker);
         try
         {
             int idWorker = _dal.Worker.Create(Doworker);
@@ -24,7 +25,7 @@ internal class WorkerImplementation : IWorker
         }
         catch (Do.DalAlreadyExistsException ex)
         {
-            throw new BlAlreadyExistsException($"worker with ID={Boworker.Id} already exists", ex);
+            throw new BlAlreadyExistsException($"worker with ID={boWorker.Id} already exists", ex);
 
         }
     }
@@ -46,7 +47,6 @@ internal class WorkerImplementation : IWorker
             try
             {
                 _dal.Worker.Delete(_Id);
-
             }
             catch (Do.DalDoesNotExistException ex)
             {
@@ -67,16 +67,12 @@ internal class WorkerImplementation : IWorker
             _ => BO.Status.Done,
         };
     }
-
     public BO.Worker? Read(int id)
     {
         Do.Worker doWorker = _dal.Worker.Read(id)!;
 
         if (doWorker == null)
             throw new BlDoesNotExistException($"worker with ID={id} doesnt exists");
-
-
-        var task = _dal.Task.Read(tmpTask => tmpTask.IdWorker == id && getStatus(tmpTask) is Status.OnTrackStarted);
 
         return new BO.Worker()
         {
@@ -85,18 +81,14 @@ internal class WorkerImplementation : IWorker
             HourPrice = doWorker.HourPrice,
             Name = doWorker.Name,
             Email = doWorker.Email,
-            WorkerTask = new WorkerTask
-            {
-                Id = task!.Id,
-                Name = task.Name,
-            }
+            WorkerTask = GetWorkerTask(doWorker)
         };
     }
 
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
         var result = (from Do.Worker doWorker in ReadAll(filter)
-                      let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id)
+                      let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted)
                       select new BO.Worker()
                       {
                           Id = doWorker.Id,
@@ -104,10 +96,11 @@ internal class WorkerImplementation : IWorker
                           HourPrice = doWorker.HourPrice,
                           Name = doWorker.Name,
                           Email = doWorker.Email,
+
                           WorkerTask = new WorkerTask
                           {
-                              Id = task.Id,
-                              Name = task.Name,
+                              Id = task != null ? task.Id : null,
+                              Name = task != null ? task.Name : null
                           }
                       });
         var orderResult = (from BO.Worker doWorker in result
@@ -129,7 +122,7 @@ internal class WorkerImplementation : IWorker
         if (boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
 
-        if (boWorker.Email == "")
+        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com")))
             throw new FormatException("you must enter an email");
 
         if (oldWorker.WorkerRank > boWorker.WorkerRank)
@@ -146,6 +139,8 @@ internal class WorkerImplementation : IWorker
         }
         Do.Worker Doworker = new Do.Worker(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
             boWorker.Name, boWorker.Email);
+        boWorker.WorkerTask = GetWorkerTask(Doworker);
+
         try
         {
             _dal.Worker.Update(Doworker);
@@ -163,7 +158,7 @@ internal class WorkerImplementation : IWorker
                       select rankList);
 
         var result1 = (from Do.Worker doWorker in result
-                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id)
+                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted)
                        select new BO.Worker
                        {
                            Id = doWorker.Id,
@@ -171,13 +166,26 @@ internal class WorkerImplementation : IWorker
                            HourPrice = doWorker.HourPrice,
                            Name = doWorker.Name,
                            Email = doWorker.Email,
+                        
                            WorkerTask = new WorkerTask
                            {
-                               Id = task.Id,
-                               Name = task.Name,
+                               Id = task != null ? task.Id : null,
+                               Name = task != null ? task.Name : null
                            }
                        });
 
         return result1;
+    }
+
+
+    public WorkerTask? GetWorkerTask(Do.Worker doWorker)
+    {
+        Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted);
+        WorkerTask current = new WorkerTask
+        {
+            Id = task != null ? task.Id : null,
+            Name = task != null ? task.Name : null
+        };
+        return current;
     }
 }

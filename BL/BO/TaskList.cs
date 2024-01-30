@@ -4,7 +4,8 @@ namespace BO;
 
 public class TaskList
 {
-   public WorkerTask? TaskDetails { get; set; }
+    public int Id { get; init; }
+    public string? Name { get; init; }
     public string? Description { get; set; }
    
     public BO.Status Status { get; set; }
