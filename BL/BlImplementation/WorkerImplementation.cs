@@ -16,7 +16,7 @@ internal class WorkerImplementation : IWorker
         if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com")))
             throw new FormatException("you must enter an email");
       
-        Do.Worker Doworker = new Do.Worker(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
+        Do.Worker Doworker = new (boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
         boWorker.WorkerTask = GetWorkerTask(Doworker);
         try
         {
@@ -39,7 +39,7 @@ internal class WorkerImplementation : IWorker
             var doTask = _dal.Task.Read(taskId);
             if (doTask is not null)
             {
-                if (getStatus(doTask) == BO.Status.OnTrackStarted || getStatus(doTask) == BO.Status.Done)
+                if (GetStatus(doTask) == BO.Status.OnTrackStarted || GetStatus(doTask) == BO.Status.Done)
                     throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
                 _dal.Task.Update(doTask with { IdWorker = null });
             }
@@ -55,7 +55,7 @@ internal class WorkerImplementation : IWorker
         }
     }
 
-    public static BO.Status getStatus(Do.Task task)
+    public static BO.Status GetStatus(Do.Task task)
     {
         var dateTimeNow = DateTime.Now;
 
@@ -88,7 +88,7 @@ internal class WorkerImplementation : IWorker
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
         var result = (from Do.Worker doWorker in ReadAll(filter)
-                      let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted)
+                      let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
                       select new BO.Worker()
                       {
                           Id = doWorker.Id,
@@ -137,7 +137,7 @@ internal class WorkerImplementation : IWorker
                 _dal.Task.Update(doTask);
             }
         }
-        Do.Worker Doworker = new Do.Worker(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
+        Do.Worker Doworker = new (boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
             boWorker.Name, boWorker.Email);
         boWorker.WorkerTask = GetWorkerTask(Doworker);
 
@@ -158,7 +158,7 @@ internal class WorkerImplementation : IWorker
                       select rankList);
 
         var result1 = (from Do.Worker doWorker in result
-                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted)
+                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
                        select new BO.Worker
                        {
                            Id = doWorker.Id,
@@ -180,12 +180,17 @@ internal class WorkerImplementation : IWorker
 
     public WorkerTask? GetWorkerTask(Do.Worker doWorker)
     {
-        Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && getStatus(tmp) is Status.OnTrackStarted);
-        WorkerTask current = new WorkerTask
+        Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted);
+        WorkerTask current = new()
         {
             Id = task != null ? task.Id : null,
             Name = task != null ? task.Name : null
         };
         return current;
+    }
+
+    public void ClearWorker()
+    {
+        _dal.Worker.ClearList();
     }
 }

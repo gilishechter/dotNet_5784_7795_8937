@@ -1,4 +1,6 @@
-﻿using Do;
+﻿using DalApi;
+using DalTest;
+using Do;
 
 namespace BlTest;
 internal class Programe
@@ -204,7 +206,7 @@ internal class Programe
         if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
             throw new FormatException("Wrong Input, Try Again");
 
-        ?DateTime _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
+        DateTime? _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
 
         string? _Product = Console.ReadLine();
 
@@ -213,7 +215,7 @@ internal class Programe
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             throw new FormatException("Wrong Input, Try Again");
 
-        BO.Task Task = new BO.Task()
+        BO.Task Task = new()
         {
             IdWorker = _IdWorker,
             Name = _Name,
@@ -261,8 +263,7 @@ internal class Programe
         Console.WriteLine("wanted start date, start date, end date, product, notes and level between 0 - 4");
 
         int? IdWorker = int.Parse(Console.ReadLine());
-        if (IdWorker == null)
-            IdWorker = task1!.IdWorker;
+        IdWorker ??= task1!.IdWorker;
 
         string? Name = Console.ReadLine();
         if (Name == "")
@@ -311,7 +312,7 @@ internal class Programe
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             _Rank = task1!.Rank;
 
-        BO.Task Task = new BO.Task()
+        BO.Task Task = new()
         {
             IdWorker = IdWorker,
             Name = Name,
@@ -421,12 +422,58 @@ internal class Programe
             Console.WriteLine(Ex);
         }
     }
+
+    private static void ClearAll()
+    {
+        try
+        {
+            Console.WriteLine("Are you sure you want to create Initial data? (Y/N)"); //stage 3
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+            if (ans == "Y") //stage 3
+            {
+                s_bl.Worker.ClearWorker();
+                s_bl.Task.ClearTask();
+                Initialization.Do();
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex);
+        }
+    }
     static void Main(string[] args)
     {
-        Console.Write("Would you like to create Initial data? (Y/N)");
-        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-        if (ans == "Y")
-            DalTest.Initialization.Do();
+        Menu();
+        int choose = int.Parse(Console.ReadLine()!);// the user put his choise
+        while (choose != 0)
+        {
 
+            switch (choose)
+            {
+                case 0://exit
+                    break;
+                case 1://if the user choose worker(1) the worker's sub menu opens for him 
+                    SubMenuWorker();
+                    if (!int.TryParse(Console.ReadLine(), out int choose1))
+                        throw new FormatException("Wrong Input, Try Again");
+
+                    SubMenuWorkerActions(choose1);
+                    break;
+
+                case 2://if the user choose task(2) the task's sub menu opens for him 
+                    SubMenuTask();
+                    if (!int.TryParse(Console.ReadLine(), out int choose2))
+                        throw new FormatException("Wrong Input, Try Again");
+
+                    SubMenuTaskActions(choose2);
+                    break;
+
+                case 3:
+                    ClearAll();
+                    break;
+            }
+            Menu();
+            choose = int.Parse(Console.ReadLine()!);
+        }
     }
 }

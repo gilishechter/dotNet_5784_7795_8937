@@ -21,7 +21,7 @@ internal class TaskImplementation : ITask
                           Id = dependency.PrevTask,
                           Name = _dal.Task.Read(dependency.PrevTask)!.Name,
                           Description = _dal.Task.Read(dependency.PrevTask)!.Description,
-                          Status = WorkerImplementation.getStatus(doTask)
+                          Status = WorkerImplementation.GetStatus(doTask)
 
                       });
         return result;
@@ -49,7 +49,7 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                      boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                      boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
-        boTask.Status=WorkerImplementation.getStatus(doTask);
+        boTask.Status=WorkerImplementation.GetStatus(doTask);
         boTask.DependenceTasks = getDependenceList(doTask);
         try
         {
@@ -65,7 +65,7 @@ internal class TaskImplementation : ITask
     public void Delete(int id)
     {
         var result = (from Do.Dependency dep in _dal.Dependency.ReadAll()
-                      where dep.PrevTask == id && _dal.Task.Read(dep.Id) != null && WorkerImplementation.getStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done
+                      where dep.PrevTask == id && _dal.Task.Read(dep.Id) != null && WorkerImplementation.GetStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done
                       select dep);
         if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
@@ -105,7 +105,7 @@ internal class TaskImplementation : ITask
             Product = doTask.Product,
             Notes = doTask.Notes,
             Rank = doTask.Rank,
-            Status = WorkerImplementation.getStatus(doTask),
+            Status = WorkerImplementation.GetStatus(doTask),
             DependenceTasks = getDependenceList(doTask)
 
         };
@@ -130,7 +130,7 @@ internal class TaskImplementation : ITask
                           Product = doTask.Product,
                           Notes = doTask.Notes,
                           Rank = doTask.Rank,
-                          Status = WorkerImplementation.getStatus(doTask),
+                          Status = WorkerImplementation.GetStatus(doTask),
                           DependenceTasks = getDependenceList(doTask)
                       });
         var orderResult = (from BO.Task doTask in result
@@ -150,7 +150,7 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
-        boTask.Status = WorkerImplementation.getStatus(doTask);
+        boTask.Status = WorkerImplementation.GetStatus(doTask);
         boTask.DependenceTasks = getDependenceList(doTask);
         try
         {
@@ -174,5 +174,10 @@ internal class TaskImplementation : ITask
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
 
+    }
+
+    public void ClearTask()
+    {
+       _dal.Task.ClearList();
     }
 }
