@@ -14,4 +14,20 @@ internal class Bl : IBl
     public IWorker Worker => new WorkerImplementation();
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
+
+    public DateTime StartDateProject =>  new DateTime();
+
+    public DateTime EndDateProject => new DateTime();
+
+    public void AutometicSchedule()
+    {
+        throw new NotImplementedException();
+    }
+
+    public StatusProject CheckStatusProject()//check
+    {
+        var tasks = BlApi.Factory.Get().Task.ReadAll(task => task.)
+        var NoStartDate = from BO.Task boTask in tasks
+                          
+    }
 }

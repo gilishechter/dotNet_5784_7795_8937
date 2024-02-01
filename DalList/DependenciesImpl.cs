@@ -55,7 +55,7 @@ internal class DependenceImplementation : IDependency
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null) 
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null) 
     {
         if (filter == null)//if there is no function to filtering
             return DataSource.Dependencies.Select(item => item);//return all the list

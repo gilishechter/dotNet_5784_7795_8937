@@ -168,6 +168,7 @@ internal class Programe
             throw new FormatException("Wrong Input, Try Again");
 
         IEnumerable<BO.Worker> group = s_bl.Worker.RankGroup(_rank);
+        Console.WriteLine(group);
         return group;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,7 +258,7 @@ internal class Programe
         Console.WriteLine(s_bl.Task!.Read(Id));
         BO.Task? task1 = s_bl.Task.Read(Id);
 
-        Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
+        Console.WriteLine("Enter New Details for: Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, product, notes and level between 0 - 4");
 
         int? IdWorker = int.Parse(Console.ReadLine());
@@ -272,13 +273,12 @@ internal class Programe
             Description = task1!.Description;
 
         if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
-            throw new FormatException("Wrong Input, Try Again");
-        if (!MileStone)
+        if (MileStone == null)
             MileStone = task1!.MileStone;
 
         TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
         if (Time == null)
-            Time = task1!.Time;
+            Time ??= task1!.Time;
 
         DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
         if (CreateDate == null)
@@ -429,8 +429,8 @@ internal class Programe
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
             if (ans == "Y") //stage 3
             {
-                s_bl.Worker.ClearWorker();
-                s_bl.Task.ClearTask();
+                //s_bl.Worker.ClearWorker();
+                //s_bl.Task.ClearTask();
                 Initialization.Do();
             }
         }

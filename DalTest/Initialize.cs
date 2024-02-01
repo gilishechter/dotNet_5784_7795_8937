@@ -209,9 +209,14 @@ public static class Initialization
         // s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
         s_dal = DalApi.Factory.Get;
 
+        s_dal.Dependency.ClearList();
+        s_dal.Task.ClearList();
+        s_dal.Worker.ClearList();
+       
         CreateDependences();
         CreateWorker();
         CreateTask();
+
     }
 
 }

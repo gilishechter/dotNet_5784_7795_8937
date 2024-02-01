@@ -54,7 +54,7 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null) 
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) 
     {
         if (filter == null)//if there is no function to filtering
             return DataSource.Tasks.Select(item => item);//return all the list
