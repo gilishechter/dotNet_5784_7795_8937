@@ -31,3 +31,15 @@ public class BlCantBeUpdated : Exception
 {
     public BlCantBeUpdated(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlWhilePlanning: Exception
+{
+        public BlWhilePlanning(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlDuringExecution : Exception
+{
+    public BlDuringExecution(string? message) : base(message) { }
+}

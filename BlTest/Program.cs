@@ -12,7 +12,8 @@ internal class Programe
         Console.WriteLine("0 - Exit");
         Console.WriteLine("1 - Worker");
         Console.WriteLine("2 - Task");
-        Console.WriteLine("3 - to intilize the data");
+        Console.WriteLine("3 - to initialize the data");
+        Console.WriteLine("4 - to Clear the data");
     }
 
     private static void SubMenuTask()
@@ -422,7 +423,7 @@ internal class Programe
         }
     }
 
-    private static void ClearAll()
+    private static void InitializationData()
     {
         try
         {
@@ -430,8 +431,6 @@ internal class Programe
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
             if (ans == "Y") //stage 3
             {
-                //s_bl.Worker.ClearWorker();
-                //s_bl.Task.ClearTask();
                 Initialization.Do();
             }
         }
@@ -470,7 +469,10 @@ internal class Programe
                     break;
 
                 case 3:
-                    ClearAll();
+                    InitializationData();
+                    break;
+                case 4:
+                    Initialization.Clear();
                     break;
             }
             Menu();

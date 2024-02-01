@@ -35,6 +35,15 @@ internal class TaskImplementation : ITask
         if (boTask.Name == "")
             throw new FormatException("you must enter a name");
 
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
+            throw new BlWhilePlanning("you cant assign a worker while planning the project");
+
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.WantedStartDate != null)
+            throw new BlWhilePlanning("you cant update a wanted start date while planning the project");
+
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution)
+            throw new BlDuringExecution("yoe can'd add task during execution");
+
         var result = (from BO.TaskList temp in boTask.DependenceTasks
                       select new Do.Dependency
                       {
@@ -49,7 +58,7 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                      boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                      boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
-        boTask.Status=WorkerImplementation.GetStatus(doTask);
+        boTask.Status = WorkerImplementation.GetStatus(doTask);
         boTask.DependenceTasks = getDependenceList(doTask);
         try
         {
@@ -141,13 +150,29 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task boTask)
     {
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
+            throw new BlWhilePlanning("you cant assign a worker while planning the project");
+
+
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.WantedStartDate != null)
+            throw new BlWhilePlanning("you cant update a wanted start date while planning the project");
+
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.Time != null)
+            throw new BlDuringExecution("you cant update the task duration during the execution");
+
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.StartDate != null)
+            throw new BlDuringExecution("you cant update the start date during the execution");
+
+
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
         boTask.DependenceTasks = getDependenceList(doTask);
+
         try
         {
+            CheckTaskForWorker(boTask);
             CheckUpdateDate(boTask.Id, boTask.StartDate);
             _dal.Task.Update(doTask);
         }
@@ -167,11 +192,30 @@ internal class TaskImplementation : ITask
                       select boTask);
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
-        if(getDependenceList(doTask) == null && do)
+        if (!(getDependenceList(doTask) == null && (BlApi.Factory.Get().StartDateProject != null)
+            && date > BlApi.Factory.Get().StartDateProject))
+            throw new BlCantBeUpdated("this date can't be updated");
     }
 
-    public void ClearTask()
+    private void CheckTaskForWorker(BO.Task boTask)
     {
-       _dal.Task.ClearList();
+        var oldTask = _dal.Task.Read(boTask.Id);
+        if (oldTask!= null && oldTask.IdWorker != boTask.IdWorker)
+            throw new BlCantBeUpdated("this worker can't assign this task because another worker is assigned");
+        if (oldTask != null && boTask.DependenceTasks != null)
+        {
+            var noDoneTasks = from BO.TaskList task in boTask.DependenceTasks
+                              where task.Status != BO.Status.Done
+                              select boTask;
+            if (noDoneTasks.Count() > 0)
+                throw new BlCantBeUpdated("this worker can't assign this task because the dependences tasks didn't finished yet");
+        }
+
+        if (boTask.IdWorker is int _idworker)
+        {
+            Do.Worker worker = _dal.Worker.Read(_idworker)!;
+            if (boTask.Rank >= (int)worker.WorkerRank)
+                throw new BlCantBeUpdated("this worker can't assign this task because the rank doesn't fit");
+        }
     }
 }

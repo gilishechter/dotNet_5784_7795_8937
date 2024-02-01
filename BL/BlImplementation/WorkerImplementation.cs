@@ -43,6 +43,8 @@ internal class WorkerImplementation : IWorker
                 if (GetStatus(doTask) == BO.Status.OnTrackStarted || GetStatus(doTask) == BO.Status.Done)
                     throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
                 _dal.Task.Update(doTask with { IdWorker = null });
+                if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && GetStatus(doTask) == BO.Status.Scheduled)
+                    throw new BlDuringExecution("you cant delete worker during the execution if he has a task.");
             }
         }
             try
@@ -124,7 +126,7 @@ internal class WorkerImplementation : IWorker
         if ((boWorker.Email != "") && oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
-        if (boWorker.WorkerTask.Id is int taskId)
+        if (boWorker.WorkerTask!=null && boWorker.WorkerTask.Id is int taskId)
         {
             var doTask = _dal.Task.Read(taskId);
             if (doTask is not null)

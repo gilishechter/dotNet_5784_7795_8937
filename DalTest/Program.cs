@@ -1,5 +1,4 @@
 ﻿namespace DalTest;
-using Dal;
 using DalApi;
 using Do;
 using System;
@@ -21,7 +20,8 @@ internal class Program
         Console.WriteLine("1 - Worker");
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - Dependence");
-        Console.WriteLine("4 - to intilize the data");
+        Console.WriteLine("4 - to initialize the data");
+        Console.WriteLine("5 - to Clear the data");
     }
 
     /// <summary>
@@ -189,8 +189,8 @@ internal class Program
         Task? task1 = s_dal.Task.Read(Id);
         Console.WriteLine("Enter New Details for Enter Id, Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
-    
-        int? IdWorker=int.Parse(Console.ReadLine());
+
+        int? IdWorker = int.Parse(Console.ReadLine());
         IdWorker ??= task1!.IdWorker;
         string? Name = Console.ReadLine();
         if (Name == "")
@@ -336,7 +336,7 @@ internal class Program
     }
 
 
-    private static void ClearAll()
+    private static void InitializationData()
     {
         try
         {
@@ -460,58 +460,53 @@ internal class Program
     }
     static void Main(string[] args)
     {
-       
+
         Menu();
-            int choose = int.Parse(Console.ReadLine()!);// the user put his choise
-           
-        
+        int choose = int.Parse(Console.ReadLine()!);// the user put his choise
+
+
         while (choose != 0)
         {
 
-                switch (choose)
-                {
-                    case 0://exit
-                        break;
-                    case 1://if the user choose worker(1) the worker's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose1))
-                            throw new FormatException("Wrong Input, Try Again");
+            switch (choose)
+            {
+                case 0://exit
+                    break;
+                case 1://if the user choose worker(1) the worker's sub menu opens for him 
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose1))
+                        throw new FormatException("Wrong Input, Try Again");
 
-                        SubMenuWorker(choose1);
+                    SubMenuWorker(choose1);
 
-                        break;
+                    break;
 
-                    case 2://if the user choose task(2) the task's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose2))
-                            throw new FormatException("Wrong Input, Try Again");
+                case 2://if the user choose task(2) the task's sub menu opens for him 
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose2))
+                        throw new FormatException("Wrong Input, Try Again");
 
-                        SubMenuTask(choose2);
+                    SubMenuTask(choose2);
 
-                        break;
+                    break;
 
-                    case 3://if the user choose dependence(3) the dependence's sub menu opens for him 
-                        SubMenu();
-                        if (!int.TryParse(Console.ReadLine(), out int choose3))
-                            throw new FormatException("Wrong Input, Try Again");
+                case 3://if the user choose dependence(3) the dependence's sub menu opens for him 
+                    SubMenu();
+                    if (!int.TryParse(Console.ReadLine(), out int choose3))
+                        throw new FormatException("Wrong Input, Try Again");
 
-                        SubMenuDependence(choose3);
+                    SubMenuDependence(choose3);
 
-                        break;
+                    break;
 
-                    case 4:
-                       ClearAll();
-                       break;
-
-
-                }
-
-
-
+                case 4:
+                    InitializationData();
+                    break;
+            }
             Menu();
-                choose = int.Parse(Console.ReadLine()!);                                                                       
+            choose = int.Parse(Console.ReadLine()!);
         }
-       
+
 
     }
 }
