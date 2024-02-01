@@ -8,6 +8,8 @@ public interface IWorker
     public int Create(BO.Worker worker);
     public BO.Worker? Read(int Id);
     public IEnumerable<BO.Worker> RankGroup(BO.Rank rank);
+    public void ClearWorker();
+
     //public BO.TaskList GetTask(int WorkerId);//return the task that the worker works on
 
 }

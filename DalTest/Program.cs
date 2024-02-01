@@ -191,8 +191,7 @@ internal class Program
         Console.WriteLine("wanted start date, start date, end date, dead line, product, notes and level between 0 - 4");
     
         int? IdWorker=int.Parse(Console.ReadLine());
-        if(IdWorker == null)
-            IdWorker = task1!.IdWorker;
+        IdWorker ??= task1!.IdWorker;
         string? Name = Console.ReadLine();
         if (Name == "")
             Name = task1!.Name;
