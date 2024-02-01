@@ -1,5 +1,4 @@
-﻿using DalApi;
-using DalTest;
+﻿using DalTest;
 using Do;
 
 namespace BlTest;
@@ -71,7 +70,6 @@ internal class Programe
 
         };//build the worker
         Console.WriteLine(s_bl.Worker?.Create(_worker));//add to the list and print the ID's worker
-
     }
 
     /// <summary>
@@ -454,6 +452,7 @@ internal class Programe
                     break;
                 case 1://if the user choose worker(1) the worker's sub menu opens for him 
                     SubMenuWorker();
+
                     if (!int.TryParse(Console.ReadLine(), out int choose1))
                         throw new FormatException("Wrong Input, Try Again");
 
@@ -462,6 +461,7 @@ internal class Programe
 
                 case 2://if the user choose task(2) the task's sub menu opens for him 
                     SubMenuTask();
+
                     if (!int.TryParse(Console.ReadLine(), out int choose2))
                         throw new FormatException("Wrong Input, Try Again");
 

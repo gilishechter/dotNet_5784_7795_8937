@@ -1,4 +1,5 @@
 ﻿namespace BlImplementation;
+using System.Net.Mail;
 using BlApi;
 using BO;
 
@@ -43,7 +44,7 @@ internal class WorkerImplementation : IWorker
                     throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
                 _dal.Task.Update(doTask with { IdWorker = null });
             }
-
+        }
             try
             {
                 _dal.Worker.Delete(_Id);
@@ -52,7 +53,7 @@ internal class WorkerImplementation : IWorker
             {
                 throw new BlDoesNotExistException($"Worker with ID={_Id} doesnt exists", ex);
             }
-        }
+        
     }
 
     public static BO.Status GetStatus(Do.Task task)
@@ -87,7 +88,7 @@ internal class WorkerImplementation : IWorker
 
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
-        var result = (from Do.Worker doWorker in ReadAll(filter)
+        var result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
                       select new BO.Worker()
                       {
@@ -102,6 +103,7 @@ internal class WorkerImplementation : IWorker
                               Id = task != null ? task.Id : null,
                               Name = task != null ? task.Name : null
                           }
+
                       });
         var orderResult = (from BO.Worker doWorker in result
                            orderby doWorker.Name
@@ -113,19 +115,13 @@ internal class WorkerImplementation : IWorker
     {
         BO.Worker oldWorker = Read(boWorker.Id)!;
 
-        if (boWorker.Id <= 0)
-            throw new FormatException("ID can't be negetive number");
-
-        if (boWorker.Name == "")
-            throw new FormatException("you must enter a name");
-
-        if (boWorker.HourPrice <= 0)
+        if ((boWorker.Email != "") && boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
 
-        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com")))
+        if ((boWorker.Email != "") && (!boWorker.Email!.Contains("@gmail.com")))
             throw new FormatException("you must enter an email");
 
-        if (oldWorker.WorkerRank > boWorker.WorkerRank)
+        if ((boWorker.Email != "") && oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
         if (boWorker.WorkerTask.Id is int taskId)
@@ -173,7 +169,6 @@ internal class WorkerImplementation : IWorker
                                Name = task != null ? task.Name : null
                            }
                        });
-
         return result1;
     }
 
