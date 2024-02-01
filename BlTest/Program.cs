@@ -202,9 +202,10 @@ internal class Programe
             throw new FormatException("Wrong Input, Try Again");
 
         if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
-            throw new FormatException("Wrong Input, Try Again");
+            throw new FormatException("Wrong Input, Try Again"); 
+        
 
-        ?DateTime _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
+        DateTime? _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
 
         string? _Product = Console.ReadLine();
 
@@ -233,7 +234,7 @@ internal class Programe
         Console.WriteLine(s_bl.Task?.Create(Task));//add to the list and print the Id's task
     }
 
-    private static void TaskObjectView()
+   private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
         if (!int.TryParse(Console.ReadLine(), out int _id))
