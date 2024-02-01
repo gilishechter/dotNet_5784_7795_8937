@@ -200,9 +200,4 @@
     <DependenceTask>20</DependenceTask>
     <PrevTask>6</PrevTask>
   </Dependency>
-  <Dependency>
-    <Id>41</Id>
-    <DependenceTask>2</DependenceTask>
-    <PrevTask>3</PrevTask>
-  </Dependency>
 </ArrayOfDependency>

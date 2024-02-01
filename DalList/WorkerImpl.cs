@@ -59,7 +59,7 @@ internal class WorkerImplementation : IWorker
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter = null) 
+    public IEnumerable<Worker> ReadAll(Func<Worker, bool>? filter = null) 
     {
         if (filter == null)//if there is no function to filtering
             return DataSource.Workers.Select(item => item);//return all the list

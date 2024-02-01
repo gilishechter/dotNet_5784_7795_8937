@@ -141,12 +141,6 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task boTask)
     {
-        if (boTask.Id < 0)
-            throw new FormatException("ID can't be negetive number");
-
-        if (boTask.Name == "")
-            throw new FormatException("you must enter a name");
-
         Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
@@ -169,11 +163,11 @@ internal class TaskImplementation : ITask
             throw new BlDoesNotExistException($"task with ID={idTask} doesnt exists");
         Do.Task? doTask = _dal.Task.Read(idTask);
         var result = (from BO.Task boTask in getDependenceList(doTask)
-                      where boTask.WantedStartDate == null || date < boTask.DeadLine
+                      where boTask.WantedStartDate == null || date <= boTask.DeadLine
                       select boTask);
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
-
+        if(getDependenceList(doTask) == null && do)
     }
 
     public void ClearTask()

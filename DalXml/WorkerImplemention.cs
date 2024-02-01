@@ -12,7 +12,7 @@ internal class WorkerImplementation : IWorker
 
     public void ClearList()
     {
-        List<Worker> workers = XMLTools.LoadListFromXMLSerializer<Worker>(s_workers_xml);
+        List<Worker> workers = new();
         workers.Clear();
         XMLTools.SaveListToXMLSerializer(workers, s_workers_xml);
     }
