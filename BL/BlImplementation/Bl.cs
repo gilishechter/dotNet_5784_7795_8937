@@ -16,9 +16,9 @@ internal class Bl : IBl
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
-    public DateTime StartDateProject =>  new DateTime();
+    public DateTime StartDateProject =>  new();
 
-    public DateTime EndDateProject => new DateTime();
+    public DateTime EndDateProject => new();
 
     public void AutometicSchedule()
     {
@@ -26,17 +26,18 @@ internal class Bl : IBl
 
         foreach(var task in tasks.ReadAll())
         {
-            if(task.DependenceTasks == null)
-                task.StartDate = StartDateProject;
+            BO.Task wantedTask = tasks.Read(task.Id)!;
+            if(wantedTask.DependenceTasks == null)
+                wantedTask.StartDate = StartDateProject;
             else
             {
                 var max = tasks.Read(task.Id)!.DeadLine;
-                foreach (var taskList in task.DependenceTasks)
+                foreach (var taskList in wantedTask.DependenceTasks)
                 {
                     if (tasks.Read(taskList.Id)!.DeadLine > max)
                         max = tasks.Read(taskList.Id)!.DeadLine;
                 }
-                task.StartDate = max;
+                wantedTask.StartDate = max;
             }
         }
     }

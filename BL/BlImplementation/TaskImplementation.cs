@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using System.Security.Cryptography;
 
 //using BO;
 //using DalApi;
@@ -35,6 +36,9 @@ internal class TaskImplementation : ITask
         if (boTask.Name == "")
             throw new FormatException("you must enter a name");
 
+        if(_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
+            throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
+
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
             throw new BlWhilePlanning("you cant assign a worker while planning the project");
 
@@ -44,7 +48,7 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution)
             throw new BlDuringExecution("yoe can'd add task during execution");
 
-        var result = (from BO.TaskList temp in boTask.DependenceTasks
+        var dependencies = (from BO.TaskList temp in boTask.DependenceTasks
                       select new Do.Dependency
                       {
                           Id = 0,
@@ -52,10 +56,10 @@ internal class TaskImplementation : ITask
                           PrevTask = temp.Id,
                       });
 
-        var result1 = (from Do.Dependency dep in result
-                       select _dal.Dependency.Create(dep));
+        var createDependencies = (from Do.Dependency dep in dependencies
+                                  select _dal.Dependency.Create(dep));
 
-        Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
+        Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                      boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                      boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
@@ -120,29 +124,18 @@ internal class TaskImplementation : ITask
         };
 
     }
-    public IEnumerable<BO.Task> ReadAll(Func<Task, bool>? filter = null)
+    public IEnumerable<BO.TaskList> ReadAll(Func<Task, bool>? filter = null)
     {
         var result = (from Do.Task doTask in _dal.Task.ReadAll()
-                      select new BO.Task()
+                      select new BO.TaskList()
                       {
-                          Id = doTask.Id,
-                          IdWorker = doTask.IdWorker,
+                          Id = doTask.Id,                        
                           Name = doTask.Name,
-                          Description = doTask.Description,
-                          MileStone = doTask.MileStone,
-                          Time = doTask.Time,
-                          CreateDate = doTask.CreateDate,
-                          WantedStartDate = doTask.WantedStartDate,
-                          StartDate = doTask?.StartDate,
-                          EndingDate = doTask?.EndingDate,
-                          DeadLine = doTask!.DeadLine,
-                          Product = doTask.Product,
-                          Notes = doTask.Notes,
-                          Rank = doTask.Rank,
+                          Description = doTask.Description,                         
                           Status = WorkerImplementation.GetStatus(doTask),
-                          DependenceTasks = getDependenceList(doTask)
+                          
                       });
-        var orderResult = (from BO.Task doTask in result
+        var orderResult = (from BO.TaskList doTask in result
                            orderby doTask.Name
                            select doTask);
         return orderResult;
@@ -150,6 +143,9 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task boTask)
     {
+        if (_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
+            throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
+
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
             throw new BlWhilePlanning("you cant assign a worker while planning the project");
 
@@ -164,7 +160,7 @@ internal class TaskImplementation : ITask
             throw new BlDuringExecution("you cant update the start date during the execution");
 
 
-        Do.Task doTask = new Do.Task(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
+        Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
@@ -173,7 +169,7 @@ internal class TaskImplementation : ITask
         try
         {
             CheckTaskForWorker(boTask);
-            CheckUpdateDate(boTask.Id, boTask.StartDate);
+            CheckStartDate(boTask.Id, boTask.StartDate);
             _dal.Task.Update(doTask);
         }
         catch (Do.DalDoesNotExistException ex)
@@ -182,7 +178,7 @@ internal class TaskImplementation : ITask
         }
     }
 
-    private void CheckUpdateDate(int idTask, DateTime? date)
+    private void CheckStartDate(int idTask, DateTime? date)
     {
         if (_dal.Task.Read(idTask) == null)
             throw new BlDoesNotExistException($"task with ID={idTask} doesnt exists");

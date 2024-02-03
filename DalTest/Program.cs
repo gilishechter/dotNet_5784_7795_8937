@@ -204,9 +204,14 @@ internal class Program
             throw new FormatException("Wrong Input, Try Again");
         if (!MileStone)
             MileStone = task1!.MileStone;
-        TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
+
+        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan Time))
+            throw new FormatException("Wrong Input, Try Again");
         if (Time == null)
-            Time = task1!.Time;
+            Time = task1!.Time.Value;
+        //TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
+        //if (Time == null)
+        //    Time = task1!.Time;
 
         DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
         if (CreateDate == null)

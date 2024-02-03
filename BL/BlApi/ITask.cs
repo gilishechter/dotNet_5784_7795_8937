@@ -2,7 +2,7 @@
 
 public interface ITask
 {
-    public IEnumerable<BO.Task> ReadAll(Func<Task, bool>? filter = null);
+    public IEnumerable<BO.TaskList> ReadAll(Func<Task, bool>? filter = null);
     public void Update(BO.Task task);
     public void Delete(int Id);
     public int Create(BO.Task task);
