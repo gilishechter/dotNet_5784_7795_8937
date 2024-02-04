@@ -278,19 +278,19 @@ internal class Programe
             MileStone = task1!.MileStone;
 
         string? time = Console.ReadLine();
-        TimeSpan? Time = !string.IsNullOrEmpty(time) ? TimeSpan.Parse(time) : (TimeSpan?)null;
+        TimeSpan? Time = !string.IsNullOrEmpty(time) ? TimeSpan.Parse(time) : task1!.Time;
 
         string? createDate = Console.ReadLine();
-        DateTime? CreateDate = !string.IsNullOrEmpty(createDate) ? DateTime.Parse(createDate) : (DateTime?)null;
+        DateTime? CreateDate = !string.IsNullOrEmpty(createDate) ? DateTime.Parse(createDate) : task1!.CreateDate;
 
         string? wantedStartDate = Console.ReadLine();
-        DateTime? WantedStartDate = !string.IsNullOrEmpty(wantedStartDate) ? DateTime.Parse(wantedStartDate) : (DateTime?)null;
+        DateTime? WantedStartDate = !string.IsNullOrEmpty(wantedStartDate) ? DateTime.Parse(wantedStartDate) : task1!.WantedStartDate;
 
         string? startDate = Console.ReadLine();
-        DateTime? StartDate = !string.IsNullOrEmpty(startDate) ? DateTime.Parse(startDate) : (DateTime?)null;
+        DateTime? StartDate = !string.IsNullOrEmpty(startDate) ? DateTime.Parse(startDate) : task1!.StartDate;
 
         string? endingDate = Console.ReadLine();
-        DateTime? EndingDate = !string.IsNullOrEmpty(endingDate) ? DateTime.Parse(endingDate) : (DateTime?)null;
+        DateTime? EndingDate = !string.IsNullOrEmpty(endingDate) ? DateTime.Parse(endingDate) : task1!.EndingDate;
 
         DateTime? DeadLine = StartDate > WantedStartDate ? StartDate + Time : WantedStartDate + Time;
 
