@@ -165,11 +165,14 @@ internal class Programe
     {
         Console.WriteLine("Enter the rank you want the group to be sorted by:");
 
-        if (!BO.Rank.TryParse(Console.ReadLine(), out BO.Rank _rank))
+        if (!int.TryParse(Console.ReadLine(), out int _rank))
             throw new FormatException("Wrong Input, Try Again");
 
         IEnumerable<BO.Worker> group = s_bl.Worker.RankGroup(_rank);
-        Console.WriteLine(group);
+        foreach (BO.Worker? worker in group)//The for goes through all the elements in the list and prints them to the user
+        {
+            Console.WriteLine(worker);
+        }
         return group;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

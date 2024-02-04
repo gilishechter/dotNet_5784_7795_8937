@@ -90,7 +90,10 @@ internal class WorkerImplementation : IWorker
 
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
-        var result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
+        IEnumerable<BO.Worker> result;
+        if (filter == null)
+        {
+            result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
                       select new BO.Worker()
                       {
@@ -107,6 +110,29 @@ internal class WorkerImplementation : IWorker
                           }
 
                       });
+        }
+        else
+        {
+            result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
+                      let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
+                      let boWorker = new BO.Worker()
+                      {
+                          Id = doWorker.Id,
+                          WorkerRank = (BO.Rank)doWorker.WorkerRank,
+                          HourPrice = doWorker.HourPrice,
+                          Name = doWorker.Name,
+                          Email = doWorker.Email,
+
+                          WorkerTask = new WorkerTask
+                          {
+                              Id = task != null ? task.Id : null,
+                              Name = task != null ? task.Name : null
+                          }
+                      }
+                      where filter(boWorker)
+                      select boWorker
+                      );
+        }
         var orderResult = (from BO.Worker doWorker in result
                            orderby doWorker.Name
                            select doWorker);
@@ -149,29 +175,22 @@ internal class WorkerImplementation : IWorker
         }
     }
 
-    public IEnumerable<BO.Worker> RankGroup(Rank rank)
+    public IEnumerable<BO.Worker> RankGroup(int rank)
     {
-        var result = (from Do.Worker doWorker in _dal.Worker.ReadAll()
-                      group doWorker by rank into rankList
-                      select rankList);
-
-        var result1 = (from Do.Worker doWorker in result
-                       let task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted)
-                       select new BO.Worker
-                       {
-                           Id = doWorker.Id,
-                           WorkerRank = (BO.Rank)doWorker.WorkerRank,
-                           HourPrice = doWorker.HourPrice,
-                           Name = doWorker.Name,
-                           Email = doWorker.Email,
-                        
-                           WorkerTask = new WorkerTask
-                           {
-                               Id = task != null ? task.Id : null,
-                               Name = task != null ? task.Name : null
-                           }
-                       });
-        return result1;
+        var groupWorkers = _dal.Worker.ReadAll().GroupBy(r => (int)r.WorkerRank);
+        var wantedGroup = groupWorkers.FirstOrDefault(g=> g.Key == rank);
+        if (wantedGroup == null)
+            throw new Exception("there is no such a worker");
+        return from Do.Worker doWorker in wantedGroup
+               select new BO.Worker()
+               {
+                   Id = doWorker.Id,
+                   WorkerRank = (BO.Rank)doWorker.WorkerRank,
+                   HourPrice = doWorker.HourPrice,
+                   Name = doWorker.Name,
+                   Email = doWorker.Email,
+                   WorkerTask = GetWorkerTask(doWorker)
+               };
     }
 
 

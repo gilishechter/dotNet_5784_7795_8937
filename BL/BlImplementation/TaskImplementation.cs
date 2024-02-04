@@ -101,11 +101,12 @@ internal class TaskImplementation : ITask
 
         if (doTask == null)
             throw new BlDoesNotExistException($"Task with ID={id} doesnt exists");
-
+       
         return new BO.Task()
         {
             Id = id,
             IdWorker = doTask.IdWorker,
+            NameWorker = (doTask.IdWorker != null && _dal.Worker.Read(doTask.IdWorker.Value) != null) ? _dal.Worker.Read(doTask.IdWorker.Value)!.Name : null,
             Name = doTask.Name,
             Description = doTask.Description,
             MileStone = doTask.MileStone,
@@ -120,25 +121,38 @@ internal class TaskImplementation : ITask
             Rank = doTask.Rank,
             Status = WorkerImplementation.GetStatus(doTask),
             DependenceTasks = getDependenceList(doTask)
-
         };
 
     }
-    public IEnumerable<BO.TaskList> ReadAll(Func<Task, bool>? filter = null)
+    public IEnumerable<BO.TaskList> ReadAll(Func<BO.TaskList, bool>? filter = null)
     {
-        var result = (from Do.Task doTask in _dal.Task.ReadAll()
-                      select new BO.TaskList()
-                      {
-                          Id = doTask.Id,                        
-                          Name = doTask.Name,
-                          Description = doTask.Description,                         
-                          Status = WorkerImplementation.GetStatus(doTask),
-                          
-                      });
-        var orderResult = (from BO.TaskList doTask in result
-                           orderby doTask.Name
-                           select doTask);
-        return orderResult;
+        if (filter == null)
+        {
+            return (from Do.Task doTask in _dal.Task.ReadAll()
+                          select new BO.TaskList()
+                          {
+                              Id = doTask.Id,
+                              Name = doTask.Name,
+                              Description = doTask.Description,
+                              Status = WorkerImplementation.GetStatus(doTask),
+                          });
+        }
+        else
+        {
+            return (from Do.Task doTask in _dal.Task.ReadAll()
+                    let boTask = new BO.TaskList()
+                    {
+                        Id = doTask.Id,
+                        Name = doTask.Name,
+                        Description = doTask.Description,
+                        Status = WorkerImplementation.GetStatus(doTask),
+                    }
+                    where filter(boTask)
+                    select boTask
+                    );
+        }
+        
+       
     }
 
     public void Update(BO.Task boTask)
@@ -182,14 +196,17 @@ internal class TaskImplementation : ITask
     {
         if (_dal.Task.Read(idTask) == null)
             throw new BlDoesNotExistException($"task with ID={idTask} doesnt exists");
+
         Do.Task? doTask = _dal.Task.Read(idTask);
         var result = (from BO.Task boTask in getDependenceList(doTask)
                       where boTask.WantedStartDate == null || date <= boTask.DeadLine
                       select boTask);
+
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
-        if (!(getDependenceList(doTask) == null && (BlApi.Factory.Get().StartDateProject != null)
-            && date > BlApi.Factory.Get().StartDateProject))
+
+        if (!(getDependenceList(doTask) == null && (IBl.StartDateProject != null)
+            && date > IBl.StartDateProject))
             throw new BlCantBeUpdated("this date can't be updated");
     }
 
@@ -210,7 +227,7 @@ internal class TaskImplementation : ITask
         if (boTask.IdWorker is int _idworker)
         {
             Do.Worker worker = _dal.Worker.Read(_idworker)!;
-            if (boTask.Rank >= (int)worker.WorkerRank)
+            if (boTask.Rank > (int)worker.WorkerRank)
                 throw new BlCantBeUpdated("this worker can't assign this task because the rank doesn't fit");
         }
     }
