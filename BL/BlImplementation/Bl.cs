@@ -16,9 +16,9 @@ internal class Bl : IBl
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
-    public DateTime StartDateProject =>  new DateTime();
+    public DateTime StartDateProject =>  new ();
 
-    public DateTime EndDateProject => new DateTime();
+    public DateTime EndDateProject => new ();
 
     public void AutometicSchedule()
     {
