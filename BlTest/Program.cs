@@ -1,6 +1,6 @@
 ﻿using DalTest;
 using Do;
-
+using System;
 namespace BlTest;
 internal class Programe
 {
@@ -165,11 +165,14 @@ internal class Programe
     {
         Console.WriteLine("Enter the rank you want the group to be sorted by:");
 
-        if (!BO.Rank.TryParse(Console.ReadLine(), out BO.Rank _rank))
+        if (!int.TryParse(Console.ReadLine(), out int _rank))
             throw new FormatException("Wrong Input, Try Again");
 
         IEnumerable<BO.Worker> group = s_bl.Worker.RankGroup(_rank);
-        Console.WriteLine(group);
+        foreach (BO.Worker? worker in group)//The for goes through all the elements in the list and prints them to the user
+        {
+            Console.WriteLine(worker);
+        }
         return group;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,8 +181,8 @@ internal class Programe
     private static void AddTask()
     {
         //the user input the details that he want to add
-        Console.WriteLine("Enter Id worker, name, description, mile stone, time, create date, " +
-            "wanted start date, start date, end date, product, notes and level between 0 - 4");
+        Console.WriteLine("Enter Id worker, name, description, mile stone, time, " +
+            "product, notes and level between 0 - 4");
 
         if (!int.TryParse(Console.ReadLine(), out int _IdWorker))//input the details and check if is right details
             throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
@@ -194,20 +197,20 @@ internal class Programe
         if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan _Time))
             throw new FormatException("Wrong Input, Try Again");
 
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _CreateDate))
-            throw new FormatException("Wrong Input, Try Again");
+        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _CreateDate))
+        //    throw new FormatException("Wrong Input, Try Again");
 
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _WantedStartDate))
-            throw new FormatException("Wrong Input, Try Again");
+        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _WantedStartDate))
+        //    throw new FormatException("Wrong Input, Try Again");
 
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _StartDate))
-            throw new FormatException("Wrong Input, Try Again");
+        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _StartDate))
+        //    throw new FormatException("Wrong Input, Try Again");
 
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
-            throw new FormatException("Wrong Input, Try Again"); 
-        
+        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
+        //    throw new FormatException("Wrong Input, Try Again"); 
 
-        DateTime? _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
+
+        //DateTime? _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
 
         string? _Product = Console.ReadLine();
 
@@ -223,11 +226,11 @@ internal class Programe
             Description = _Description,
             MileStone = _MileStone,
             Time = _Time,
-            CreateDate = _CreateDate,
-            WantedStartDate = _WantedStartDate,
-            StartDate = _StartDate,
-            EndingDate = _EndingDate,
-            DeadLine = _DeadLine,
+            //CreateDate = _CreateDate,
+            //WantedStartDate = _WantedStartDate,
+            //StartDate = _StartDate,
+            //EndingDate = _EndingDate,
+            //DeadLine = _DeadLine,
             Product = _Product,
             Notes = _Notes,
             Rank = _Rank,
@@ -236,7 +239,7 @@ internal class Programe
         Console.WriteLine(s_bl.Task?.Create(Task));//add to the list and print the Id's task
     }
 
-   private static void TaskObjectView()
+    private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
         if (!int.TryParse(Console.ReadLine(), out int _id))
@@ -274,29 +277,23 @@ internal class Programe
         if (Description == "")
             Description = task1!.Description;
 
-        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))
-        if (MileStone == null)
+        if (!bool.TryParse(Console.ReadLine(), out bool MileStone))            
             MileStone = task1!.MileStone;
 
-        TimeSpan? Time = TimeSpan.Parse(Console.ReadLine()!);
-        if (Time == null)
-            Time ??= task1!.Time;
+        string? time = Console.ReadLine();
+        TimeSpan? Time = !string.IsNullOrEmpty(time) ? TimeSpan.Parse(time) : task1!.Time;
 
-        DateTime? CreateDate = DateTime.Parse(Console.ReadLine()!);
-        if (CreateDate == null)
-            CreateDate = task1!.CreateDate;
+        string? createDate = Console.ReadLine();
+        DateTime? CreateDate = !string.IsNullOrEmpty(createDate) ? DateTime.Parse(createDate) : task1!.CreateDate;
 
-        DateTime? WantedStartDate = DateTime.Parse(Console.ReadLine()!);
-        if (WantedStartDate == null)
-            WantedStartDate = task1!.WantedStartDate;
+        string? wantedStartDate = Console.ReadLine();
+        DateTime? WantedStartDate = !string.IsNullOrEmpty(wantedStartDate) ? DateTime.Parse(wantedStartDate) : task1!.WantedStartDate;
 
-        DateTime? StartDate = DateTime.Parse(Console.ReadLine()!);
-        if (StartDate == null)
-            StartDate = task1!.StartDate;
+        string? startDate = Console.ReadLine();
+        DateTime? StartDate = !string.IsNullOrEmpty(startDate) ? DateTime.Parse(startDate) : task1!.StartDate;
 
-        DateTime? EndingDate = DateTime.Parse(Console.ReadLine()!);
-        if (EndingDate == null)
-            EndingDate = task1!.EndingDate;
+        string? endingDate = Console.ReadLine();
+        DateTime? EndingDate = !string.IsNullOrEmpty(endingDate) ? DateTime.Parse(endingDate) : task1!.EndingDate;
 
         DateTime? DeadLine = StartDate > WantedStartDate ? StartDate + Time : WantedStartDate + Time;
 
@@ -344,8 +341,8 @@ internal class Programe
     private static void TaskListView()
     {
         Console.WriteLine("tasks list:");
-        IEnumerable<BO.Task?> taskList = s_bl.Task!.ReadAll();
-        foreach (BO.Task? task in taskList)//The for goes through all the elements in the list and prints them to the user
+        IEnumerable<BO.TaskList?> taskList = s_bl.Task!.ReadAll();
+        foreach (BO.TaskList? task in taskList)//The for goes through all the elements in the list and prints them to the user
         {
             Console.WriteLine(task);
         }

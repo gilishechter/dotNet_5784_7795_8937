@@ -28,7 +28,7 @@ public static class Initialization
         {
 
             int _id = rand.Next(100000000, 999999999);
-            string _email = _name + "@gmail.com";
+            string _email = _name.Replace(" ", "") + "@gmail.com";
             int _hourPrice = rand.Next(30, 1000);
             Rank _workerRank = (Rank)rand.Next((int)Rank.Beginner, (int)Rank.Expert + 1);
             Worker _newWorker = new(_id, _workerRank, _hourPrice, _name, _email);
