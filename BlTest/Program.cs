@@ -77,7 +77,7 @@ internal class Programe
     }
 
     /// <summary>
-    /// this function input id of worker and print the object with the write ID
+    /// this function input id of worker and print the object with the right ID
     /// </summary>
     private static void WorkerObjectView()
     {
@@ -180,7 +180,11 @@ internal class Programe
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+    /// <summary>
+    /// the function ask details from user and add the task
+    /// </summary>
+    /// <exception cref="FormatException"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
     private static void AddTask()
     {
         //the user input the details that he want to add
@@ -205,7 +209,7 @@ internal class Programe
             throw new FormatException("Wrong Input, Try Again");
 
         List<TaskList> dependencies = new List<TaskList>();
-
+        // if this task have previous task the user enter the amount and the previous task and update 
         Console.WriteLine("Does this _task have previous tasks?");
         string? choice = Console.ReadLine();
         if (choice == "yes" || choice == "Yes")
@@ -227,7 +231,7 @@ internal class Programe
                     Description = s_bl.Task.Read(depTask)!.Description,
                     Status = s_bl.Task.Read(depTask).Status
                 };
-                dependencies.Add(task);
+                dependencies.Add(task);// update the dependence task if he enter
 
             }
         }
@@ -245,7 +249,11 @@ internal class Programe
         };//build the _task object
         Console.WriteLine(s_bl.Task?.Create(Task));//add to the list and print the Id's _task
     }
-
+    /// <summary>
+    /// the function return the task with the id that the user enter
+    /// </summary>
+    /// <exception cref="FormatException"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     private static void TaskObjectView()
     {
         Console.WriteLine("Enter Id for print");
@@ -342,6 +350,10 @@ internal class Programe
         s_bl.Task?.Update(Task);
 
     }
+    /// <summary>
+    /// the function delete the task 
+    /// </summary>
+    /// <exception cref="FormatException"></exception>
     private static void DeleteTask()
     {
         Console.WriteLine("Enter Id to delete");
@@ -351,7 +363,9 @@ internal class Programe
 
         s_bl.Task?.Delete(_id);
     }
-
+    /// <summary>
+    /// the function print the list of the task
+    /// </summary>
     private static void TaskListView()
     {
         Console.WriteLine("tasks list:");
@@ -433,7 +447,10 @@ internal class Programe
             Console.WriteLine(Ex);
         }
     }
-
+    /// <summary>
+    /// the function intilaize the xml file 
+    /// </summary>
+    /// <exception cref="FormatException"></exception>
     private static void InitializationData()
     {
         try

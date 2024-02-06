@@ -28,7 +28,7 @@ internal class WorkerImplementation : IWorker
         boWorker.WorkerTask = GetWorkerTask(Doworker);//update current task for worker 
         try
         {
-            int idWorker = _dal.Worker.Create(Doworker);
+            int idWorker = _dal.Worker.Create(Doworker);//try to create the worker and catch  
             return idWorker;
         }
         catch (Do.DalAlreadyExistsException ex)
@@ -37,7 +37,13 @@ internal class WorkerImplementation : IWorker
 
         }
     }
-
+    /// <summary>
+    /// the function delete the worker withe the id thar the function get and throw match exeption
+    /// </summary>
+    /// <param name="_Id"></param>
+    /// <exception cref="BlCantBeDeleted"></exception>
+    /// <exception cref="BlDuringExecution"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int _Id)
     {
         BO.Worker boWorker = Read(_Id)!;
@@ -48,7 +54,7 @@ internal class WorkerImplementation : IWorker
             if (doTask is not null)
             {
                 if (GetStatus(doTask) == BO.Status.OnTrackStarted || GetStatus(doTask) == BO.Status.Done)
-                    throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");
+                    throw new BlCantBeDeleted($"this worker with ID={_Id} is in the middle of task, or has finished it, so he can't be deleted");//you can't delete worker if he work on task
                 _dal.Task.Update(doTask with { IdWorker = null });
                 if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && GetStatus(doTask) == BO.Status.Scheduled)
                     throw new BlDuringExecution("you cant delete worker during the execution if he has a task.");
@@ -64,19 +70,34 @@ internal class WorkerImplementation : IWorker
             }
         
     }
-
+    /// <summary>
+    /// the function return the match status of the task 
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public static BO.Status GetStatus(Do.Task task)
     {
         var dateTimeNow = DateTime.Now;
+        //If the task does not have the id of the worker working on it, the status is Unscheduled
+        //If the task have the id of the worker working on it,and the start date don't come yet the status is Scheduled
+        //If the task have the id of the worker working on it,and the start date come but the end date dont come yet status is Scheduled OnTrackStarted
+        //else done
 
         return task switch
         {
-            Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
+        Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
             Do.Task t when t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
         };
     }
+
+    /// <summary>
+    /// the function return the worker with the id that the function get
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public BO.Worker? Read(int id)
     {
         Do.Worker doWorker = _dal.Worker.Read(id)!;
@@ -94,7 +115,11 @@ internal class WorkerImplementation : IWorker
             WorkerTask = GetWorkerTask(doWorker)
         };
     }
-
+    /// <summary>
+    /// return all the worker
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
         IEnumerable<BO.Worker> result;
@@ -140,14 +165,15 @@ internal class WorkerImplementation : IWorker
                       select boWorker
                       );
         }
-        var orderResult = result.OrderBy(doWorker => doWorker.Name);
+        var orderResult = result.OrderBy(doWorker => doWorker.Name); //order the worker by name
         return orderResult;
     }
-
+    
+    // the function update the old worker to the new worker that the worke get
     public void Update(BO.Worker boWorker)
     {
         BO.Worker oldWorker = Read(boWorker.Id)!;
-
+        //Checks if illogical values ​​have been entered
         if ( boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
 
@@ -157,7 +183,7 @@ internal class WorkerImplementation : IWorker
         if (oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
-        if (boWorker.WorkerTask!=null && boWorker.WorkerTask.Id is int taskId)
+        if (boWorker.WorkerTask!=null && boWorker.WorkerTask.Id is int taskId)//put the int value in taskId because read get int?
         {
             var doTask = _dal.Task.Read(taskId);
             if (doTask is not null)
@@ -179,6 +205,13 @@ internal class WorkerImplementation : IWorker
             throw new BlDoesNotExistException($"worker with ID={Doworker.Id} doesnt exists", ex);
         }
     }
+
+    /// <summary>
+    /// The function sort the worker into grouping according to their rank and returns the group with the rank as the function receives
+    /// </summary>
+    /// <param name="rank"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public IEnumerable<BO.Worker> RankGroup(int rank)
     {
         var groupWorkers = _dal.Worker.ReadAll().GroupBy(r => (int)r.WorkerRank);
@@ -196,7 +229,11 @@ internal class WorkerImplementation : IWorker
                    WorkerTask = GetWorkerTask(doWorker)
                };
     }
-
+    /// <summary>
+    /// the function update current task for worker
+    /// </summary>
+    /// <param name="doWorker"></param>
+    /// <returns></returns>
     public WorkerTask? GetWorkerTask(Do.Worker doWorker)
     {
         Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted);
