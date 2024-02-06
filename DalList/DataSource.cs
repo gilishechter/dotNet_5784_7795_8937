@@ -9,8 +9,8 @@ internal static class DataSource
     internal static List<Do.Dependency> Dependencies { get; } = new();
     internal static class Config
     {
-        static DateTime? start = null;
-        static DateTime? end = null;
+        static DateTime? startDate = null;
+        static DateTime? endDate = null;
 
         internal const int startTaskId = 1;//build the automatic running numbers
         private static int nextTaskId = startTaskId;

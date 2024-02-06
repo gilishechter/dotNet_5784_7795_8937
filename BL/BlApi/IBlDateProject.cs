@@ -4,8 +4,8 @@ namespace BlApi;
 
 internal interface IBlDateProject
 {
-    public void createStartProjectDate();
-    public void createEndProjectDate();
-    public DateTime? EndProjectDate();
-    public DateTime? startProjectDate();
+    public void SetStartProjectDate(DateTime? StartDate);
+    public void SetEndProjectDate(DateTime? EndDate);
+    public DateTime? GetEndProjectDate();
+    public DateTime? GetStartProjectDate();
 }

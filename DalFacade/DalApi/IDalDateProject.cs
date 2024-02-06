@@ -1,7 +1,11 @@
 ﻿
 
 namespace DalApi;
-
-internal interface IDalDateProject
+using Do;
+public interface IDalDateProject
 {
+    public void SetStartProjectDate(DateTime? StartDate);
+    public void SetEndProjectDate(DateTime? EndDate);
+    public DateTime? GetEndProjectDate();
+    public DateTime? GetStartProjectDate();
 }

@@ -10,6 +10,32 @@ internal class Programe
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    private static void CreateSchedule(int _id, DateTime? _date)
+    {
+        BO.Task task = s_bl.Task.Read(_id);
+        if (task == null)
+            throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
+
+       var startDates = from BO.TaskList taskList in task.DependenceTasks
+                        where task.DependenceTasks != null && s_bl.Task.Read(taskList.Id) != null && s_bl.Task.Read(taskList.Id).StartDate ==null
+                        select taskList;
+        if (startDates.Count() > 0)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
+
+        var endDates = from BO.TaskList taskList in task.DependenceTasks
+                       where task.DependenceTasks != null && s_bl.Task.Read(taskList.Id) != null && s_bl.Task.Read(taskList.Id).EndingDate > _date
+                       select taskList;
+        if (endDates.Count() > 0)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+    }
+
+
+
+
+
+
+
+
     private static void Menu()
     {
         Console.WriteLine("Choose logic Entity:");

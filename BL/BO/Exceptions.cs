@@ -43,3 +43,9 @@ public class BlDuringExecution : Exception
 {
     public BlDuringExecution(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlCantUpdateStartDateExecution : Exception
+{
+    public BlCantUpdateStartDateExecution(string? message) : base(message) { }
+}

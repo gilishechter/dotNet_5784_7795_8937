@@ -6,4 +6,6 @@ internal static class Config
                                      set => XMLTools.SetNextId(s_data_config_xml, "NextTaskId", value);  }
     internal static int NextDependenceId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependenceId");
                                            set => XMLTools.SetNextId(s_data_config_xml, "NextDependenceId", value);    }
+
+    //internal static DateTime? startDate { get => }
 }
