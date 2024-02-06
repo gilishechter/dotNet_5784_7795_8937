@@ -1,6 +1,10 @@
-﻿using DalTest;
+﻿using BO;
+using DalApi;
+using DalTest;
 using Do;
 using System;
+using System.Security.Cryptography;
+
 namespace BlTest;
 internal class Programe
 {
@@ -181,12 +185,9 @@ internal class Programe
     private static void AddTask()
     {
         //the user input the details that he want to add
-        Console.WriteLine("Enter Id worker, name, description, mile stone, time, " +
+        Console.WriteLine("Enter name, description, mile stone, time, " +
             "product, notes and level between 0 - 4");
-
-        if (!int.TryParse(Console.ReadLine(), out int _IdWorker))//input the details and check if is right details
-            throw new FormatException("Wrong Input, Try Again");//throw exception if is wrong input
-
+       
         string? _Name = Console.ReadLine();
 
         string? _Description = Console.ReadLine();
@@ -197,21 +198,6 @@ internal class Programe
         if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan _Time))
             throw new FormatException("Wrong Input, Try Again");
 
-        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _CreateDate))
-        //    throw new FormatException("Wrong Input, Try Again");
-
-        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _WantedStartDate))
-        //    throw new FormatException("Wrong Input, Try Again");
-
-        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _StartDate))
-        //    throw new FormatException("Wrong Input, Try Again");
-
-        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime _EndingDate))
-        //    throw new FormatException("Wrong Input, Try Again"); 
-
-
-        //DateTime? _DeadLine = _StartDate > _WantedStartDate ? _StartDate + _Time : _WantedStartDate + _Time;
-
         string? _Product = Console.ReadLine();
 
         string? _Notes = Console.ReadLine();
@@ -219,22 +205,44 @@ internal class Programe
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             throw new FormatException("Wrong Input, Try Again");
 
+        List<TaskList> dependencies = new List<TaskList>();
+
+        Console.WriteLine("Does this task have previous tasks?");
+        string? choice = Console.ReadLine();
+        if (choice == "yes" || choice == "Yes")
+        {
+            Console.WriteLine("How many previous tasks this task has?");
+            int num = int.Parse(Console.ReadLine()!);
+
+            Console.WriteLine("Enter the previous tasks: ");
+
+            for (int i = 0; i < num; i++)
+            {
+                int depTask = int.Parse(Console.ReadLine()!);
+                if (s_bl.Task.Read(depTask) == null)
+                    throw new BlDoesNotExistException("this task doesn't exist");
+                TaskList task = new()
+                {
+                    Id = depTask,
+                    Name = s_bl.Task.Read(depTask)!.Name,
+                    Description = s_bl.Task.Read(depTask)!.Description,
+                    Status = s_bl.Task.Read(depTask).Status
+                };
+                dependencies.Add(task);
+               
+            }
+        }
+
         BO.Task Task = new()
         {
-            IdWorker = _IdWorker,
             Name = _Name,
             Description = _Description,
             MileStone = _MileStone,
             Time = _Time,
-            //CreateDate = _CreateDate,
-            //WantedStartDate = _WantedStartDate,
-            //StartDate = _StartDate,
-            //EndingDate = _EndingDate,
-            //DeadLine = _DeadLine,
             Product = _Product,
             Notes = _Notes,
             Rank = _Rank,
-
+            DependenceTasks = dependencies
         };//build the task object
         Console.WriteLine(s_bl.Task?.Create(Task));//add to the list and print the Id's task
     }

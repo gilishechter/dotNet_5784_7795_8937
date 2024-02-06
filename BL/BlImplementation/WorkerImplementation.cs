@@ -133,9 +133,7 @@ internal class WorkerImplementation : IWorker
                       select boWorker
                       );
         }
-        var orderResult = (from BO.Worker doWorker in result
-                           orderby doWorker.Name
-                           select doWorker);
+        var orderResult = result.OrderBy(doWorker => doWorker.Name);
         return orderResult;
     }
 
@@ -174,7 +172,6 @@ internal class WorkerImplementation : IWorker
             throw new BlDoesNotExistException($"worker with ID={Doworker.Id} doesnt exists", ex);
         }
     }
-
     public IEnumerable<BO.Worker> RankGroup(int rank)
     {
         var groupWorkers = _dal.Worker.ReadAll().GroupBy(r => (int)r.WorkerRank);
@@ -192,7 +189,6 @@ internal class WorkerImplementation : IWorker
                    WorkerTask = GetWorkerTask(doWorker)
                };
     }
-
 
     public WorkerTask? GetWorkerTask(Do.Worker doWorker)
     {

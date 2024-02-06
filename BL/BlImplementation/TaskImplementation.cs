@@ -1,6 +1,5 @@
 ﻿namespace BlImplementation;
 using BlApi;
-using System.Security.Cryptography;
 
 //using BO;
 //using DalApi;
@@ -36,8 +35,8 @@ internal class TaskImplementation : ITask
         if (boTask.Name == "")
             throw new FormatException("you must enter a name");
 
-        if(_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
-            throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
+        //if (_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
+        // throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
 
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
             throw new BlWhilePlanning("you cant assign a worker while planning the project");
@@ -48,25 +47,24 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution)
             throw new BlDuringExecution("yoe can'd add task during execution");
 
-        var dependencies = (from BO.TaskList temp in boTask.DependenceTasks
-                      select new Do.Dependency
-                      {
-                          Id = 0,
-                          DependenceTask = boTask.Id,
-                          PrevTask = temp.Id,
-                      });
-
-        var createDependencies = (from Do.Dependency dep in dependencies
-                                  select _dal.Dependency.Create(dep));
-
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
-                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
-                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
+                                    boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
+                                    boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
-        boTask.DependenceTasks = getDependenceList(doTask);
+
         try
         {
             int idTask = _dal.Task.Create(doTask);
+
+            if (boTask.DependenceTasks != null)
+            {
+                //var dependencies = from BO.TaskList dep in boTask.DependenceTasks
+                //                   select _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id));
+                foreach (var dep in boTask.DependenceTasks)
+                {
+                    _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id));
+                }
+            }
             return idTask;
         }
         catch (Do.DalAlreadyExistsException ex)
@@ -77,9 +75,9 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        var result = (from Do.Dependency dep in _dal.Dependency.ReadAll()
-                      where dep.PrevTask == id && _dal.Task.Read(dep.Id) != null && WorkerImplementation.GetStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done
-                      select dep);
+        var result = _dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id && _dal.Task.Read(dep.Id) != null
+        && WorkerImplementation.GetStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done).Select(dep => dep);
+
         if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
 
@@ -101,7 +99,7 @@ internal class TaskImplementation : ITask
 
         if (doTask == null)
             throw new BlDoesNotExistException($"Task with ID={id} doesnt exists");
-       
+
         return new BO.Task()
         {
             Id = id,
@@ -129,13 +127,13 @@ internal class TaskImplementation : ITask
         if (filter == null)
         {
             return (from Do.Task doTask in _dal.Task.ReadAll()
-                          select new BO.TaskList()
-                          {
-                              Id = doTask.Id,
-                              Name = doTask.Name,
-                              Description = doTask.Description,
-                              Status = WorkerImplementation.GetStatus(doTask),
-                          });
+                    select new BO.TaskList()
+                    {
+                        Id = doTask.Id,
+                        Name = doTask.Name,
+                        Description = doTask.Description,
+                        Status = WorkerImplementation.GetStatus(doTask),
+                    });
         }
         else
         {
@@ -151,8 +149,8 @@ internal class TaskImplementation : ITask
                     select boTask
                     );
         }
-        
-       
+
+
     }
 
     public void Update(BO.Task boTask)
@@ -213,7 +211,7 @@ internal class TaskImplementation : ITask
     private void CheckTaskForWorker(BO.Task boTask)
     {
         var oldTask = _dal.Task.Read(boTask.Id);
-        if (oldTask!= null && oldTask.IdWorker != boTask.IdWorker)
+        if (oldTask != null && oldTask.IdWorker != boTask.IdWorker)
             throw new BlCantBeUpdated("this worker can't assign this task because another worker is assigned");
         if (oldTask != null && boTask.DependenceTasks != null)
         {

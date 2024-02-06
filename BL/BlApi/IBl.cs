@@ -11,8 +11,8 @@ public interface IBl
     public IWorker Worker { get;}
     public IWorkerTask WorkerTask { get;}
 
-    public static DateTime StartDateProject { get;}
-    public static DateTime EndDateProject { get; }
+    public static DateTime? StartDateProject { get;} = null;
+    public static DateTime? EndDateProject { get; } = null;
 
     public StatusProject CheckStatusProject();
     public void AutometicSchedule();

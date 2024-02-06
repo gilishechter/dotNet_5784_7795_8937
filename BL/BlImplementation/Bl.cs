@@ -65,9 +65,6 @@ internal class Bl : IBl
     public StatusProject CheckStatusProject()//check
     {
         var tasks = BlApi.Factory.Get().Task.ReadAll();
-        //var NoStartDate = from BO.Task boTask in tasks
-        //                  where boTask.StartDate == null
-        //                  select boTask;
         if (IBl.StartDateProject == null)
             return StatusProject.Planning;
         var noStartDate = from BO.Task boTask in tasks
