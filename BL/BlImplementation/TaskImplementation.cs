@@ -155,7 +155,7 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task boTask)
     {
-        if (_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
+        if (boTask.IdWorker != null &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)
             throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
 
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
@@ -171,19 +171,22 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.StartDate != null)
             throw new BlDuringExecution("you cant update the start date during the execution");
 
+        boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
 
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
         boTask.DependenceTasks = getDependenceList(doTask);
-
+        
         try
         {
-            CheckTaskForWorker(boTask);
-            
+            if(boTask.IdWorker!=null)
+                CheckTaskForWorker(boTask);
             CheckStartDate(boTask.Id, boTask.StartDate);
+            
             _dal.Task.Update(doTask);
+            //CreateSchedule(boTask.Id, boTask.StartDate);
         }
         catch (Do.DalDoesNotExistException ex)
         {
@@ -197,22 +200,22 @@ internal class TaskImplementation : ITask
             throw new BlDoesNotExistException($"task with ID={idTask} doesnt exists");
 
         Do.Task? doTask = _dal.Task.Read(idTask);
-        var result = (from BO.Task boTask in getDependenceList(doTask)
-                      where boTask.WantedStartDate == null || date <= boTask.DeadLine
+        var result = (from BO.TaskList boTask in getDependenceList(doTask)
+                      let task=_dal.Task.Read(boTask.Id)
+                      where task.StartDate == null || date <= task.DeadLine
                       select boTask);
 
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
 
-        if (!(getDependenceList(doTask) == null && (IBl.StartDateProject != null)
-            && date > IBl.StartDateProject))
+        if (getDependenceList(doTask) != null && IBl.StartDateProject!=null && date < IBl.StartDateProject)
             throw new BlCantBeUpdated("this date can't be updated");
     }
 
     private void CheckTaskForWorker(BO.Task boTask)
     {
         var oldTask = _dal.Task.Read(boTask.Id);
-        if (oldTask != null && oldTask.IdWorker != boTask.IdWorker)
+        if (oldTask!=null && oldTask.IdWorker != null && oldTask.IdWorker != boTask.IdWorker)
             throw new BlCantBeUpdated("this worker can't assign this task because another worker is assigned");
         if (oldTask != null && boTask.DependenceTasks != null)
         {
@@ -228,6 +231,41 @@ internal class TaskImplementation : ITask
             Do.Worker worker = _dal.Worker.Read(_idworker)!;
             if (boTask.Rank > (int)worker.WorkerRank)
                 throw new BlCantBeUpdated("this worker can't assign this task because the rank doesn't fit");
+        
         }
+    }
+    
+    public DateTime? CreateSchedule(int _id, DateTime? _date)
+    {
+        Do.Task? _task = _dal.Task.Read(_id);
+        if (_task == null)
+            throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
+
+        var startDates = from BO.TaskList taskList in getDependenceList(_task)
+                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.StartDate == null
+                         select taskList;
+        if (startDates.Count() > 0)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
+
+        var endDates = from BO.TaskList taskList in getDependenceList(_task)
+                       where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
+                       select taskList;
+        if (endDates.Count() > 0)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+
+        if (getDependenceList(_task) == null && _date < IBl.StartDateProject)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
+
+        //try
+        //{
+        //    Do.Task doTask = _task with { StartDate = _date };
+        //    _dal.Task.Update(doTask);
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine(ex);
+        //}
+        return _date;
+
     }
 }
