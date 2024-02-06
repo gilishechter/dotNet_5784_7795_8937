@@ -7,7 +7,7 @@ internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
    /// <summary>
-   /// The function get bo worker and throw exception / create the worker
+   /// The function get bo worker and throw exception / create the worker object
    /// </summary>
    /// <param name="boWorker"></param>
    /// <returns></returns>
