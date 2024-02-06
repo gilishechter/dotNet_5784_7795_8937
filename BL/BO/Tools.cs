@@ -5,53 +5,34 @@ namespace BO;
 
 public static class Tools
 {
-    //public static string ToStringProperty<T>(this T obj)
-    //{
-    //    var properties = typeof(T).GetProperties();
-    //    string result = $"{typeof(T).Name} properties:\n";
-
-    //    foreach (var prop in properties)
-    //    {
-    //        result += $"{prop.Name}: {prop.GetValue(obj)}\n";
-    //    }
-
-    //    return result;
-    //}     
-
+   /// <summary>
+   /// add all the object properties to one long string
+   /// </summary>
+   /// <typeparam name="T"></typeparam>
+   /// <param name="obj"></param>
+   /// <returns></returns>
     public static string ToStringProperty<T>(this T obj)
     {
-        var properties = typeof(T).GetProperties();
-        string result = $"{typeof(T).Name} properties:\n";
+        var properties = typeof(T).GetProperties();//get the type
+        StringBuilder resultBuilder = new StringBuilder();//build empty string
+        resultBuilder.Append($"{typeof(T).Name} properties:\n");//add the title to the list
 
         foreach (var prop in properties)
         {
-            if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            object propValue = prop.GetValue(obj);//get the value of the prop
+            if (propValue is IEnumerable<object> collectionValue)//if the prop is a IEnumerable
             {
                 // Handle collection property
-                var collectionValue = prop.GetValue(obj) as IEnumerable<object>;
-                if (collectionValue != null)
-                {
-                    result += $"{prop.Name}: [";
-                    foreach (var item in collectionValue)
-                    {
-                        result += $"{item}, ";
-                    }
-                    // Remove the trailing comma and space
-                    if (result.EndsWith(", "))
-                    {
-                        result = result.Remove(result.Length - 2);
-                    }
-                    result += "]\n";
-                }
+                resultBuilder.Append($"{prop.Name}: [{string.Join(", ", collectionValue)}]\n");//add all the list to the string
             }
             else
             {
                 // Handle non-collection property
-                result += $"{prop.Name}: {prop.GetValue(obj)}\n";
+                resultBuilder.Append($"{prop.Name}: {propValue}\n");//add the reguler props
             }
         }
 
-        return result;
+        return resultBuilder.ToString();//return the string
     }
 
 }
