@@ -6,6 +6,13 @@ using BO;
 internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+   /// <summary>
+   /// The function get bo worker and throw exception / create the worker
+   /// </summary>
+   /// <param name="boWorker"></param>
+   /// <returns></returns>
+   /// <exception cref="FormatException"></exception>
+   /// <exception cref="BlAlreadyExistsException"></exception>
     public int Create(BO.Worker boWorker)
     {
         if (boWorker.Id <= 0)
@@ -14,11 +21,11 @@ internal class WorkerImplementation : IWorker
             throw new FormatException("you must enter a name");
         if (boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
-        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com")))
+        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com"))) 
             throw new FormatException("you must enter an email");
       
         Do.Worker Doworker = new (boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
-        boWorker.WorkerTask = GetWorkerTask(Doworker);
+        boWorker.WorkerTask = GetWorkerTask(Doworker);//update current task for worker 
         try
         {
             int idWorker = _dal.Worker.Create(Doworker);
