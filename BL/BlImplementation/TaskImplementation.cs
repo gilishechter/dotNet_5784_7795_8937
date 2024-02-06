@@ -181,6 +181,7 @@ internal class TaskImplementation : ITask
         try
         {
             CheckTaskForWorker(boTask);
+            
             CheckStartDate(boTask.Id, boTask.StartDate);
             _dal.Task.Update(doTask);
         }
