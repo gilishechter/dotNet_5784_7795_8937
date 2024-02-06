@@ -141,13 +141,13 @@ internal class WorkerImplementation : IWorker
     {
         BO.Worker oldWorker = Read(boWorker.Id)!;
 
-        if ((boWorker.Email != "") && boWorker.HourPrice <= 0)
+        if ( boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
 
         if ((boWorker.Email != "") && (!boWorker.Email!.Contains("@gmail.com")))
-            throw new FormatException("you must enter an email");
+            throw new FormatException("this email is wrong please enter a valid email");
 
-        if ((boWorker.Email != "") && oldWorker.WorkerRank > boWorker.WorkerRank)
+        if (oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
         if (boWorker.WorkerTask!=null && boWorker.WorkerTask.Id is int taskId)
