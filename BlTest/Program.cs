@@ -8,63 +8,7 @@ internal class Programe
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    public static void CreateSchedule(int _id, DateTime? _date)
-    {
-        BO.Task? _task = s_bl.Task.Read(_id);
-        if (_task == null)
-            throw new BlDoesNotExistException($"this _task with id ={_id} doesn't exist");
-
-        var startDates = from BO.TaskList taskList in _task.DependenceTasks
-                         where _task.DependenceTasks != null && s_bl.Task.Read(taskList.Id) != null && s_bl.Task.Read(taskList.Id).StartDate == null
-                         select taskList;
-        if (startDates.Count() > 0)
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
-
-        var endDates = from BO.TaskList taskList in _task.DependenceTasks
-                       where _task.DependenceTasks != null && s_bl.Task.Read(taskList.Id) != null && s_bl.Task.Read(taskList.Id).EndingDate > _date
-                       select taskList;
-        if (endDates.Count() > 0)
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
-
-        if (_task.DependenceTasks == null && _date < IBl.StartDateProject)
-            throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
-
-        //        try
-        //        {
-        //            BO.Task? botask = new()
-        //            {
-        //                Id = _task.Id,
-        //                IdWorker = _task.IdWorker,
-        //                NameWorker = _task.NameWorker,
-        //                Description = _task.Description,
-        //                MileStone = _task.MileStone,
-        //                Time = _task.Time,
-        //                CreateDate = _task.CreateDate,
-        //                WantedStartDate = _task.WantedStartDate,
-        //                StartDate = _date,
-        //                EndingDate = _task?.EndingDate,
-        //                DeadLine = _task!.DeadLine,
-        //                Product = _task.Product,
-        //                Notes = _task.Notes,
-        //                Rank = _task.Rank,
-        //                Status = _task.Status,
-        //                DependenceTasks = _task.DependenceTasks,
-        //            };
-        //            s_bl.Task.Update(botask);
-        //        }
-        //        catch (Exception ex)
-        //+       {
-        //            Console.WriteLine(ex);
-        //        }
-    }
-
-
-
-
-
-
-
-
+   
     private static void Menu()
     {
         Console.WriteLine("Choose logic Entity:");
@@ -329,8 +273,11 @@ internal class Programe
         Console.WriteLine("Enter New Details for: Id worker, name, description, mile stone, time, create date,");
         Console.WriteLine("wanted start date, start date, end date, product, notes and level between 0 - 4");
 
-        int? IdWorker = int.Parse(Console.ReadLine());
-        IdWorker ??= task1!.IdWorker;
+        string? idWorker = (Console.ReadLine());
+        int? IdWorker = !string.IsNullOrEmpty(idWorker) ? int.Parse(idWorker) : task1!.IdWorker;
+        string? NameWorker = null;
+        if (IdWorker != null)           
+            NameWorker = s_bl.Worker.Read(IdWorker.Value).Name;
 
         string? Name = Console.ReadLine();
         if (Name == "")
@@ -372,17 +319,19 @@ internal class Programe
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             _Rank = task1!.Rank;
 
-        CreateSchedule(Id, StartDate);
+        
         BO.Task Task = new()
         {
+            Id = Id,
             IdWorker = IdWorker,
+            NameWorker = NameWorker,
             Name = Name,
             Description = Description,
             MileStone = MileStone,
             Time = Time,
             CreateDate = CreateDate,
             WantedStartDate = WantedStartDate,
-            //StartDate = StartDate,
+            StartDate = StartDate,
             EndingDate = EndingDate,
             DeadLine = DeadLine,
             Product = Product,
@@ -391,6 +340,7 @@ internal class Programe
 
         };//build the _task object
         s_bl.Task?.Update(Task);
+
     }
     private static void DeleteTask()
     {

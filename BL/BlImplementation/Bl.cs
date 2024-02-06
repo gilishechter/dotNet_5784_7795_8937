@@ -67,8 +67,9 @@ internal class Bl : IBl
         var tasks = BlApi.Factory.Get().Task.ReadAll();
         if (IBl.StartDateProject == null)
             return StatusProject.Planning;
-        var noStartDate = from BO.Task boTask in tasks
-                          where boTask.StartDate == null
+        var noStartDate = from BO.TaskList boTask in tasks
+                          let task = BlApi.Factory.Get().Task.Read(boTask.Id)
+                          where task.StartDate == null ||task.IdWorker==null
                           select boTask;
         if (noStartDate.Count() > 0)
             return StatusProject.Mid;
