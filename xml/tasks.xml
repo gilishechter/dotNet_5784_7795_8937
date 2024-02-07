@@ -316,4 +316,20 @@
     <Notes />
     <Rank>3</Rank>
   </Task>
+  <Task>
+    <Id>22</Id>
+    <IdWorker xsi:nil="true" />
+    <Name>hg</Name>
+    <Description>hg</Description>
+    <MileStone>true</MileStone>
+    <Time>P3D</Time>
+    <CreateDate xsi:nil="true" />
+    <WantedStartDate xsi:nil="true" />
+    <StartDate xsi:nil="true" />
+    <EndingDate xsi:nil="true" />
+    <DeadLine xsi:nil="true" />
+    <Product>fd</Product>
+    <Notes>re</Notes>
+    <Rank>3</Rank>
+  </Task>
 </ArrayOfTask>
