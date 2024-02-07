@@ -62,11 +62,7 @@ internal class TaskImplementation : ITask
             if (boTask.DependenceTasks != null)
             {
                 var dependencies = (from BO.TaskList dep in boTask.DependenceTasks
-                                   select _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id))).ToList();
-                //foreach (var dep in boTask.DependenceTasks)
-                //{
-                //    _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id));//create the dependency
-                //}
+                                   select _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id))).ToList();              
             }
             return idTask;
         }
