@@ -17,7 +17,7 @@ internal class Programe
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - to initialize the data");
         Console.WriteLine("4 - to Clear the data");
-        if (s_bl.Task.getStartProject() == null)
+        if (s_bl.getStartProject() == null)
             Console.WriteLine("5 - If you want to enter the start project date");
         
 
@@ -509,7 +509,7 @@ internal class Programe
                 case 5:
                     Console.WriteLine("Enter the date:");
                     DateTime date = DateTime.Parse(Console.ReadLine());
-                    s_bl.Task.setStartProject(date);
+                    s_bl.setStartProject(date);
                     break;
             }
             Menu();

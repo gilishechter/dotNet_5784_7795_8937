@@ -96,23 +96,5 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.Clear();
     }
 
-    public void setStartDate(DateTime? startDate)
-    {
-        DataSource.Config.startDate = startDate;
-    }
-
-    public DateTime? getStartDate()
-    {
-        return DataSource.Config.startDate;
-    }
-
-    public void setEndDate(DateTime? endDate)
-    {
-        DataSource.Config.startDate = endDate;
-    }
-
-    public DateTime? getEndDate()
-    {
-        return DataSource.Config.endDate;
-    }
+   
 }

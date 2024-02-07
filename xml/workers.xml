@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Worker>
+    <Id>123</Id>
+    <WorkerRank>Advanced</WorkerRank>
+    <HourPrice>25</HourPrice>
+    <Name>fds</Name>
+    <Email>@gmail.com</Email>
+  </Worker>
+</ArrayOfWorker>

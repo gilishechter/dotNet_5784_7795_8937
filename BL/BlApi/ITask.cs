@@ -7,10 +7,5 @@ public interface ITask
     public void Delete(int Id);
     public int Create(BO.Task task);
     public BO.Task? Read(int Id);
-    public void setStartProject(DateTime? date);
-    public void setEndProject(DateTime? date);
-    public DateTime? getStartProject();
-    public DateTime? getEndProject();
-
 
 }

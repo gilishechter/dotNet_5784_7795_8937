@@ -8,6 +8,8 @@ namespace BlImplementation;
 
 internal class Bl : IBl
 {
+    public DalApi.IDal _dal = DalApi.Factory.Get;
+
     public ITask Task => new TaskImplementation();
 
     public ITaskList TaskList => new TaskListImplementation();
@@ -48,7 +50,7 @@ internal class Bl : IBl
         {
             BO.Task wantedTask = tasks.Read(task.Id)!;
             if (wantedTask.DependenceTasks == null)
-                wantedTask.StartDate = tasks.getStartProject();
+                wantedTask.StartDate = _dal.getStartDate();
             else
             {
                 var max = tasks.Read(task.Id)!.DeadLine;
@@ -65,7 +67,7 @@ internal class Bl : IBl
     public StatusProject CheckStatusProject()//check
     {
         var tasks = BlApi.Factory.Get().Task.ReadAll();
-        if (BlApi.Factory.Get().Task.getStartProject() == null)
+        if (BlApi.Factory.Get().getStartProject() == null)
             return StatusProject.Planning;
         var noStartDate = from BO.TaskList boTask in tasks
                           let task = BlApi.Factory.Get().Task.Read(boTask.Id)
@@ -76,4 +78,10 @@ internal class Bl : IBl
         return StatusProject.Execution; 
 
     }
+
+    public DateTime? getEndProject()=> _dal.getEndDate();
+    public DateTime? getStartProject() => _dal.getStartDate();  
+    public void setEndProject(DateTime? date)=> _dal.setEndDate(date);
+    public void setStartProject(DateTime? date)=>_dal.setStartDate(date);
+   
 }

@@ -55,32 +55,7 @@ internal class TaskImplementation : ITask
         throw new DalDoesNotExistException($"this task with id={Id} is not exist");//throw exception
     }
 
-    public DateTime? getEndDate()
-    {
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        return root.ToDateTimeNullable("endDate");
-    }
-
-    public DateTime? getStartDate()
-    {
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        return root.ToDateTimeNullable("startDate");
-    }
-
-    public void setEndDate(DateTime? startDate)
-    {
-       
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        root.Element("endDate").Value = startDate.ToString();
-        XMLTools.SaveListToXMLElement(root, "endDate");
-    }
-
-    public void setStartDate(DateTime? startDate)
-    {
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        root.Element("startDate").SetValue(startDate.ToString());
-        XMLTools.SaveListToXMLElement(root, "data-config");
-    }
+  
 
     /// <summary>
     /// Reads entity object by its ID 
