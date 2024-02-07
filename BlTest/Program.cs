@@ -17,8 +17,12 @@ internal class Programe
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - to initialize the data");
         Console.WriteLine("4 - to Clear the data");
-        if(s_bl.Task.getStartProject() == null)
+        if (s_bl.Task.getStartProject() == null)
+            Console.WriteLine("5 - If you want to enter the start project date");
+        if (s_bl.Task.getStartProject() != null && s_bl.CheckStatusProject() == StatusProject.Planning)
             Console.WriteLine("5 - If you want to update the start project date");
+
+
     }
 
     private static void SubMenuTask()
