@@ -16,9 +16,9 @@ internal class Bl : IBl
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
-    public DateTime StartDateProject =>  new();
+    //public DateTime StartDateProject => new();
 
-    public DateTime EndDateProject => new();
+   // public DateTime EndDateProject => new();
 
     public void AutometicSchedule()
     {
@@ -48,7 +48,7 @@ internal class Bl : IBl
         {
             BO.Task wantedTask = tasks.Read(task.Id)!;
             if (wantedTask.DependenceTasks == null)
-                wantedTask.StartDate = StartDateProject;
+                wantedTask.StartDate = tasks.getStartProject();
             else
             {
                 var max = tasks.Read(task.Id)!.DeadLine;
@@ -65,7 +65,7 @@ internal class Bl : IBl
     public StatusProject CheckStatusProject()//check
     {
         var tasks = BlApi.Factory.Get().Task.ReadAll();
-        if (IBl.StartDateProject == null)
+        if (BlApi.Factory.Get().Task.getStartProject() == null)
             return StatusProject.Planning;
         var noStartDate = from BO.TaskList boTask in tasks
                           let task = BlApi.Factory.Get().Task.Read(boTask.Id)

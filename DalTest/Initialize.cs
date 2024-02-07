@@ -221,6 +221,7 @@ public static class Initialization
         s_dal.Worker.ClearList();
         s_dal.Dependency.ClearList();
         s_dal.Task.ClearList();
+        s_dal.Task.setStartDate(null);
     }
 }
 
