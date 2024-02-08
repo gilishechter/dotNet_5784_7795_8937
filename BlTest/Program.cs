@@ -508,7 +508,7 @@ internal class Programe
                     break;
                 case 5:
                     Console.WriteLine("Enter the date:");
-                    DateTime date = DateTime.Parse(Console.ReadLine());
+                    DateTime.TryParse(Console.ReadLine(), out DateTime date);
                     s_bl.setStartProject(date);
                     break;
             }

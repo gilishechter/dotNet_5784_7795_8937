@@ -234,7 +234,7 @@ internal class TaskImplementation : ITask
         if (result.Count() > 0)
             throw new BlCantBeUpdated("this date can't be updated");
 
-        if (getDependenceList(doTask) != null && _dal.getStartDate()!=null && date < _dal.getStartDate())//if the given date is sooner then the start date project
+        if (getDependenceList(doTask) != null && _dal.GetStartDate()!=null && date < _dal.GetStartDate())//if the given date is sooner then the start date project
             throw new BlCantBeUpdated("this date can't be updated");
     }
     /// <summary>
@@ -290,7 +290,7 @@ internal class TaskImplementation : ITask
         if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
             throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
 
-        if (getDependenceList(_task) == null && _date < _dal.getStartDate())//if he date is sooner then the start project date
+        if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
             throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
 
       

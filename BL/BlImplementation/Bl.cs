@@ -50,7 +50,7 @@ internal class Bl : IBl
         {
             BO.Task wantedTask = tasks.Read(task.Id)!;
             if (wantedTask.DependenceTasks == null)
-                wantedTask.StartDate = _dal.getStartDate();
+                wantedTask.StartDate = _dal.GetStartDate();
             else
             {
                 var max = tasks.Read(task.Id)!.DeadLine;
@@ -79,9 +79,9 @@ internal class Bl : IBl
 
     }
 
-    public DateTime? getEndProject()=> _dal.getEndDate();
-    public DateTime? getStartProject() => _dal.getStartDate();  
-    public void setEndProject(DateTime? date)=> _dal.setEndDate(date);
-    public void setStartProject(DateTime? date)=>_dal.setStartDate(date);
+    public DateTime? getEndProject()=> _dal.GetEndDate();
+    public DateTime? getStartProject() => _dal.GetStartDate();  
+    public void setEndProject(DateTime? date)=> _dal.SetEndDate(date);
+    public void setStartProject(DateTime? date)=>_dal.SetStartDate(date);
    
 }

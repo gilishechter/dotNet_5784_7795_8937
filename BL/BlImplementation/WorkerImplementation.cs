@@ -134,13 +134,7 @@ internal class WorkerImplementation : IWorker
                           HourPrice = doWorker.HourPrice,
                           Name = doWorker.Name,
                           Email = doWorker.Email,
-
-                          WorkerTask = new WorkerTask
-                          {
-                              Id = task != null ? task.Id : null,
-                              Name = task != null ? task.Name : null
-                          }
-
+                          WorkerTask = GetWorkerTask(doWorker)
                       });
         }
         else
@@ -155,11 +149,7 @@ internal class WorkerImplementation : IWorker
                           Name = doWorker.Name,
                           Email = doWorker.Email,
 
-                          WorkerTask = new WorkerTask
-                          {
-                              Id = task != null ? task.Id : null,
-                              Name = task != null ? task.Name : null
-                          }
+                          WorkerTask = GetWorkerTask(doWorker)                       
                       }
                       where filter(boWorker)
                       select boWorker

@@ -12,9 +12,12 @@ sealed internal class DalList : IDal
     public IDependency Dependency => new DependenceImplementation();
     public ITask Task => new TaskImplementation();
 
-    public void setStartDate(DateTime? startDate) => DataSource.Config.startDate = startDate;
-    public DateTime? getStartDate() { return DataSource.Config.startDate; }
-    public void setEndDate(DateTime? endDate) => DataSource.Config.startDate = endDate;  
-    public DateTime? getEndDate()   { return DataSource.Config.endDate; }
 
+    public void SetStartDate(DateTime? startDate) => DataSource.Config.StartProjectDate = startDate;
+    public DateTime? GetStartDate() { return DataSource.Config.StartProjectDate; } 
+    public void SetEndDate(DateTime? endDate) => DataSource.Config.endProjectDate = endDate;  
+    public DateTime? GetEndDate()  { return DataSource.Config.endProjectDate; }
+
+   
 }
+

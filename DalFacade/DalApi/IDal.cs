@@ -9,9 +9,13 @@ public interface IDal
     IDependency Dependency { get; }
     ITask Task { get; }
 
-    public void setStartDate(DateTime? startDate);
-    public DateTime? getStartDate();
-    public void setEndDate(DateTime? startDate);
-    public DateTime? getEndDate();
+    //public DateTime? StartProjectDate { get; set; }
+    //public DateTime? EndProjectDate { get; set; }
+    public void SetStartDate(DateTime? startDate);
+    public DateTime? GetStartDate();
+    public void SetEndDate(DateTime? startDate);
+    public DateTime? GetEndDate();
+
+
 }
 
