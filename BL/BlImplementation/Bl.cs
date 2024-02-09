@@ -26,25 +26,6 @@ internal class Bl : IBl
     {
         var tasks = BlApi.Factory.Get().Task;
 
-        //var task1 = from Do.Task doTask in tasks.ReadAll()
-        //            let wantedTask = tasks.Read(doTask.Id)
-        //            //from BO.TaskList taskList in wantedTask.DependenceTasks
-        //            where wantedTask.DependenceTasks == null
-        //            select wantedTask.StartDate = StartDateProject;
-
-        //var task2 = from Do.Task doTask in tasks.ReadAll()
-        //            let wantedTask = tasks.Read(doTask.Id)
-        //            where wantedTask.DependenceTasks != null
-
-
-
-        //            from BO.TaskList taskList in wantedTask.DependenceTasks
-        //            let wantedDepTask = tasks.Read(taskList.Id)                   
-        //            orderby wantedDepTask.StartDate descending
-        //            select wantedTask.StartDate = wantedTask.DependenceTasks.FirstOrDefault()
-
-
-
 
         foreach (var task in tasks.ReadAll())
         {
