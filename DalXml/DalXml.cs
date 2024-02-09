@@ -27,14 +27,14 @@ sealed internal class DalXml : IDal
     public void SetEndDate(DateTime? startDate)
     {
         XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        root.Element("endDate").Value = startDate.ToString();
+        root.Element("endDate").Value = startDate.ToString()!;
         XMLTools.SaveListToXMLElement(root, "endDate");
     }
 
     public void SetStartDate(DateTime? startDate)
     {
         XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        root.Element("startDate").SetValue(startDate.ToString());
+        root.Element("startDate").SetValue(startDate.ToString()!);
         XMLTools.SaveListToXMLElement(root, "data-config");
     }
 

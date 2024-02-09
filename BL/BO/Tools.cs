@@ -14,12 +14,12 @@ public static class Tools
     public static string ToStringProperty<T>(this T obj)
     {
         var properties = typeof(T).GetProperties();//get the type
-        StringBuilder resultBuilder = new StringBuilder();//build empty string
+        StringBuilder resultBuilder = new();//build empty string
         resultBuilder.Append($"{typeof(T).Name} properties:\n");//add the title to the list
 
         foreach (var prop in properties)
         {
-            object propValue = prop.GetValue(obj);//get the value of the prop
+            object propValue = prop.GetValue(obj)!;//get the value of the prop
             if (propValue is IEnumerable<object> collectionValue)//if the prop is a IEnumerable
             {
                 // Handle collection property

@@ -17,7 +17,7 @@ internal class Programe
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - to initialize the data");
         Console.WriteLine("4 - to Clear the data");
-        if (s_bl.getStartProject() == null)
+        if (s_bl.GetStartProject() == null)
             Console.WriteLine("5 - If you want to enter the start project date");
         
 
@@ -233,7 +233,7 @@ internal class Programe
                     Id = depTask,
                     Name = s_bl.Task.Read(depTask)!.Name,
                     Description = s_bl.Task.Read(depTask)!.Description,
-                    Status = s_bl.Task.Read(depTask).Status
+                    Status = s_bl.Task.Read(depTask)!.Status
                 };
                 dependencies.Add(task);// update the dependence task if he enter
 
@@ -289,7 +289,7 @@ internal class Programe
         int? IdWorker = !string.IsNullOrEmpty(idWorker) ? int.Parse(idWorker) : task1!.IdWorker;
         string? NameWorker = null;
         if (IdWorker != null)           
-            NameWorker = s_bl.Worker.Read(IdWorker.Value).Name;
+            NameWorker = s_bl.Worker.Read(IdWorker.Value)!.Name;
 
         string? Name = Console.ReadLine();
         if (Name == "")
@@ -509,7 +509,7 @@ internal class Programe
                 case 5:
                     Console.WriteLine("Enter the date:");
                     DateTime.TryParse(Console.ReadLine(), out DateTime date);
-                    s_bl.setStartProject(date);
+                    s_bl.SetStartProject(date);
                     break;
             }
             Menu();

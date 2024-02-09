@@ -48,7 +48,7 @@ internal class WorkerImplementation : IWorker
     {
         BO.Worker boWorker = Read(_Id)!;
 
-        if (boWorker.WorkerTask.Id is int taskId)
+        if (boWorker.WorkerTask!.Id is int taskId)
         {
             var doTask = _dal.Task.Read(taskId);
             if (doTask is not null)
