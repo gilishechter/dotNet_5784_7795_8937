@@ -4,5 +4,5 @@
 /// </summary>
 public enum Rank
 {
-    Beginner, Advanced_Beginner, Intermediate, Advanced, Expert
+    Beginner, Advanced_Beginner, Intermediate, Advanced, Expert, None
 }

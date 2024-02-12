@@ -1,7 +1,7 @@
 ﻿namespace BO;
 public enum Rank
 {
-    Beginner, Advanced_Beginner, Intermediate, Advanced, Expert
+    Beginner, Advanced_Beginner, Intermediate, Advanced, Expert, None
 }
 
 public enum Status

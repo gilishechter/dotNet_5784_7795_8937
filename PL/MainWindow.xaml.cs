@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.worker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click_Workers(object sender, RoutedEventArgs e)
+        {
+            new WorkerWindow().Show();
+        }
+
+        private void Button_Click_init(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo);
+            if (MessageBoxResult.Yes == result)
+                DalTest.Initialization.Do();              
         }
     }
 }

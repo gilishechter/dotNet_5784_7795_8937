@@ -19,9 +19,29 @@ namespace PL.worker
     /// </summary>
     public partial class WorkerWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public WorkerWindow()
         {
             InitializeComponent();
+            workers = s_bl?.Worker.ReadAll()!;
+        }
+
+        public IEnumerable<BO.Worker> workers
+        {
+            get { return (IEnumerable<BO.Worker>)GetValue(WorkersProperty); }
+            set { SetValue(WorkersProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WorkersProperty =
+            DependencyProperty.Register("workers", typeof(IEnumerable<BO.Worker>), typeof(WorkerWindow), new PropertyMetadata(null));
+
+        public BO.Rank Rank { get; set; } = BO.Rank.None;
+
+        private void ComboBox_SelectionChanged_Rank(object sender, SelectionChangedEventArgs e)
+        {
+            workers = (Rank == BO.Rank.None) ?
+            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.WorkerRank == Rank)!;
         }
     }
 }

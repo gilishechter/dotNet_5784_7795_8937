@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:Rankcollection x:Key="RankCollectionKey" />
+
     </Application.Resources>
 </Application>
