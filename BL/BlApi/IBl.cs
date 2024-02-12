@@ -13,13 +13,10 @@ public interface IBl
     public IWorker Worker { get;}
     public IWorkerTask WorkerTask { get;}
 
-    //public static DateTime? StartDateProject { get; set; } = new DateTime(2024,1,1);
-    //public static DateTime? EndDateProject { get => 
-
-    public void setStartProject(DateTime? date);
-    public void setEndProject(DateTime? date);
-    public DateTime? getStartProject();
-    public DateTime? getEndProject();
+    public void SetStartProject(DateTime? date);
+    public void SetEndProject(DateTime? date);
+    public DateTime? GetStartProject();
+    public DateTime? GetEndProject();
     public StatusProject CheckStatusProject();
-    //public void AutometicSchedule();
+    //public void AutometicSchedule(); we didn't do the bonus yet
 }

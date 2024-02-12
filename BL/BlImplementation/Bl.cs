@@ -19,19 +19,33 @@ internal class Bl : IBl
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
-    //public DateTime StartDateProject => new();
-
-    // public DateTime EndDateProject => new();
-
-    //public void AutometicSchedule()
+    //public void AutometicSchedule()            //we didn't do the bonus yet
     //{
     //    var tasks = BlApi.Factory.Get().Task;
-        
+
     //    foreach (var task in tasks.ReadAll())
     //    {
     //        var fullTask = tasks.Read(task.Id);
     //        if (fullTask.DependenceTasks == null)
     //            fullTask.StartDate = _dal.GetStartDate();
+    //    }
+    //}
+
+    //    foreach (var task in tasks.ReadAll())
+    //    {
+    //        BO.Task wantedTask = tasks.Read(task.Id)!;
+    //        if (wantedTask.DependenceTasks == null)
+    //            wantedTask.StartDate = _dal.GetStartDate();
+    //        else
+    //        {
+    //            var max = tasks.Read(task.Id)!.DeadLine;
+    //            foreach (var taskList in wantedTask.DependenceTasks)
+    //            {
+    //                if (tasks.Read(taskList.Id)!.DeadLine > max)
+    //                    max = tasks.Read(taskList.Id)!.DeadLine;
+    //            }
+    //            wantedTask.StartDate = max;
+    //        }
     //    }
     //}
 
@@ -45,31 +59,12 @@ internal class Bl : IBl
     //        //var startDates = task.DependenceTasks.Where(date => tasks.Read(date.Id).StartDate != null);
     //        foreach(var x)
 
-    //    }
-       
-
+    //    }       
     //}
-
-
-
-        //foreach (var task in tasks.ReadAll())
-        //{
-        //    BO.Task wantedTask = tasks.Read(task.Id)!;
-        //    if (wantedTask.DependenceTasks == null)
-        //        wantedTask.StartDate = _dal.GetStartDate();
-        //    else
-        //    {
-        //        var max = tasks.Read(task.Id)!.DeadLine;
-        //        foreach (var taskList in wantedTask.DependenceTasks)
-        //        {
-        //            if (tasks.Read(taskList.Id)!.DeadLine > max)
-        //                max = tasks.Read(taskList.Id)!.DeadLine;
-        //        }
-        //        wantedTask.StartDate = max;
-    public StatusProject CheckStatusProject()//check
+    public StatusProject CheckStatusProject()
     {
         var tasks = BlApi.Factory.Get().Task.ReadAll();
-        if (BlApi.Factory.Get().getStartProject() == null)
+        if (BlApi.Factory.Get().GetStartProject() == null)
             return StatusProject.Planning;
         var noStartDate = from BO.TaskList boTask in tasks
                           let task = BlApi.Factory.Get().Task.Read(boTask.Id)
@@ -81,9 +76,9 @@ internal class Bl : IBl
 
     }
 
-    public DateTime? getEndProject()=> _dal.GetEndDate();
-    public DateTime? getStartProject() => _dal.GetStartDate();  
-    public void setEndProject(DateTime? date)=> _dal.SetEndDate(date);
-    public void setStartProject(DateTime? date)=>_dal.SetStartDate(date);
+    public DateTime? GetEndProject()=> _dal.GetEndDate();
+    public DateTime? GetStartProject() => _dal.GetStartDate();  
+    public void SetEndProject(DateTime? date)=> _dal.SetEndDate(date);
+    public void SetStartProject(DateTime? date)=>_dal.SetStartDate(date);
    
 }
