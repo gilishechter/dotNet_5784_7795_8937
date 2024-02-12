@@ -11,7 +11,7 @@
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Width"
-                       Value="110"/>
+                       Value="120"/>
             <Setter Property="Height"
                     Value="43"/>
             <Setter Property="HorizontalAlignment"
@@ -19,7 +19,7 @@
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Width"
-                       Value="110"/>
+                       Value="150"/>
             <Setter Property="Height"
                     Value="43"/>
             <Setter Property="HorizontalAlignment"
@@ -36,10 +36,10 @@
         <Label Content="Rank:" Margin="70,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
         <ComboBox  ItemsSource="{Binding Source={StaticResource RankCollectionKey}}"
         SelectedValue="{Binding WorkerRank, Mode=TwoWay, NotifyOnValidationError=true, 
-        ValidatesOnExceptions=true}" Margin="250,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168" Width="110" Height="43" HorizontalAlignment="Left"/>
+        ValidatesOnExceptions=true}" Margin="250,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168" Width="150" Height="43" HorizontalAlignment="Left"/>
 
         <Label Content="Current Task Name:" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-        <TextBox Text="{Binding WorkerTask.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding WorkerTask.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <Label Content="Email:" Margin="70,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
         <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>

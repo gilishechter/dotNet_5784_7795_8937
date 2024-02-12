@@ -21,14 +21,14 @@
         </Grid>
         <Label Content="Label" HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Rank, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged_Rank"/>
-        <ListView Grid.Column="1" Grid.Row="1"  ItemsSource="{Binding workers}">
+        <ListView Grid.Column="1" Grid.Row="1"  ItemsSource="{Binding workers}" MouseDoubleClick="Double_Click_Update">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Height="50" Width="100" Margin="0,531,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Button_Click_addWorker" MouseDoubleClick="Double_Click_UpdateWorker"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Height="50" Width="100" Margin="0,497,0,0" VerticalAlignment="Top" Click="Button_Click_addWorker"/>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

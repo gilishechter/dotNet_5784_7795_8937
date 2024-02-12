@@ -1,30 +1,31 @@
 ﻿namespace BlImplementation;
-using System.Net.Mail;
 using BlApi;
 using BO;
 
 internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
-   /// <summary>
-   /// The function get bo worker and throw exception / create the worker object
-   /// </summary>
-   /// <param name="boWorker"></param>
-   /// <returns></returns>
-   /// <exception cref="FormatException"></exception>
-   /// <exception cref="BlAlreadyExistsException"></exception>
+    /// <summary>
+    /// The function get bo worker and throw exception / create the worker object
+    /// </summary>
+    /// <param name="boWorker"></param>
+    /// <returns></returns>
+    /// <exception cref="FormatException"></exception>
+    /// <exception cref="BlAlreadyExistsException"></exception>
     public int Create(BO.Worker boWorker)
     {
         if (boWorker.Id <= 0)
             throw new FormatException("ID can't be negetive number");
-        if (boWorker.Name == "")
+        if (boWorker.Name == null)
             throw new FormatException("you must enter a name");
         if (boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
-        if ((boWorker.Email == "") || (!boWorker.Email!.Contains("@gmail.com"))) 
+        if ((boWorker.Email == null))
             throw new FormatException("you must enter an email");
-      
-        Do.Worker Doworker = new (boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
+        if ((!boWorker.Email!.Contains("@gmail.com")))
+            throw new FormatException("the email is invalid");
+
+        Do.Worker Doworker = new(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
         boWorker.WorkerTask = GetWorkerTask(Doworker);//update current task for worker 
         try
         {
@@ -60,15 +61,15 @@ internal class WorkerImplementation : IWorker
                     throw new BlDuringExecution("you cant delete worker during the execution if he has a task.");
             }
         }
-            try
-            {
-                _dal.Worker.Delete(_Id);
-            }
-            catch (Do.DalDoesNotExistException ex)
-            {
-                throw new BlDoesNotExistException($"Worker with ID={_Id} doesnt exists", ex);
-            }
-        
+        try
+        {
+            _dal.Worker.Delete(_Id);
+        }
+        catch (Do.DalDoesNotExistException ex)
+        {
+            throw new BlDoesNotExistException($"Worker with ID={_Id} doesnt exists", ex);
+        }
+
     }
     /// <summary>
     /// the function return the match status of the task 
@@ -85,7 +86,7 @@ internal class WorkerImplementation : IWorker
 
         return task switch
         {
-        Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
+            Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
             Do.Task t when t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
@@ -149,7 +150,7 @@ internal class WorkerImplementation : IWorker
                           Name = doWorker.Name,
                           Email = doWorker.Email,
 
-                          WorkerTask = GetWorkerTask(doWorker)                       
+                          WorkerTask = GetWorkerTask(doWorker)
                       }
                       where filter(boWorker)
                       select boWorker
@@ -158,13 +159,13 @@ internal class WorkerImplementation : IWorker
         var orderResult = result.OrderBy(doWorker => doWorker.Name); //order the worker by name
         return orderResult;
     }
-    
+
     // the function update the old worker to the new worker that the worke get
     public void Update(BO.Worker boWorker)
     {
         BO.Worker oldWorker = Read(boWorker.Id)!;
         //Checks if illogical values ​​have been entered
-        if ( boWorker.HourPrice <= 0)
+        if (boWorker.HourPrice <= 0)
             throw new FormatException("hour price can't be negetive number");
 
         if ((boWorker.Email != "") && (!boWorker.Email!.Contains("@gmail.com")))
@@ -173,7 +174,7 @@ internal class WorkerImplementation : IWorker
         if (oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
-        if (boWorker.WorkerTask!=null && boWorker.WorkerTask.Id is int taskId)//put the int value in taskId because read get int?
+        if (boWorker.WorkerTask != null && boWorker.WorkerTask.Id is int taskId)//put the int value in taskId because read get int?
         {
             var doTask = _dal.Task.Read(taskId);
             if (doTask is not null)
@@ -182,7 +183,7 @@ internal class WorkerImplementation : IWorker
                 _dal.Task.Update(doTask);
             }
         }
-        Do.Worker Doworker = new (boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
+        Do.Worker Doworker = new(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice,
             boWorker.Name, boWorker.Email);
         boWorker.WorkerTask = GetWorkerTask(Doworker);
 
@@ -205,7 +206,7 @@ internal class WorkerImplementation : IWorker
     public IEnumerable<BO.Worker> RankGroup(int rank)
     {
         var groupWorkers = _dal.Worker.ReadAll().GroupBy(r => (int)r.WorkerRank);
-        var wantedGroup = groupWorkers.FirstOrDefault(g=> g.Key == rank);
+        var wantedGroup = groupWorkers.FirstOrDefault(g => g.Key == rank);
         if (wantedGroup == null)
             throw new Exception("there is no such a worker");
         return from Do.Worker doWorker in wantedGroup

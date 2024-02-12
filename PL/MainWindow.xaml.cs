@@ -35,7 +35,7 @@ namespace PL
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo);
             if (MessageBoxResult.Yes == result)
-                DalTest.Initialization.Do();              
+                DalTest.Initialization.Do();         
         }
     }
 }

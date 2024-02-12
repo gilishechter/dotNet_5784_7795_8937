@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-//using System.Windows.Controls;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Shapes;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 namespace PL.worker;
 
 /// <summary>
@@ -20,8 +19,6 @@ namespace PL.worker;
 public partial class WorkerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
-
 
     public BO.Worker worker
     {
@@ -42,7 +39,7 @@ public partial class WorkerWindow : Window
             if (id == 0)
                 worker = new BO.Worker();
             else
-                s_bl.Worker.Read(id);
+               worker= s_bl.Worker.Read(id);
         }
         catch (Exception ex)
         {
@@ -54,16 +51,19 @@ public partial class WorkerWindow : Window
     {
         try
         {
-            BO.Worker worker = (BO.Worker)sender;
-            if (worker.Id == 0)
-            {
+            if (s_bl.Worker.ReadAll().FirstOrDefault(tmp=> tmp.Id ==worker.Id) == null)
+            {  
                 s_bl.Worker.Create(worker);
                 MessageBox.Show("The worker has been successfully added");
+                this.Close();
+                new WorkerlistWindow().Show();
             }
             else
             {
                 s_bl.Worker.Update(worker);
                 MessageBox.Show("The worker has been successfully updated");
+                this.Close();
+                new WorkerlistWindow().Show();
             }
         }
         catch (Exception ex)

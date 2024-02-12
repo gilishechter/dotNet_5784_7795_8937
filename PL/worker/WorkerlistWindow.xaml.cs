@@ -47,13 +47,14 @@ namespace PL.worker
         private void Button_Click_addWorker(object sender, RoutedEventArgs e)
         {
             new WorkerWindow().ShowDialog();
+            this.Close();///
         }
 
-        private void Double_Click_UpdateWorker(object sender, MouseButtonEventArgs e)
+        private void Double_Click_Update(object sender, MouseButtonEventArgs e)
         {
-            BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
+            BO.Worker? worker =(sender as ListView)?.SelectedItem as BO.Worker;
             new WorkerWindow(worker.Id).ShowDialog();
-
+            this.Close();
         }
     }
 }

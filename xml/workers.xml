@@ -1,38 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>876236754</Id>
-    <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>459</HourPrice>
-    <Name>Gili Shechter</Name>
-    <Email>GiliShechter@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>130929234</Id>
-    <WorkerRank>Intermediate</WorkerRank>
-    <HourPrice>299</HourPrice>
-    <Name>Ayelet Fridman</Name>
-    <Email>AyeletFridman@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>484888937</Id>
-    <WorkerRank>Expert</WorkerRank>
-    <HourPrice>227</HourPrice>
-    <Name>Bibi Netanyahu</Name>
-    <Email>BibiNetanyahu@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>954280531</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>315</HourPrice>
+    <Id>970895719</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>547</HourPrice>
     <Name>Eliana Yakobs</Name>
     <Email>ElianaYakobs@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>424483906</Id>
+    <Id>604818275</Id>
     <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>636</HourPrice>
+    <HourPrice>803</HourPrice>
     <Name>Dana Frider</Name>
     <Email>DanaFrider@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>216293373</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>1000000000</HourPrice>
+    <Name>esti</Name>
+    <Email>estifridman100@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>518164886</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>295</HourPrice>
+    <Name>Gili Shechter</Name>
+    <Email>GiliShechter@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>629868618</Id>
+    <WorkerRank>Advanced_Beginner</WorkerRank>
+    <HourPrice>500</HourPrice>
+    <Name>Bibi Netanyahu</Name>
+    <Email>BibiNetanyahu@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>908987563</Id>
+    <WorkerRank>Advanced</WorkerRank>
+    <HourPrice>600</HourPrice>
+    <Name>Ayelet Fridman</Name>
+    <Email>AyeletFridman@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>782</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>780</HourPrice>
+    <Name>bla</Name>
+    <Email>b@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>
