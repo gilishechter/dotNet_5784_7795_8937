@@ -4,6 +4,7 @@ using System.Collections.Generic;
 //using System.Text;
 //using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 //using System.Windows.Controls;
 //using System.Windows.Data;
 //using System.Windows.Documents;
@@ -42,6 +43,28 @@ public partial class WorkerWindow : Window
                 worker = new BO.Worker();
             else
                 s_bl.Worker.Read(id);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void Button_Click_AddOrUpdate(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            BO.Worker worker = (BO.Worker)sender;
+            if (worker.Id == 0)
+            {
+                s_bl.Worker.Create(worker);
+                MessageBox.Show("The worker has been successfully added");
+            }
+            else
+            {
+                s_bl.Worker.Update(worker);
+                MessageBox.Show("The worker has been successfully updated");
+            }
         }
         catch (Exception ex)
         {

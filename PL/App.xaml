@@ -6,5 +6,6 @@
     <Application.Resources>
         <local:Rankcollection x:Key="RankCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+        <local:ConvertIdToISEnable x:Key="ConverIdToIsEnableKey"/>
     </Application.Resources>
 </Application>

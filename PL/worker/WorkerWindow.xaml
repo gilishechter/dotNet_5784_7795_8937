@@ -28,7 +28,7 @@
     </Window.Resources>
     <Grid>
         <Label Content="ID:" Margin="70,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding Id}" Margin="250,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding Id,Converter={StaticResource ConverIdToIsEnableKey}}" Margin="250,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
 
         <Label Content="Name:" Margin="70,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
         <TextBox  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -51,7 +51,7 @@
         <TextBox Text="{Binding WorkerTask.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-         HorizontalAlignment="Left" Margin="348,449,0,0" VerticalAlignment="Top" Height="32" Width="70"/>
+         HorizontalAlignment="Left" Margin="348,449,0,0" VerticalAlignment="Top" Height="32" Width="70" Click="Button_Click_AddOrUpdate"/>
 
     </Grid>
 </Window>

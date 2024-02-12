@@ -43,5 +43,17 @@ namespace PL.worker
             workers = (Rank == BO.Rank.None) ?
             s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.WorkerRank == Rank)!;
         }
+
+        private void Button_Click_addWorker(object sender, RoutedEventArgs e)
+        {
+            new WorkerWindow().ShowDialog();
+        }
+
+        private void Double_Click_UpdateWorker(object sender, MouseButtonEventArgs e)
+        {
+            BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
+            new WorkerWindow(worker.Id).ShowDialog();
+
+        }
     }
 }
