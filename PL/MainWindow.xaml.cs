@@ -28,7 +28,7 @@ namespace PL
 
         private void Button_Click_Workers(object sender, RoutedEventArgs e)
         {
-            new WorkerWindow().Show();
+            new WorkerlistWindow().Show();
         }
 
         private void Button_Click_init(object sender, RoutedEventArgs e)

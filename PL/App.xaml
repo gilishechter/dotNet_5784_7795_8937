@@ -5,6 +5,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:Rankcollection x:Key="RankCollectionKey" />
-
+        <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
     </Application.Resources>
 </Application>
