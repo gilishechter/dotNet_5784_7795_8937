@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>970895719</Id>
+    <Id>139945462</Id>
     <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>547</HourPrice>
-    <Name>Eliana Yakobs</Name>
-    <Email>ElianaYakobs@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>604818275</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>803</HourPrice>
-    <Name>Dana Frider</Name>
-    <Email>DanaFrider@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>216293373</Id>
-    <WorkerRank>Expert</WorkerRank>
-    <HourPrice>1000000000</HourPrice>
-    <Name>esti</Name>
-    <Email>estifridman100@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>518164886</Id>
-    <WorkerRank>Expert</WorkerRank>
-    <HourPrice>295</HourPrice>
+    <HourPrice>465</HourPrice>
     <Name>Gili Shechter</Name>
     <Email>GiliShechter@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>629868618</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>500</HourPrice>
+    <Id>128716025</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>834</HourPrice>
     <Name>Bibi Netanyahu</Name>
     <Email>BibiNetanyahu@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>908987563</Id>
-    <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>600</HourPrice>
-    <Name>Ayelet Fridman</Name>
-    <Email>AyeletFridman@gmail.com</Email>
+    <Id>644979623</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>562</HourPrice>
+    <Name>Eliana Yakobs</Name>
+    <Email>ElianaYakobs@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>782</Id>
+    <Id>927430378</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>654</HourPrice>
+    <Name>Dana Frider</Name>
+    <Email>DanaFrider@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>138327048</Id>
     <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>780</HourPrice>
-    <Name>bla</Name>
-    <Email>b@gmail.com</Email>
+    <HourPrice>164</HourPrice>
+    <Name>Ayelet</Name>
+    <Email>AyeletFridman@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>

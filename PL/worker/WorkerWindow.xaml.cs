@@ -43,7 +43,7 @@ public partial class WorkerWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -54,21 +54,22 @@ public partial class WorkerWindow : Window
             if (s_bl.Worker.ReadAll().FirstOrDefault(tmp=> tmp.Id ==worker.Id) == null)
             {  
                 s_bl.Worker.Create(worker);
-                MessageBox.Show("The worker has been successfully added");
+                MessageBox.Show("The worker has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new WorkerlistWindow().Show();
             }
             else
             {
                 s_bl.Worker.Update(worker);
-                MessageBox.Show("The worker has been successfully updated");
+                MessageBox.Show("The worker has been successfully updated",  "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
                 new WorkerlistWindow().Show();
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message);
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
         }
     }
 }

@@ -33,7 +33,7 @@ namespace PL
 
         private void Button_Click_init(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (MessageBoxResult.Yes == result)
                 DalTest.Initialization.Do();         
         }

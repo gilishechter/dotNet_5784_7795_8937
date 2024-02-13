@@ -6,10 +6,27 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Height="434" VerticalAlignment="Center">
+        <Grid.Background>
+            <ImageBrush ImageSource="/51VGDWJTpJL._AC_UF894,1000_QL80_.jpg"/>
+        </Grid.Background>
         <!--workers button-->
-        <Button Content="Handle Workers" HorizontalAlignment="Left" Margin="195,119,0,0" VerticalAlignment="Top" Height="84" Width="180" Click="Button_Click_Workers"/>
-        <Button Content="Initialization" HorizontalAlignment="Left" Margin="425,119,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469"  Height="84" Width="180" Click="Button_Click_init"/>
+        <Button Content="Handle Workers" HorizontalAlignment="Left" Margin="193,153,0,0" VerticalAlignment="Top" Height="84" Width="180" Click="Button_Click_Workers" BorderBrush="Black" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" >
+            <Button.Background>
+                <ImageBrush TileMode="FlipXY" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Initialization" HorizontalAlignment="Left" Margin="423,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469"  Height="84" Width="180" Click="Button_Click_init" BorderBrush="Black" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Background="{x:Null}"/>
+        <Label Content="       T&amp;T&#xD;&#xA;Tour&amp;Travel" Margin="0,41,0,0" Height="90" Width="308" RenderTransformOrigin="0.5,0.5" FontFamily="Californian FB" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.17"/>
+                    <RotateTransform Angle="0.031"/>
+                    <TranslateTransform Y="-0.397"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
 
     </Grid>
 </Window>
