@@ -36,17 +36,17 @@
     <Email>BibiNetanyahu@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>908987563</Id>
-    <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>600</HourPrice>
-    <Name>Ayelet Fridman</Name>
-    <Email>AyeletFridman@gmail.com</Email>
-  </Worker>
-  <Worker>
     <Id>782</Id>
     <WorkerRank>Beginner</WorkerRank>
     <HourPrice>780</HourPrice>
     <Name>bla</Name>
     <Email>b@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>908987563</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>650</HourPrice>
+    <Name>Ayelet Fridman</Name>
+    <Email>AyeletFridman@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>
