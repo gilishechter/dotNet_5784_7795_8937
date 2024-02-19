@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-
-    <Grid>
+    
+        <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FFD8EEFB" Offset="0"/>
@@ -20,12 +20,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Height="auto" Grid.Row="0" Width="auto">
-            <ComboBox ItemsSource="{Binding Source={StaticResource FilterCollectionKey}}" SelectedValue="{Binding filter, Mode=TwoWay}" HorizontalAlignment="Left" Margin="200,2,0,0" VerticalAlignment="Top" Width="170" Height="46" SelectionChanged="ComboBox_SelectionChanged_filter"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource FilterCollectionKey}}" SelectedValue="{Binding filter, Mode=TwoWay}" HorizontalAlignment="Left" Margin="200,2,0,0" VerticalAlignment="Top" Width="170" Height="46" />
+            <!--SelectionChanged="ComboBox_SelectionChanged_filter"-->
             <Label Content="Choose filter:" HorizontalAlignment="Left" Margin="38,0,0,0" VerticalAlignment="Center" Width="157" Height="46" FontSize="20"/>
         </Grid>
         <ComboBox Name="options"   Grid.Column="1"  Grid.ColumnSpan="3" Background="LightBlue" />
         <!--SelectionChanged="options_SelectionChanged_filters"--> 
-        <ListView Grid.Column="1"  ItemsSource="{Binding tasklist}" Grid.ColumnSpan="3" Margin="0,46,0,0" Grid.RowSpan="2" FontFamily="Arial" FontSize="14">
+        <ListView Grid.Column="1"  ItemsSource="{Binding tasklist}" Grid.ColumnSpan="3" Margin="0,46,0,0" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateWorker">
             <ListView.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD8EEFB" Offset="0"/>
@@ -37,7 +38,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Height="114" Width="168" Margin="0,225,0,0" VerticalAlignment="Top" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" />
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Height="114" Width="168" Margin="0,225,0,0" VerticalAlignment="Top" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Click="Button_Click_AddTask" />
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
@@ -47,4 +48,5 @@
         </Grid.ColumnDefinitions>
 
     </Grid>
+       
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.worker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,17 +41,31 @@ namespace PL.task
         public BO.filter filter { get; set; } = BO.filter.None;
         public BO.Status status { get; set; } = BO.Status.None;
         public BO.level level { get; set; } = BO.level.None;
-        private void ComboBox_SelectionChanged_filter(object sender, SelectionChangedEventArgs e)
-        {
-            if(filter == BO.filter.ByStatus)
-            {
-                options.ItemsSource = Enum.GetValues(typeof(BO.Status));
-            }
-            else
-            {
-                options.ItemsSource = Enum.GetValues(typeof(BO.level));
-            }
+        //private void ComboBox_SelectionChanged_filter(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if(filter == BO.filter.ByStatus)
+        //    {
+        //        options.ItemsSource = Enum.GetValues(typeof(BO.Status));
+        //    }
+        //    else
+        //    {
+        //        options.ItemsSource = Enum.GetValues(typeof(BO.level));
+        //    }
 
+        //}
+
+        private void Button_Click_AddTask(object sender, RoutedEventArgs e)
+        {
+            new TaskWindow().ShowDialog();
+            this.Close();   
+        }
+
+        private void double_click_updateWorker(object sender, MouseButtonEventArgs e)
+        {
+
+            BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+            new WorkerWindow(task.Id).ShowDialog();
+            this.Close();
         }
 
         //private void options_SelectionChanged_filters(object sender, SelectionChangedEventArgs e)
@@ -61,7 +76,7 @@ namespace PL.task
         //        s_bl.Task.ReadAll(t => t.Status == status);
         //    else
         //    {
-              
+
         //    }
 
 

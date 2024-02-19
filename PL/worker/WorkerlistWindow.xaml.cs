@@ -25,7 +25,10 @@ namespace PL.worker
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
         //private ObservableCollection<BO.Worker> workers = new ObservableCollection<BO.Worker>();
-
+        public WorkerlistWindow()
+        {
+            InitializeComponent();
+        }
 
         public IEnumerable<BO.Worker> workers
         {
@@ -33,7 +36,7 @@ namespace PL.worker
             set { SetValue(WorkersProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for task.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WorkersProperty =
             DependencyProperty.Register("workers", typeof(IEnumerable<BO.Worker>), typeof(WorkerlistWindow), new PropertyMetadata(null));
 

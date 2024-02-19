@@ -5,8 +5,98 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="TaskWindow" Height="600" Width="450"
+        DataContext="{Binding task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Width"
+                       Value="120"/>
+            <Setter Property="Height"
+                    Value="30"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"/>
+            <Setter Property="FontFamily"
+                    Value="Ariel"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width"
+                       Value="150"/>
+            <Setter Property="Height"
+                    Value="30"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"/>
+        </Style>
+    </Window.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD8EEFB" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Label Content="ID:" Margin="70,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding Id,Mode=OneTime,Converter={StaticResource ConverIdToIsEnableKey}}" Margin="250,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+
+            <Label Content="Name:" Margin="70,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="ID Worker" Margin="70,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding IdWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+
+            <Label Content="Name Worker:" Margin="70,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding NameWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Description:" Margin="70,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Mile Stone" Margin="70,270,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding MileStone, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Time" Margin="70,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Time, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Create Date" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Planed Start Date" Margin="70,420,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding WantedStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,420,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Start Date" Margin="70,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,470,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="End Date" Margin="70,520,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,520,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Dead Line" Margin="70,570,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,570,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Proudct" Margin="70,620,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Product, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,620,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Notes" Margin="70,670,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Notes, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,670,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Rank" Margin="70,720,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <TextBox Text="{Binding Rank, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,720,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+            <Label Content="Status:" Margin="70,770,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <ComboBox  ItemsSource="{Binding Source={StaticResource RankCollectionKey}}"
+        SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, 
+        ValidatesOnExceptions=true}" Margin="250,770,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168" Width="150" Height="30" HorizontalAlignment="Left"/>
+
+            <Label Content="Dependence Task" Margin="70,820,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <ListView ItemsSource="{Binding DependenceTasks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,820,0,0" VerticalAlignment="Top"/>
+
+            <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+         HorizontalAlignment="Left" Margin="293,880,0,0" VerticalAlignment="Top" Height="47" Width="88" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Click="Button_Click_AddOrUpdateTask" RenderTransformOrigin="-0.009,-0.225" />
+
+
+        </Grid>
+    </ScrollViewer>
 </Window>

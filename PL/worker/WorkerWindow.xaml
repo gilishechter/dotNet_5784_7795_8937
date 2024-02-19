@@ -31,8 +31,10 @@
                     Value="Left"/>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.Background>
+   
+        <Grid>
+        
+            <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FFD8EEFB" Offset="0"/>
             </LinearGradientBrush>
@@ -63,6 +65,7 @@
         <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
          HorizontalAlignment="Left" Margin="341,493,0,0" VerticalAlignment="Top" Height="37" Width="81" Click="Button_Click_AddOrUpdate" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" />
 
-
+         
     </Grid>
+        
 </Window>

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.task;
 using PL.worker;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,12 @@ namespace PL
             if (MessageBoxResult.Yes == result)
                 // DalTest.Initialization.Do();
                 s_bl.Clear();
+        }
+
+        private void Button_Click_Tasks(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().Show();
+
         }
     }
 }
