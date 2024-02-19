@@ -13,6 +13,10 @@ public interface IBl
     public IWorker Worker { get;}
     public IWorkerTask WorkerTask { get;}
 
+    public void Clear();
+    public void InitializeDB() => DalTest.Initialization.Do();
+
+
     public void SetStartProject(DateTime? date);
     public void SetEndProject(DateTime? date);
     public DateTime? GetStartProject();

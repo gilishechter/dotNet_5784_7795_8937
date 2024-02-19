@@ -21,7 +21,6 @@ internal class Program
         Console.WriteLine("2 - Task");
         Console.WriteLine("3 - Dependence");
         Console.WriteLine("4 - to initialize the data");
-        Console.WriteLine("5 - to Clear the data");
     }
 
     /// <summary>

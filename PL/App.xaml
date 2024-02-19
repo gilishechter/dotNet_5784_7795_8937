@@ -5,6 +5,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:Rankcollection x:Key="RankCollectionKey" />
+        <local:Statuscollection x:Key="StatusCollectionKey" />
+        <local:Levelcollection x:Key="LevelCollectionKey" />
+        <local:Filtercollection x:Key="FilterCollectionKey" />
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:ConvertIdToISEnable x:Key="ConverIdToIsEnableKey"/>
     </Application.Resources>

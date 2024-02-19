@@ -76,6 +76,11 @@ internal class Bl : IBl
 
     }
 
+    public void Clear()
+    {
+        DalTest.Initialization.Clear();
+    }
+
     public DateTime? GetEndProject()=> _dal.GetEndDate();
     public DateTime? GetStartProject() => _dal.GetStartDate();  
     public void SetEndProject(DateTime? date)=> _dal.SetEndDate(date);

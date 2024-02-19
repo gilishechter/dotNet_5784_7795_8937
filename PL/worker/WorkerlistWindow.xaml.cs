@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PL.worker
 {
     /// <summary>
@@ -20,11 +23,9 @@ namespace PL.worker
     public partial class WorkerlistWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public WorkerlistWindow()
-        {
-            InitializeComponent();
-            workers = s_bl?.Worker.ReadAll()!;
-        }
+
+        //private ObservableCollection<BO.Worker> workers = new ObservableCollection<BO.Worker>();
+
 
         public IEnumerable<BO.Worker> workers
         {

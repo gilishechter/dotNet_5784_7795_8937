@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using System.Runtime.Intrinsics.Arm;
 
 
 internal class TaskImplementation : ITask
@@ -197,14 +198,20 @@ internal class TaskImplementation : ITask
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);//build the do object
         boTask.Status = WorkerImplementation.GetStatus(doTask);//update the logic properties
-        boTask.DependenceTasks = getDependenceList(doTask);
+        //boTask.DependenceTasks = getDependenceList(doTask);
         
         try
         {
             if(boTask.IdWorker!=null)
                 CheckTaskForWorker(boTask);//call those functions
             CheckStartDate(boTask.Id, boTask.StartDate);
-            
+            if (boTask.DependenceTasks != null)
+            {
+                foreach(var dep in boTask.DependenceTasks)
+                    _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id));
+                //(from BO.TaskList dep in boTask.DependenceTasks
+                //  _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id))).ToList();
+            }
             _dal.Task.Update(doTask);
             //CreateSchedule(boTask.Id, boTask.StartDate);
         }

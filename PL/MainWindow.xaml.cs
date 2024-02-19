@@ -1,4 +1,5 @@
-﻿using PL.worker;
+﻿using BlApi;
+using PL.worker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +38,16 @@ namespace PL
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (MessageBoxResult.Yes == result)
-                DalTest.Initialization.Do();         
+                // DalTest.Initialization.Do();
+                s_bl.InitializeDB();
+        }
+
+        private void ButtonReset_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the date?", "Reset", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (MessageBoxResult.Yes == result)
+                // DalTest.Initialization.Do();
+                s_bl.Clear();
         }
     }
 }

@@ -6,10 +6,21 @@ public enum Rank
 
 public enum Status
 {
-    Unscheduled, Scheduled, OnTrackStarted, Done
+    Unscheduled, Scheduled, OnTrackStarted, Done, None
 }
 
 public enum StatusProject
 {
     Planning, Mid, Execution
 }
+
+public enum filter
+{
+    ByLevel, ByStatus, None
+}
+
+public enum level
+{
+    level1, level2, level3, level4, None
+}
+

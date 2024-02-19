@@ -327,7 +327,6 @@ internal class Programe
         if (Notes == "")
             Notes = task1!.Notes;
 
-
         if (!int.TryParse(Console.ReadLine(), out int _Rank))
             _Rank = task1!.Rank;
 
