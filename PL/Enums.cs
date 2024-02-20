@@ -24,4 +24,9 @@ internal class Filtercollection : IEnumerable
     static readonly IEnumerable<BO.filter> s_enums = (Enum.GetValues(typeof(BO.filter)) as IEnumerable<BO.filter>)!;
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
+internal class StatusProjectcollection : IEnumerable
+{
+    static readonly IEnumerable<BO.StatusProject> s_enums = (Enum.GetValues(typeof(BO.StatusProject)) as IEnumerable<BO.StatusProject>)!;
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
 

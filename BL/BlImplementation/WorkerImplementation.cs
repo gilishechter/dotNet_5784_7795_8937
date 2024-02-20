@@ -90,7 +90,7 @@ internal class WorkerImplementation : IWorker
         {
             Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
-            Do.Task t when t.EndingDate > dateTimeNow => BO.Status.OnTrackStarted,
+            Do.Task t when t.DeadLine > dateTimeNow => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
         };
     }

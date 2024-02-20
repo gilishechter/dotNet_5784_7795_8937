@@ -4,14 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 namespace PL.worker;
+
 
 /// <summary>
 /// Interaction logic for WorkerWindow.xaml
@@ -20,6 +14,7 @@ public partial class WorkerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    private event Action<int, bool> _onAddOrUpdate;
     public BO.Worker worker
     {
         get { return (BO.Worker)GetValue(workerProperty); }
@@ -30,10 +25,10 @@ public partial class WorkerWindow : Window
     public static readonly DependencyProperty workerProperty =
         DependencyProperty.Register("worker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
 
-
-    public WorkerWindow(int id=0)
+    public WorkerWindow(Action<int, bool> onAddOrUpdate, int id=0)
     {
         InitializeComponent();
+        _onAddOrUpdate = onAddOrUpdate;
         try
         {
             if (id == 0)
@@ -54,16 +49,20 @@ public partial class WorkerWindow : Window
             if (s_bl.Worker.ReadAll().FirstOrDefault(tmp=> tmp.Id ==worker.Id) == null)
             {  
                 s_bl.Worker.Create(worker);
+                _onAddOrUpdate(worker.Id, true);
+
                 MessageBox.Show("The worker has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                new WorkerlistWindow().Show();
+               
             }
             else
             {
                 s_bl.Worker.Update(worker);
+                _onAddOrUpdate(worker.Id, false);
+
                 MessageBox.Show("The worker has been successfully updated",  "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                new WorkerlistWindow().Show();
+                
             }
         }
         catch (Exception ex)

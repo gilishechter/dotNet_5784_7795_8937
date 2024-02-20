@@ -39,7 +39,7 @@ internal class TaskImplementation : ITask
         if (boTask.Id < 0)
             throw new FormatException("ID can't be negetive number");
 
-        if (boTask.Name == "")
+        if (boTask.Name == null)
             throw new FormatException("you must enter a name");
 
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)//throw match exeptions

@@ -4,11 +4,26 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:Rankcollection x:Key="RankCollectionKey" />
-        <local:Statuscollection x:Key="StatusCollectionKey" />
-        <local:Levelcollection x:Key="LevelCollectionKey" />
-        <local:Filtercollection x:Key="FilterCollectionKey" />
-        <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
-        <local:ConvertIdToISEnable x:Key="ConverIdToIsEnableKey"/>
+        <ResourceDictionary>
+            <local:Rankcollection x:Key="RankCollectionKey" />
+            <local:Statuscollection x:Key="StatusCollectionKey" />
+            <local:Levelcollection x:Key="LevelCollectionKey" />
+            <local:Filtercollection x:Key="FilterCollectionKey" />
+            <local:StatusProjectcollection x:Key="StatusProjectcollectionKey" />
+
+            <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+            <local:ConvertIdToISEnable x:Key="ConverIdToIsEnableKey"/>
+            <local:ConvertStatusProjectToISEnable x:Key="ConvertStatusProjectToISEnableKey"/>
+            <local:ConvertStatusProjectPlanningToISEnable x:Key="ConvertStatusProjectPlanningToISEnableKey"/>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        
     </Application.Resources>
 </Application>

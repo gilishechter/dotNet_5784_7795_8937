@@ -1,4 +1,5 @@
-﻿using PL.worker;
+﻿using BlApi;
+using PL.worker;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,10 +29,10 @@ internal class ConvertIdToISEnable : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        
+
         if ((int)value <= 0)
         {
-           return true;
+            return true;
         }
         return false;
     }
@@ -41,3 +42,34 @@ internal class ConvertIdToISEnable : IValueConverter
         throw new NotImplementedException();
     }
 }
+    internal class ConvertStatusProjectToISEnable : IValueConverter
+    {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid))
+                return true;
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+internal class ConvertStatusProjectPlanningToISEnable : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid) || (s_bl.CheckStatusProject() == BO.StatusProject.Planning))
+            return true;
+        return false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+

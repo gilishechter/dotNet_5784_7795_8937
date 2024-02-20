@@ -1,6 +1,9 @@
-﻿using PL.worker;
+﻿using PL.Tools.ToObservableCollection;
+using PL.Tools.NewFolder;
+using PL.worker;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +23,7 @@ namespace PL.task
     /// </summary>
     public partial class TaskListWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
         public TaskListWindow()
         {
             InitializeComponent();
@@ -28,15 +31,15 @@ namespace PL.task
 
 
 
-        public IEnumerable<BO.TaskList> tasklist
+        private ObservableCollection<BO.TaskList> _tasks
         {
-            get { return (IEnumerable<BO.TaskList>)GetValue(tasklistProperty); }
+            get { return (ObservableCollection<BO.TaskList>)GetValue(tasklistProperty); }
             set { SetValue(tasklistProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for tasklist.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty tasklistProperty =
-            DependencyProperty.Register("tasklist", typeof(IEnumerable<BO.TaskList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for _tasks.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty tasklistProperty =
+            DependencyProperty.Register("_tasks", typeof(IEnumerable<BO.TaskList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
         public BO.filter filter { get; set; } = BO.filter.None;
         public BO.Status status { get; set; } = BO.Status.None;
@@ -56,30 +59,41 @@ namespace PL.task
 
         private void Button_Click_AddTask(object sender, RoutedEventArgs e)
         {
-            new TaskWindow().ShowDialog();
-            this.Close();   
+            new TaskWindow(onAddOrUpdate).ShowDialog();
         }
-
-        private void double_click_updateWorker(object sender, MouseButtonEventArgs e)
+        private void double_click_updateTask(object sender, MouseButtonEventArgs e)
         {
-
-            BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
-            new WorkerWindow(task.Id).ShowDialog();
-            this.Close();
+            BO.TaskList? task = (sender as ListView)?.SelectedItem as BO.TaskList;
+            new TaskWindow(onAddOrUpdate,task.Id).ShowDialog();
         }
 
-        //private void options_SelectionChanged_filters(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (filter == BO.filter.None)
-        //        s_bl?.Task.ReadAll();
-        //    if (filter == BO.filter.ByStatus)
-        //        s_bl.Task.ReadAll(t => t.Status == status);
-        //    else
-        //    {
+        private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)
+        {
+            _tasks =( (status == BO.Status.None) ?
+           _s_bl?.Task.ReadAll()! : _s_bl?.Task.ReadAll(item => item.Status == status)!).ToObservableCollection();
+        }
 
-        //    }
+        private void onAddOrUpdate(int id, bool isUpdate)
+        {
+            BO.TaskList tasklist = new BO.TaskList()
+            {
+                Id = id,
+                Status = _s_bl.Task.Read(id)!.Status,
+                Name = _s_bl?.Task.Read(id)!.Name,
+                Description = _s_bl?.Task.Read(id)!.Description
+            };
+            if (isUpdate)
+            {
+                var oldTask = _tasks.FirstOrDefault(task => task.Id == id);
+                _tasks.Remove(oldTask);
+                // _tasks.ReplaceItem((task => task.Id == id), tasklist);
+            }
+        
+            _tasks.Add(tasklist);
+            //_tasks.Add(_s_bl?.Task.Read(id));
+        }
+      
 
 
-        //}
     }
 }

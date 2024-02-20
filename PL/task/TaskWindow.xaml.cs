@@ -21,9 +21,12 @@ namespace PL.task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public TaskWindow(int id=0)
+        private event Action<int, bool> _onAddOrUpdate;
+
+        public TaskWindow(Action<int, bool> onAddOrUpdate,int id=0)
         {
             InitializeComponent();
+            _onAddOrUpdate = onAddOrUpdate;
             try
             {
                 if (id == 0)
@@ -37,7 +40,7 @@ namespace PL.task
             }
         }
 
-
+        public BO.StatusProject statusProject { get; set; } = BO.StatusProject.Planning;
         public BO.Task task
         {
             get { return (BO.Task)GetValue(taskProperty); }
@@ -47,7 +50,7 @@ namespace PL.task
         // Using a DependencyProperty as the backing store for task.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty taskProperty =
             DependencyProperty.Register("task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
-
+       
         private void Button_Click_AddOrUpdateTask(object sender, RoutedEventArgs e)
         {
             try
@@ -55,22 +58,36 @@ namespace PL.task
                 if (s_bl.Task.ReadAll().FirstOrDefault(tmp => tmp.Id == task.Id) == null)
                 {
                     s_bl.Task.Create(task);
+                    _onAddOrUpdate(task.Id, true);
                     MessageBox.Show("The task has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
-                    //new WorkerlistWindow().Show();
+                    
                 }
                 else
                 {
                     s_bl.Task.Update(task);
+                    _onAddOrUpdate(task.Id, false);
                     MessageBox.Show("The task has been successfully updated", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
-                   // new WorkerlistWindow().Show();
+                    this.Close();                 
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void double_click_updateDepTask(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result= MessageBox.Show("Are yoe sure you want do delete this dependence task", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            BO.TaskList? taskList = (sender as ListView)?.SelectedItem as BO.TaskList;
+            if (MessageBoxResult.Yes == result)
+                s_bl.TaskList.Delete(task.Id, taskList.Id);
+        }
+
+        private void Button_Click_AddDep(object sender, RoutedEventArgs e)
+        {
+            new DepTaskWindow(task.Id).ShowDialog();
         }
     }
     

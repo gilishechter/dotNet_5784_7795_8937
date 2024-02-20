@@ -5,38 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.worker"
         mc:Ignorable="d"
-        Title="WorkerlistWindow" Height="640" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        Title="WorkerlistWindow" Height="643" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" >
 
 
     <!--Extrnal Grid-->
-    <Grid>
+    <Grid Margin="0,0,0,-6">
+        
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FFD8EEFB" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
         <Grid Height="auto" Grid.Row="0" Width="auto"/>
+        
         <Label Content="Rank Filter" HorizontalAlignment="Left" Margin="121,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
-        <ComboBox ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Rank, Mode=TwoWay}" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged_Rank" Grid.ColumnSpan="3" Background="LightBlue" />
-        <ListView Grid.Column="1"  ItemsSource="{Binding workers}" MouseDoubleClick="Double_Click_Update" Grid.ColumnSpan="3" Margin="0,46,0,0" Grid.RowSpan="2" FontFamily="Arial" FontSize="14">
+        
+        <ComboBox ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Rank, Mode=TwoWay}" Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged_Rank" Grid.ColumnSpan="3" Background="LightBlue" Margin="5,0,0,0" />
+
+        <ListView  ItemsSource="{Binding _workers}" MouseDoubleClick="Double_Click_Update" Grid.ColumnSpan="4" Margin="0,4,0,0" FontFamily="Arial" FontSize="14" Grid.Row="1">
             <ListView.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD8EEFB" Offset="0"/>
                 </LinearGradientBrush>
             </ListView.Background>
+            
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="Id"  DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Hour Price" DisplayMemberBinding="{Binding HourPrice}"/>
+                    <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding WorkerRank}"/>
+                    <GridViewColumn Header="Current Task Id" DisplayMemberBinding="{Binding WorkerTask.Id}"/>
+                    <GridViewColumn Header="Current Task Name" DisplayMemberBinding="{Binding WorkerTask.Name}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Height="114" Width="168" Margin="0,225,0,0" VerticalAlignment="Top" Click="Button_Click_addWorker" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" />
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Left" Height="53" Width="122" Margin="322,5,0,0" VerticalAlignment="Top" Click="Button_Click_addWorker" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" RenderTransformOrigin="1.508,5.371" Grid.ColumnSpan="2" />
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
