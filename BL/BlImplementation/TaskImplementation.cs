@@ -176,13 +176,13 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDuringExecution"></exception>
     public void Update(BO.Task boTask)
     {
-        if (boTask.IdWorker != null &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)//throw match exeptions
+        if (boTask.IdWorker != 0 &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)//throw match exeptions
             throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
 
-        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != null)
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != 0)
             throw new BlWhilePlanning("you cant assign a worker while planning the project");
 
-        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && (boTask.WantedStartDate == null || boTask.StartDate!= null || boTask.CreateDate != null
+        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && (boTask.WantedStartDate != null || boTask.StartDate!= null
             || boTask.DeadLine != null || boTask.EndingDate != null))
             throw new BlWhilePlanning("you cant update dates while planning the project");
 
@@ -192,7 +192,9 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.StartDate != null)
             throw new BlDuringExecution("you cant update the start date during the execution");
 
-        boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
+
+        if (boTask.StartDate != null)
+            boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
 
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
@@ -204,14 +206,17 @@ internal class TaskImplementation : ITask
         {
             if(boTask.IdWorker!=null)
                 CheckTaskForWorker(boTask);//call those functions
-            CheckStartDate(boTask.Id, boTask.StartDate);
-            if (boTask.DependenceTasks != null)
-            {
-                foreach(var dep in boTask.DependenceTasks)
-                    _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id));
-                //(from BO.TaskList dep in boTask.DependenceTasks
-                //  _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id))).ToList();
-            }
+
+            if(boTask.StartDate!=null)
+                CheckStartDate(boTask.Id, boTask.StartDate);
+
+            //if (boTask.DependenceTasks != null)
+            //{
+            //    foreach(var dep in boTask.DependenceTasks)
+            //        _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id));
+            //    //(from BO.TaskList dep in boTask.DependenceTasks
+            //    //  _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id))).ToList();
+            //}
             _dal.Task.Update(doTask);
             //CreateSchedule(boTask.Id, boTask.StartDate);
         }
@@ -266,7 +271,7 @@ internal class TaskImplementation : ITask
         if (boTask.IdWorker is int _idworker)
         {
             Do.Worker worker = _dal.Worker.Read(_idworker)!;//if the task rank is bigger then the worker rank
-            if (boTask.Rank > (int)worker.WorkerRank)
+            if (worker != null && boTask.Rank > (int)worker.WorkerRank)
                 throw new BlCantBeUpdated("this worker can't assign this task because the rank doesn't fit");
         
         }

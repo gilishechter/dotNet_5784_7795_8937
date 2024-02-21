@@ -210,4 +210,14 @@
     <DependenceTask>3</DependenceTask>
     <PrevTask>10</PrevTask>
   </Dependency>
+  <Dependency>
+    <Id>45</Id>
+    <DependenceTask>3</DependenceTask>
+    <PrevTask>7</PrevTask>
+  </Dependency>
+  <Dependency>
+    <Id>46</Id>
+    <DependenceTask>2</DependenceTask>
+    <PrevTask>5</PrevTask>
+  </Dependency>
 </ArrayOfDependency>

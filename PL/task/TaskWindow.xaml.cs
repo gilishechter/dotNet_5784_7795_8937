@@ -21,7 +21,10 @@ namespace PL.task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         private event Action<int, bool> _onAddOrUpdate;
+
+        private readonly bool _isUpdate;
 
         public TaskWindow(Action<int, bool> onAddOrUpdate,int id=0)
         {
@@ -29,10 +32,12 @@ namespace PL.task
             _onAddOrUpdate = onAddOrUpdate;
             try
             {
-                if (id == 0)
-                    task = new BO.Task();
-                else
-                    task = s_bl.Task.Read(id);
+                _isUpdate = id is not 0;
+                task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task());
+                //if (id == 0)
+                //    task = new BO.Task();
+                //else
+                //    task = s_bl.Task.Read(id);
             }
             catch (Exception ex)
             {
@@ -55,21 +60,35 @@ namespace PL.task
         {
             try
             {
-                if (s_bl.Task.ReadAll().FirstOrDefault(tmp => tmp.Id == task.Id) == null)
-                {
-                    s_bl.Task.Create(task);
-                    _onAddOrUpdate(task.Id, true);
-                    MessageBox.Show("The task has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
-                    
-                }
-                else
-                {
-                    s_bl.Task.Update(task);
-                    _onAddOrUpdate(task.Id, false);
-                    MessageBox.Show("The task has been successfully updated", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();                 
-                }
+                var content = (sender as Button)!.Content;
+
+                int _id = task.Id;
+
+                if (_isUpdate) s_bl.Task.Update(task!);
+
+                else _id = s_bl.Task.Create(task);
+
+
+                _onAddOrUpdate(_id, _isUpdate);
+
+                if (content is "Add") content += "e";
+                MessageBox.Show($"The worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+                //if (s_bl.Task.ReadAll().FirstOrDefault(tmp => tmp.Id == task.Id) == null)
+                //{
+                //    s_bl.Task.Create(task);
+                //   // _onAddOrUpdate(task.Id, true);
+                //    MessageBox.Show("The task has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    this.Close();
+
+                //}
+                //else
+                //{
+                //    s_bl.Task.Update(task);
+                //   // _onAddOrUpdate(task.Id, false);
+                //    MessageBox.Show("The task has been successfully updated", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    this.Close();                 
+                //}
             }
             catch (Exception ex)
             {

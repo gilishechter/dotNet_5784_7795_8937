@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-namespace PL.worker;
+using System.Windows.Controls;
 
+namespace PL.worker;
 
 /// <summary>
 /// Interaction logic for WorkerWindow.xaml
@@ -13,17 +14,20 @@ namespace PL.worker;
 public partial class WorkerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
+   
     private event Action<int, bool> _onAddOrUpdate;
-    public BO.Worker worker
+
+    private readonly bool _isUpdate;
+
+    private BO.Worker? _worker
     {
         get { return (BO.Worker)GetValue(workerProperty); }
         set { SetValue(workerProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for worker.  This enables animation, styling, binding, etc...
+    // Using a DependencyProperty as the backing store for _worker.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty workerProperty =
-        DependencyProperty.Register("worker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("_worker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
 
     public WorkerWindow(Action<int, bool> onAddOrUpdate, int id=0)
     {
@@ -31,10 +35,8 @@ public partial class WorkerWindow : Window
         _onAddOrUpdate = onAddOrUpdate;
         try
         {
-            if (id == 0)
-                worker = new BO.Worker();
-            else
-               worker= s_bl.Worker.Read(id);
+            _isUpdate = id is not 0;
+            _worker = (_isUpdate ? s_bl.Worker.Read(id) : new BO.Worker());
         }
         catch (Exception ex)
         {
@@ -46,24 +48,17 @@ public partial class WorkerWindow : Window
     {
         try
         {
-            if (s_bl.Worker.ReadAll().FirstOrDefault(tmp=> tmp.Id ==worker.Id) == null)
-            {  
-                s_bl.Worker.Create(worker);
-                _onAddOrUpdate(worker.Id, true);
+            var content = (sender as Button)!.Content;
 
-                MessageBox.Show("The worker has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
-               
-            }
-            else
-            {
-                s_bl.Worker.Update(worker);
-                _onAddOrUpdate(worker.Id, false);
+            if (_isUpdate) s_bl.Worker.Update(_worker!);
 
-                MessageBox.Show("The worker has been successfully updated",  "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
-                
-            }
+            else s_bl.Worker.Create(_worker!);
+           
+            _onAddOrUpdate(_worker!.Id, _isUpdate);
+
+            if (content is "Add") content += "e";
+            MessageBox.Show($"The _worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
         catch (Exception ex)
         {

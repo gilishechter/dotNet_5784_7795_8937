@@ -86,11 +86,9 @@ namespace PL.task
             {
                 var oldTask = _tasks.FirstOrDefault(task => task.Id == id);
                 _tasks.Remove(oldTask);
-                // _tasks.ReplaceItem((task => task.Id == id), tasklist);
-            }
-        
+                
+            }           
             _tasks.Add(tasklist);
-            //_tasks.Add(_s_bl?.Task.Read(id));
         }
       
 
