@@ -67,5 +67,21 @@ public partial class WorkerlistWindow : Window
         }
         _workers.Add(_s_bl?.Worker.Read(id)!);
     }
+
+    private void click_deleteWorker(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            MessageBoxResult result = MessageBox.Show("Are yoe sure you want do delete this worker", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            BO.Worker worker = (sender as Button)?.CommandParameter as BO.Worker;
+
+            if (MessageBoxResult.Yes == result)
+                _s_bl.Worker.Delete(worker.Id);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 }
 

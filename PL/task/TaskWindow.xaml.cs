@@ -33,11 +33,7 @@ namespace PL.task
             try
             {
                 _isUpdate = id is not 0;
-                task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task());
-                //if (id == 0)
-                //    task = new BO.Task();
-                //else
-                //    task = s_bl.Task.Read(id);
+                task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
             }
             catch (Exception ex)
             {
@@ -68,27 +64,13 @@ namespace PL.task
 
                 else _id = s_bl.Task.Create(task);
 
-
                 _onAddOrUpdate(_id, _isUpdate);
 
                 if (content is "Add") content += "e";
+
                 MessageBox.Show($"The worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                //if (s_bl.Task.ReadAll().FirstOrDefault(tmp => tmp.Id == task.Id) == null)
-                //{
-                //    s_bl.Task.Create(task);
-                //   // _onAddOrUpdate(task.Id, true);
-                //    MessageBox.Show("The task has been successfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    this.Close();
-
-                //}
-                //else
-                //{
-                //    s_bl.Task.Update(task);
-                //   // _onAddOrUpdate(task.Id, false);
-                //    MessageBox.Show("The task has been successfully updated", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    this.Close();                 
-                //}
+              
             }
             catch (Exception ex)
             {
@@ -98,10 +80,18 @@ namespace PL.task
 
         private void double_click_updateDepTask(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result= MessageBox.Show("Are yoe sure you want do delete this dependence task", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            BO.TaskList? taskList = (sender as ListView)?.SelectedItem as BO.TaskList;
-            if (MessageBoxResult.Yes == result)
-                s_bl.TaskList.Delete(task.Id, taskList.Id);
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Are yoe sure you want do delete this dependence task", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                BO.TaskList _task = (sender as Button)?.CommandParameter as BO.TaskList;
+
+                if (MessageBoxResult.Yes == result)
+                    s_bl.TaskList.Delete(task.Id, _task.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Button_Click_AddDep(object sender, RoutedEventArgs e)

@@ -44,10 +44,17 @@ namespace PL.task
 
         private void Button_Click_ok(object sender, RoutedEventArgs e)
         {
-            
-            _s_bl.TaskList.Create(_Id, idDep);
-            this.Close();
-            MessageBox.Show("The task succesfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            try {
+                _s_bl.Task.Read(idDep);
+
+                _s_bl.TaskList.Create(_Id, idDep);
+                this.Close();
+                MessageBox.Show("The task succesfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

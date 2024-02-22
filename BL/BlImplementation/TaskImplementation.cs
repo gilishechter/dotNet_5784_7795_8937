@@ -14,7 +14,8 @@ internal class TaskImplementation : ITask
     private IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
     {
         var result = (from Do.Dependency dependency in _dal.Dependency.ReadAll()
-                      where doTask.Id == dependency.DependenceTask
+                      where doTask.Id == dependency.DependenceTask && _dal.Task.Read(dependency.PrevTask) != null
+
                       select new BO.TaskList//create the current task list for each dependence
                       {
                           Id = dependency.PrevTask,
@@ -63,7 +64,7 @@ internal class TaskImplementation : ITask
             if (boTask.DependenceTasks != null)
             {
                 var dependencies = (from BO.TaskList dep in boTask.DependenceTasks
-                                   select _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id))).ToList();              
+                                    select _dal.Dependency.Create(new Do.Dependency(0, idTask, dep.Id))).ToList();
             }
             return idTask;
         }
@@ -80,8 +81,9 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
-        var result = _dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id && _dal.Task.Read(dep.Id) != null//if the task has dependencies tasks
-        && WorkerImplementation.GetStatus(_dal.Task.Read(dep.Id)!) != BO.Status.Done).Select(dep => dep);//if the status is not done
+
+        var result = _dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id //if the task has dependencies tasks
+    && WorkerImplementation.GetStatus(_dal.Task.Read(id)!) != BO.Status.Done).Select(dep => dep);//if the status is not done
 
         if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
@@ -89,6 +91,7 @@ internal class TaskImplementation : ITask
 
         try
         {
+
             _dal.Task.Delete(id);
         }
         catch (Do.DalDoesNotExistException ex)
@@ -139,9 +142,10 @@ internal class TaskImplementation : ITask
     /// <returns></returns>
     public IEnumerable<BO.TaskList> ReadAll(Func<BO.TaskList, bool>? filter = null)
     {
+        IEnumerable<BO.TaskList> result;
         if (filter == null)//if there is no filter , create task list for each task
         {
-            return (from Do.Task doTask in _dal.Task.ReadAll()
+            result= (from Do.Task doTask in _dal.Task.ReadAll()
                     select new BO.TaskList()
                     {
                         Id = doTask.Id,
@@ -152,7 +156,7 @@ internal class TaskImplementation : ITask
         }
         else
         {//ifthere is filter create the task list but choose only the tasks that the filter match them
-            return (from Do.Task doTask in _dal.Task.ReadAll()
+            result =  (from Do.Task doTask in _dal.Task.ReadAll()
                     let boTask = new BO.TaskList()
                     {
                         Id = doTask.Id,
@@ -163,9 +167,11 @@ internal class TaskImplementation : ITask
                     where filter(boTask)
                     select boTask
                     );
+          
         }
 
-
+        var orderResult = result.OrderBy(doTask => doTask.Id); //order the worker by name
+        return orderResult;
     }
     /// <summary>
     /// uptate the task to the given task

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="600" Width="450"
+        Title="TaskWindow" Height="600" Width="550"
         DataContext="{Binding task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <!--Activated="reOpenDepTaskList_activated"-->
 
@@ -61,20 +61,20 @@
             <Label Content="Time" Margin="70,320,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <TextBox Text="{Binding Time, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-            <Label Content="Create Date" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,370,0,0" VerticalAlignment="Top"/>
+            <Label Content="Create Date"  Padding="0,0,10,0" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay}" Width="150" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="135,370,0,0" VerticalAlignment="Top"/>
 
-            <Label Content="Planed Start Date" Margin="70,420,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding WantedStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,420,0,0" VerticalAlignment="Top"/>
+            <Label Content="Planed Start Date"  Margin="70,420,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <DatePicker SelectedDate="{Binding WantedStartDate, Mode=TwoWay}" Width="150" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="135,420,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Start Date" Margin="70,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,470,0,0" VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Width="150" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="135,470,0,0" VerticalAlignment="Top"/>
 
             <Label Content="End Date" Margin="70,520,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,520,0,0"  VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Width="150" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="135,520,0,0"  VerticalAlignment="Top"/>
 
             <Label Content="Dead Line" Margin="70,570,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,570,0,0" VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Width="150" IsEnabled="False" Margin="135,570,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Proudct" Margin="70,620,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <TextBox Text="{Binding Product, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="True" Margin="250,620,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -91,14 +91,34 @@
         ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,770,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168" Width="150" Height="30" HorizontalAlignment="Left"/>
 
             <Label Content="Dependence Task" Margin="70,820,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <ListView ItemsSource="{Binding DependenceTasks}" IsEnabled="{Binding TargetNullValue,Mode=OneTime,Converter={StaticResource ConvertStatusProjectPlanningToISEnableKey}}" Margin="250,820,0,0" VerticalAlignment="Top" MouseDoubleClick="double_click_updateDepTask"/>
+            <ListView ItemsSource="{Binding DependenceTasks}" IsEnabled="{Binding TargetNullValue,Mode=OneTime,Converter={StaticResource ConvertStatusProjectPlanningToISEnableKey}}" Margin="250,860,0,0" VerticalAlignment="Top">
+                <ListView.View>
+                    <GridView >
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn>
+                            <GridViewColumnHeader HorizontalContentAlignment="Center"/>
+                            <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                        <Button Background="Transparent" BorderThickness="0" Click="double_click_updateDepTask" Command="{Binding double_click_updateDepTask}" CommandParameter="{Binding}">
+                                            <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20"/>
+                                        </Button>
+                                    </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+                </ListView.View>
+            </ListView>
 
-            
-            
+
             <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
          HorizontalAlignment="Left" Margin="100,880,0,0" VerticalAlignment="Top" Height="47" Width="88" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="18" FontWeight="Bold" Click="Button_Click_AddOrUpdateTask" RenderTransformOrigin="-0.009,-0.225" />
             <Grid/>
-            <Button Content="Add dependence Task"  HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep"></Button>
+            <Button Content="Add dependence Task" Margin="250,700,0,0"    BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep"></Button>
 
         </Grid>
     </ScrollViewer>

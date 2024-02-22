@@ -38,7 +38,7 @@
             </ListView.Background>
             
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn Header="Id"  DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
@@ -46,6 +46,18 @@
                     <GridViewColumn Header="Rank" DisplayMemberBinding="{Binding WorkerRank}"/>
                     <GridViewColumn Header="Current Task Id" DisplayMemberBinding="{Binding WorkerTask.Id}"/>
                     <GridViewColumn Header="Current Task Name" DisplayMemberBinding="{Binding WorkerTask.Name}"/>
+
+                    <GridViewColumn Header="">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Background="Transparent" BorderThickness="0" Click="click_deleteWorker" Command="{Binding click_deleteWorker}" CommandParameter="{Binding}">
+                                        <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
