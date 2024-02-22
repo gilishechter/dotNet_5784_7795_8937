@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.worker"
         mc:Ignorable="d"
         Title="WorkerWindow" Height="600" Width="450"
-        DataContext="{Binding worker, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+        DataContext="{Binding _worker, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
 
     <Window.Resources>
         <Style TargetType="Label">

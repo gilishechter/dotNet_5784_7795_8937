@@ -62,10 +62,10 @@ public partial class WorkerlistWindow : Window
     {
         if (isUpdate)
         {
-            var oldWorker= _workers.FirstOrDefault(worker=> worker.Id == id);
-            _workers.Remove(oldWorker);           
+           var oldWorker = _workers.FirstOrDefault(worker => worker.Id == id);
+          _workers.Remove(oldWorker);           
         }
-        _workers.Add(_s_bl?.Worker.Read(id)!);///
+        _workers.Add(_s_bl?.Worker.Read(id)!);
     }
 }
 

@@ -62,19 +62,19 @@
             <TextBox Text="{Binding Time, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="Create Date" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding CreateDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,370,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Planed Start Date" Margin="70,420,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding WantedStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,420,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding WantedStartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,420,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Start Date" Margin="70,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,470,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,470,0,0" VerticalAlignment="Top"/>
 
             <Label Content="End Date" Margin="70,520,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,520,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding TargetNullValue, Mode=OneTime,Converter={StaticResource ConvertStatusProjectToISEnableKey}}" Margin="250,520,0,0"  VerticalAlignment="Top"/>
 
             <Label Content="Dead Line" Margin="70,570,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,570,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,570,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Proudct" Margin="70,620,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <TextBox Text="{Binding Product, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="True" Margin="250,620,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
