@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>1</Id>
-    <IdWorker>0</IdWorker>
-    <Name>Market Research</Name>
-    <Description>Conduct market research to identify emerging travel trends.</Description>
-    <MileStone>false</MileStone>
-    <Time>PT22H3M27S</Time>
-    <CreateDate>2023-10-25T00:00:00</CreateDate>
-    <WantedStartDate xsi:nil="true" />
-    <StartDate xsi:nil="true" />
-    <EndingDate xsi:nil="true" />
-    <DeadLine xsi:nil="true" />
-    <Product>Detailed report on current market demands and potential opportunities.</Product>
-    <Rank>3</Rank>
-  </Task>
-  <Task>
     <Id>2</Id>
     <IdWorker>0</IdWorker>
     <Name>Destination Analysis</Name>
