@@ -101,6 +101,7 @@ public partial class TaskListWindow : Window
 
             if (MessageBoxResult.Yes == result)
                 _s_bl.Task.Delete(_task.Id);
+
         }
         catch (Exception ex)
         {
