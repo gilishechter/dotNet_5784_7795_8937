@@ -41,7 +41,7 @@ public partial class TaskListWindow : Window
     private static readonly DependencyProperty tasklistProperty =
         DependencyProperty.Register("_tasks", typeof(ObservableCollection<BO.TaskList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
-    public BO.filter filter { get; set; } = BO.filter.None;
+    public BO.filter filter { get; set; } = BO.filter.None; 
     public BO.Status status { get; set; } = BO.Status.None;
     public BO.level level { get; set; } = BO.level.None;
     //private void ComboBox_SelectionChanged_filter(object sender, SelectionChangedEventArgs e)
