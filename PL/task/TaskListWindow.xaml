@@ -24,7 +24,7 @@
             <!--SelectionChanged="ComboBox_SelectionChanged_filter"-->
             <Label Content="Choose Status:" HorizontalAlignment="Left" Margin="38,0,0,0" VerticalAlignment="Center" Width="157" Height="46" FontSize="20"/>
         </Grid>
-        <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" SelectedValue="{Binding status, Mode=TwoWay}"  Grid.Column="1"  Grid.ColumnSpan="3" Background="LightBlue" SelectionChanged="ComboBox_SelectionChanged_status" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" IsEnabled="{Binding isAllTasks}" SelectedValue="{Binding status, Mode=TwoWay}"  Grid.Column="1"  Grid.ColumnSpan="3" Background="LightBlue" SelectionChanged="ComboBox_SelectionChanged_status" />
         <!--SelectionChanged="options_SelectionChanged_filters"-->
         <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4" Margin="0,46,0,80" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateTask">
             <ListView.View>
@@ -33,14 +33,16 @@
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
                     <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
-                    <GridViewColumn Header="">
+                    <GridViewColumn Header="" >
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Background="Transparent" BorderThickness="0" Click="click_DeleteTask" Command="{Binding click_updateTask}" CommandParameter="{Binding}">
-                                        <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20"/>
+                            <DataTemplate >
+                               
+                                    <Button Background="Transparent" BorderThickness="0" Click="click_DeleteTask" Command="{Binding click_updateTask}" CommandParameter="{Binding}"
+                                          Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        
+                                        <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20" />
                                     </Button>
-                                </StackPanel>
+                                
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

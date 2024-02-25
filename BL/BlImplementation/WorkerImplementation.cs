@@ -242,4 +242,6 @@ internal class WorkerImplementation : IWorker
     {
         _dal.Worker.ClearList();
     }
+
+   
 }

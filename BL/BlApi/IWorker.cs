@@ -10,6 +10,4 @@ public interface IWorker
     public IEnumerable<BO.Worker> RankGroup(int rank);
     public void ClearWorker();
 
-    //public BO.TaskList GetTask(int WorkerId);//return the task that the worker works on
-
 }

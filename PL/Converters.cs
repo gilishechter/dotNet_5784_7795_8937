@@ -85,8 +85,22 @@ internal class ConvertBoolToVisability : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if ((Visibility)value == Visibility.Visible)
-            return true;
-        return false;
+        throw new NotImplementedException();
+    }
+}
+
+internal class ConvertBoolToVisability2 : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((bool)value)
+            return Visibility.Collapsed;
+        return Visibility.Visible;
+
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

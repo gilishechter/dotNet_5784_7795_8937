@@ -16,6 +16,8 @@
             <local:ConvertStatusProjectToISEnable x:Key="ConvertStatusProjectToISEnableKey"/>
             <local:ConvertStatusProjectPlanningToISEnable x:Key="ConvertStatusProjectPlanningToISEnableKey"/>
             <local:ConvertBoolToVisability x:Key="ConvertBoolToVisabilityKey"/>
+            <local:ConvertBoolToVisability2 x:Key="ConvertBoolToVisabilityKey2"/>
+
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

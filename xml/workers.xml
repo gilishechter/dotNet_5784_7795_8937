@@ -37,7 +37,7 @@
   </Worker>
   <Worker>
     <Id>123</Id>
-    <WorkerRank>Beginner</WorkerRank>
+    <WorkerRank>Intermediate</WorkerRank>
     <HourPrice>7</HourPrice>
     <Name>aaa</Name>
     <Email>a@gmail.com</Email>

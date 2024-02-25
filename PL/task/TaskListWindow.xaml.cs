@@ -24,8 +24,30 @@ namespace PL.task;
 public partial class TaskListWindow : Window
 {
     static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-    public TaskListWindow()
+    // public bool isAllTasks { get; set; }
+
+
+    public bool isAllTasks
     {
+        get { return (bool)GetValue(isAllTasksProperty); }
+        set { SetValue(isAllTasksProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for isAllTasks.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty isAllTasksProperty =
+        DependencyProperty.Register("isAllTasks", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(false));
+
+    
+    public TaskListWindow(BO.Worker? worker=null)
+    {
+        if (worker != null)
+        {
+            _tasks=_s_bl?.Task.OptionTasks(worker).ToObservableCollection();
+            isAllTasks = false;
+            //IEnumerable<BO.TaskList> tasks= _s_bl.Task.OptionTasks(worker);
+            //_tasks=tasks.ToObservableCollection();
+        }
+        else { isAllTasks = true; }
         InitializeComponent();
     }
 
@@ -35,6 +57,7 @@ public partial class TaskListWindow : Window
     {
         get { return (ObservableCollection<BO.TaskList>)GetValue(tasklistProperty); }
         set { SetValue(tasklistProperty, value); }
+
     }
 
     // Using a DependencyProperty as the backing store for _tasks.  This enables animation, styling, binding, etc...
@@ -69,8 +92,11 @@ public partial class TaskListWindow : Window
 
     private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)
     {
-        _tasks =( (status == BO.Status.None) ?
-       _s_bl?.Task.ReadAll()! : _s_bl?.Task.ReadAll(item => item.Status == status)!).ToObservableCollection();
+        if (_tasks == null)
+        {
+            _tasks = ((status == BO.Status.None) ?
+           _s_bl?.Task.ReadAll()! : _s_bl?.Task.ReadAll(item => item.Status == status)!).ToObservableCollection();
+        }
     }
 
     private void onAddOrUpdate(int id, bool isUpdate)

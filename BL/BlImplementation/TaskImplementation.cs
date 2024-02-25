@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using System.Collections.ObjectModel;
 using System.Runtime.Intrinsics.Arm;
 
 
@@ -52,9 +53,11 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution)
             throw new BlDuringExecution("yoe can'd add task during execution");
 
+        DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
-                                    boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
+                                    DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = WorkerImplementation.GetStatus(doTask);
 
         try
@@ -202,9 +205,12 @@ internal class TaskImplementation : ITask
         if (boTask.StartDate != null)
             boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
 
+        DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+
+
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
-                                    boTask.DeadLine, boTask.Product, boTask.Notes, boTask.Rank);//build the do object
+                                    DeadLine, boTask.Product, boTask.Notes, boTask.Rank);//build the do object
         boTask.Status = WorkerImplementation.GetStatus(doTask);//update the logic properties
         //boTask.DependenceTasks = getDependenceList(doTask);
         
@@ -316,5 +322,18 @@ internal class TaskImplementation : ITask
 
     }
 
-   
+    public IEnumerable <BO.TaskList> OptionTasks(BO.Worker worker)
+    {
+        var tasks = (from Do.Task task in _dal.Task.ReadAll()
+                     //let task = _dal.Task.Read(taskList.Id)
+                     where task.Rank <= (int)worker.WorkerRank && WorkerImplementation.GetStatus(task) == BO.Status.Unscheduled
+                     select new BO.TaskList()
+                     {
+                         Id = task.Id,
+                         Name = task.Name,
+                         Description = task.Description,
+                         Status = WorkerImplementation.GetStatus(task),
+                     });
+        return tasks;
+    }
 }

@@ -7,5 +7,7 @@ public interface ITask
     public void Delete(int Id);
     public int Create(BO.Task task);
     public BO.Task? Read(int Id);
+    public IEnumerable<BO.TaskList> OptionTasks(BO.Worker worker);
+
 
 }

@@ -16,7 +16,6 @@ namespace PL.task
         private event Action<int, bool> _onAddOrUpdate;
 
         private readonly bool _isUpdate;
-
         public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0)
         {
             InitializeComponent();
@@ -25,7 +24,6 @@ namespace PL.task
             {
                 _isUpdate = id is not 0;
                 task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
-                //depTasks = s_bl.Task.Read(id).DependenceTasks.ToObservableCollection();
             }
             catch (Exception ex)
             {
@@ -74,7 +72,7 @@ namespace PL.task
 
                 if (content is "Add") content += "e";
 
-                MessageBox.Show($"The worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"The task has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
 
             }
@@ -94,7 +92,8 @@ namespace PL.task
                 if (MessageBoxResult.Yes == result)
                 {
                     s_bl.TaskList.Delete(task.Id, _task.Id);
-                    //.Read(_task.Id).DependenceTasks.ToObservableCollection();
+                    depTasks = s_bl.Task.Read(_task.Id).DependenceTasks.ToObservableCollection();
+
                     depTasks.Remove(_task!);
                     MessageBox.Show("This dependence task has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <!--DataContext="{ RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
-    
+        Title="MainWindow" Height="450" Width="800"
+    DataContext="{Binding user, RelativeSource={RelativeSource Mode=Self}}">
+
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Height"
@@ -32,11 +32,16 @@
             <ImageBrush ImageSource="/51VGDWJTpJL._AC_UF894,1000_QL80_.jpg"/>
         </Grid.Background>
         <!--workers button-->
-        <Button Content="Handle Workers" HorizontalAlignment="Left" Margin="423,269,0,0" VerticalAlignment="Top" Click="Button_Click_Workers" Visibility="{Binding isAdmin,Converter={StaticResource ConvertBoolToVisabilityKey}}" />
-        <Button Content="Initialization" HorizontalAlignment="Left" Margin="423,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469" Click="Button_Click_init"/>
+        <Button Content="Handle Workers" HorizontalAlignment="Left" Margin="423,269,0,0" VerticalAlignment="Top" Click="Button_Click_Workers" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}" />
+        <Button Content="Initialization" HorizontalAlignment="Left" Margin="423,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469" Click="Button_Click_init" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
         <Label Content="       T&amp;T&#xD;&#xA;Tour&amp;Travel" Margin="0,41,0,0" Height="90" Width="308" RenderTransformOrigin="0.5,0.5" FontFamily="Californian FB" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"></Label>
-        <Button Content="Reset" HorizontalAlignment="Left" Margin="196,153,0,0" VerticalAlignment="Top" Click="ButtonReset_Click"/>
-        <Button Content="Handle Tasks" HorizontalAlignment="Left" Margin="196,269,0,0" VerticalAlignment="Top" Click="Button_Click_Tasks"/>
+        <Button Content="Reset" HorizontalAlignment="Left" Margin="196,153,0,0" VerticalAlignment="Top" Click="ButtonReset_Click" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
+        <Button Content="Handle Tasks" HorizontalAlignment="Left" Margin="196,269,0,0" VerticalAlignment="Top" Click="Button_Click_Tasks" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
+
+        <Button Content="Current Task" HorizontalAlignment="Left" Margin="196,217,0,0" VerticalAlignment="Top" Click="Button_Click_CurrentTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
+        <Button Content="Choose New Task" HorizontalAlignment="Left" Margin="423,217,0,0" VerticalAlignment="Top" Click="Button_Click_ChooseTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
+
+        <Button Content="Enter Start Date To The Project" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Height="40" Width="340" Click="Button_Click_StartDate" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
 
     </Grid>
 </Window>

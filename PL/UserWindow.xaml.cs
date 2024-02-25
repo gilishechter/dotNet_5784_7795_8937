@@ -54,7 +54,7 @@ namespace PL
                 if (_user.Id != password)
                     MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
-                    new MainWindow(_user.isAdmin).Show();
+                    new MainWindow(_user).Show();
             }
             catch (Exception ex)
             {
