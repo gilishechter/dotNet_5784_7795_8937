@@ -1,6 +1,4 @@
-﻿
-
-using BO;
+﻿using BO;
 using DalApi;
 using System.Reflection.Metadata.Ecma335;
 namespace BlApi;
@@ -12,6 +10,7 @@ public interface IBl
     public ITaskList TaskList { get;}
     public IWorker Worker { get;}
     public IWorkerTask WorkerTask { get;}
+    public IUser User { get;}
 
     public void Clear();
     public void InitializeDB() => DalTest.Initialization.Do();

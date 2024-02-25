@@ -20,7 +20,7 @@ public static class Initialization
     {
         string[] workerNames =
         {
-        "Gili Shechter", "Ayelet Fridman", "Bibi Netanyahu",
+        "Avital Shenker", "Ayala Bikel", "Bibi Netanyahu",
         "Eliana Yakobs", "Dana Frider"
     };
         Random rand = new(DateTime.Now.Millisecond);
@@ -33,7 +33,15 @@ public static class Initialization
             Rank _workerRank = (Rank)rand.Next((int)Rank.Beginner, (int)Rank.Expert + 1);
             Worker _newWorker = new(_id, _workerRank, _hourPrice, _name, _email);
             s_dal?.Worker?.Create(_newWorker);
+
+            string pass = _id.ToString();
+            User _newUser = new(_name, pass, false);
+            s_dal?.User.Create(_newUser);
         }
+        //User _newAdmin1 = new("Gili", "1212", true);
+        //User _newAdmin2 = new("Ayelet", "1111", true);
+        //s_dal?.User.Create(_newAdmin1);
+        //s_dal?.User.Create(_newAdmin2);
     }
 
     /// <summary>
@@ -221,6 +229,7 @@ public static class Initialization
         s_dal.Worker.ClearList();
         s_dal.Dependency.ClearList();
         s_dal.Task.ClearList();
+        s_dal.User.ClearList();
         s_dal.SetStartDate(null);
     }
 }

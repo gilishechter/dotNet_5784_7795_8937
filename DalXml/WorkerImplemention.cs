@@ -9,7 +9,6 @@ using System.Linq;
 internal class WorkerImplementation : IWorker
 {
     readonly string s_workers_xml = "workers";
-
     public void ClearList()
     {
         List<Worker> workers = new();
@@ -18,7 +17,9 @@ internal class WorkerImplementation : IWorker
     }
     public int Create(Worker item)
     {
-        List<Worker> workers = XMLTools.LoadListFromXMLSerializer<Worker>(s_workers_xml);
+        List<Worker> workers = XMLTools.LoadListFromXMLSerializer<Worker>(s_workers_xml); 
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>("users");
+
         foreach (Worker tempWorker in workers)//go through the list
         {
             if (tempWorker.Id == item.Id)//if the item is already exist
@@ -26,6 +27,10 @@ internal class WorkerImplementation : IWorker
                 throw new DalAlreadyExistsException($"this worker with id={item.Id} is already exist");//throe exception
             }
         }
+        string pass = item.Id.ToString();
+        User user = new(item.Name, pass, false);
+        users.Add(user);
+        XMLTools.SaveListToXMLSerializer(users, "users");
 
         workers.Add(item);//add the object to the list
         XMLTools.SaveListToXMLSerializer(workers, s_workers_xml);

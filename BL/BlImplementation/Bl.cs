@@ -19,6 +19,8 @@ internal class Bl : IBl
 
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
+    public IUser User =>  new UserImplementation();
+
     //public void AutometicSchedule()            //we didn't do the bonus yet
     //{
     //    var tasks = BlApi.Factory.Get().Task;
@@ -85,5 +87,6 @@ internal class Bl : IBl
     public DateTime? GetStartProject() => _dal.GetStartDate();  
     public void SetEndProject(DateTime? date)=> _dal.SetEndDate(date);
     public void SetStartProject(DateTime? date)=>_dal.SetStartDate(date);
-   
+
+  
 }

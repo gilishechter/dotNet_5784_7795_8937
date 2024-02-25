@@ -25,7 +25,7 @@ namespace PL.task
             {
                 _isUpdate = id is not 0;
                 task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
-                depTasks = s_bl.Task.Read(id).DependenceTasks.ToObservableCollection();
+                //depTasks = s_bl.Task.Read(id).DependenceTasks.ToObservableCollection();
             }
             catch (Exception ex)
             {

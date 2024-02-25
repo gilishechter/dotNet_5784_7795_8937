@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <userName>Gili</userName>
+    <Id>1212</Id>
+    <isAdmin>true</isAdmin>
+  </User>
+  <User>
+    <userName>Ayelet</userName>
+    <Id>1111</Id>
+    <isAdmin>true</isAdmin>
+  </User>
+  <User>
+    <userName>Avital Shenker</userName>
+    <Id>450187098</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Ayala Bikel</userName>
+    <Id>769628922</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Bibi Netanyahu</userName>
+    <Id>755917242</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Eliana Yakobs</userName>
+    <Id>538538301</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Dana Frider</userName>
+    <Id>739343731</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>aaa</userName>
+    <Id>123</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+</ArrayOfUser>

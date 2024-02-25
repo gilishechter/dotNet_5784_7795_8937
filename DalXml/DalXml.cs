@@ -11,6 +11,8 @@ sealed internal class DalXml : IDal
     public IWorker Worker => new WorkerImplementation();
     public ITask Task => new TaskImplementation();
     public IDependency Dependency => new DependencyImplementation();
+    public IUser User => new UserImplementation();
+
 
     public DateTime? GetEndDate()
     {

@@ -24,10 +24,12 @@ namespace PL
     public partial class MainWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
-        public MainWindow()
+        readonly bool isAdmin;
+        public MainWindow(bool _isAdmin)
         {
+            isAdmin= _isAdmin;
             InitializeComponent();
+           
         }
 
         private void Button_Click_Workers(object sender, RoutedEventArgs e)
