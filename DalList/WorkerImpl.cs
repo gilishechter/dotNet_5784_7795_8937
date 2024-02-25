@@ -25,6 +25,10 @@ internal class WorkerImplementation : IWorker
         }
        
         DataSource.Workers.Add(item);//add the object to the list
+        string pass=item.Id.ToString();
+        User user = new(item.Name, pass, false);
+        DataSource.Users.Add(user);
+
         return item.Id;
     }
     /// <summary>
@@ -34,11 +38,14 @@ internal class WorkerImplementation : IWorker
     /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Workers.Count; i++)//go through the list
+        foreach (Worker Worker1 in DataSource.Workers)//go through the list
         {
-            if (DataSource.Workers[i].Id == id)//if the ID's even
+            if (Worker1.Id == id)//if the ID's even
             {
-                DataSource.Workers.Remove(DataSource.Workers[i]);//remove the item from the list
+                DataSource.Workers.Remove(Worker1);//remove the item from the list
+                string pass = Worker1.Id.ToString();
+                User user = new(Worker1.Name, pass, false);
+                DataSource.Users.Remove(user);
                 return;
             }
         }
@@ -98,5 +105,6 @@ internal class WorkerImplementation : IWorker
     public void ClearList()
     {
         DataSource.Workers.Clear();
+        
     }
 }

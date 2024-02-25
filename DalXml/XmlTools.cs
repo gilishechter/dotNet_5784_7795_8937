@@ -13,7 +13,7 @@ static class XMLTools
         if (!Directory.Exists(s_xml_dir))
             Directory.CreateDirectory(s_xml_dir);
     }
-
+     
     #region Extension Fuctions
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
@@ -109,3 +109,4 @@ static class XMLTools
     }
     #endregion
 }
+
