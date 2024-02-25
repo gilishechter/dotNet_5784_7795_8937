@@ -54,8 +54,7 @@ public partial class WorkerlistWindow : Window
     private void Double_Click_Update(object sender, MouseButtonEventArgs e)
     {
         BO.Worker? worker =(sender as ListView)?.SelectedItem as BO.Worker;
-        new WorkerWindow(onAddOrUpdate, worker.Id).ShowDialog();
-      
+        new WorkerWindow(onAddOrUpdate, worker.Id).ShowDialog();     
     }
 
     private void onAddOrUpdate(int id, bool isUpdate)
@@ -63,7 +62,7 @@ public partial class WorkerlistWindow : Window
         if (isUpdate)
         {
            var oldWorker = _workers.FirstOrDefault(worker => worker.Id == id);
-          _workers.Remove(oldWorker);           
+          _workers.Remove(oldWorker!);           
         }
         _workers.Add(_s_bl?.Worker.Read(id)!);
     }
@@ -76,7 +75,11 @@ public partial class WorkerlistWindow : Window
             BO.Worker worker = (sender as Button)?.CommandParameter as BO.Worker;
 
             if (MessageBoxResult.Yes == result)
-                _s_bl.Worker.Delete(worker.Id);
+            {
+                _s_bl.Worker.Delete(worker!.Id);
+                _workers.Remove(worker!);
+                MessageBox.Show("This worker has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         catch (Exception ex)
         {

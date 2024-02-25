@@ -8,13 +8,6 @@
     <Email>GiliShechter@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>582062216</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>101</HourPrice>
-    <Name>Ayelet Fridman</Name>
-    <Email>AyeletFridman@gmail.com</Email>
-  </Worker>
-  <Worker>
     <Id>903486604</Id>
     <WorkerRank>Expert</WorkerRank>
     <HourPrice>333</HourPrice>

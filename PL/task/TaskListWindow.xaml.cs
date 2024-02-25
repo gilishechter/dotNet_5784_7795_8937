@@ -100,8 +100,11 @@ public partial class TaskListWindow : Window
             BO.TaskList _task = (sender as Button)?.CommandParameter as BO.TaskList;
 
             if (MessageBoxResult.Yes == result)
+            {
                 _s_bl.Task.Delete(_task.Id);
-
+                _tasks.Remove(_task!);
+                MessageBox.Show("This task has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
         catch (Exception ex)
         {

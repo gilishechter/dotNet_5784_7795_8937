@@ -26,11 +26,6 @@
     <PrevTask>3</PrevTask>
   </Dependency>
   <Dependency>
-    <Id>6</Id>
-    <DependenceTask>5</DependenceTask>
-    <PrevTask>6</PrevTask>
-  </Dependency>
-  <Dependency>
     <Id>7</Id>
     <DependenceTask>6</DependenceTask>
     <PrevTask>3</PrevTask>
@@ -81,19 +76,9 @@
     <PrevTask>3</PrevTask>
   </Dependency>
   <Dependency>
-    <Id>17</Id>
-    <DependenceTask>9</DependenceTask>
-    <PrevTask>6</PrevTask>
-  </Dependency>
-  <Dependency>
     <Id>18</Id>
     <DependenceTask>10</DependenceTask>
     <PrevTask>3</PrevTask>
-  </Dependency>
-  <Dependency>
-    <Id>19</Id>
-    <DependenceTask>10</DependenceTask>
-    <PrevTask>7</PrevTask>
   </Dependency>
   <Dependency>
     <Id>20</Id>
