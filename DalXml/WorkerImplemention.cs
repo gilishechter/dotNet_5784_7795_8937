@@ -27,10 +27,10 @@ internal class WorkerImplementation : IWorker
                 throw new DalAlreadyExistsException($"this worker with id={item.Id} is already exist");//throe exception
             }
         }
-        string pass = item.Id.ToString();
-        User user = new(item.Name, pass, false);
-        users.Add(user);
-        XMLTools.SaveListToXMLSerializer(users, "users");
+        //string pass = item.Id.ToString();
+        //User user = new(item.Name, pass, false);
+        //users.Add(user);
+        //XMLTools.SaveListToXMLSerializer(users, "users");
 
         workers.Add(item);//add the object to the list
         XMLTools.SaveListToXMLSerializer(workers, s_workers_xml);

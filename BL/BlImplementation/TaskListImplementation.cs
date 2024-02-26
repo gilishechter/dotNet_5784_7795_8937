@@ -13,8 +13,10 @@ internal class TaskListImplementation : ITaskList
     {
         if (IdCurrentTask == idtaskList)
             throw new BlAlreadyExistsException("A task can't be depend on it self");
+
         Do.Task task = _dal.Task.Read(IdCurrentTask);
-        if (TaskImplementation.getDependenceList(task).Where(t => t.Id == idtaskList) != null)
+        var tasks = TaskImplementation.getDependenceList(task).Where(t => t.Id == idtaskList);
+        if (tasks.Count() != 0)
             throw new BlAlreadyExistsException("This task already depends on the task you selected");
 
         _dal.Dependency.Create(new Do.Dependency(0, IdCurrentTask, idtaskList));

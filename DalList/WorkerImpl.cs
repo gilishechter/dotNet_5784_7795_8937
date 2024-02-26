@@ -25,9 +25,9 @@ internal class WorkerImplementation : IWorker
         }
        
         DataSource.Workers.Add(item);//add the object to the list
-        string pass=item.Id.ToString();
-        User user = new(item.Name, pass, false);
-        DataSource.Users.Add(user);
+        //string pass=item.Id.ToString();
+        //User user = new(item.Name, pass, false);
+        //DataSource.Users.Add(user);
 
         return item.Id;
     }

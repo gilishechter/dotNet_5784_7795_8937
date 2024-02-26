@@ -29,7 +29,7 @@
         <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4" Margin="0,46,0,80" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateTask" HorizontalAlignment="Center">
            
             <ListView.View>
-                <GridView AllowsColumnReorder="true">
+                <GridView >
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>
