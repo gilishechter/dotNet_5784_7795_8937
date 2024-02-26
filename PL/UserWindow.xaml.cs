@@ -52,7 +52,7 @@ namespace PL
                 string password = passwordBox.Password;
 
                 _user = _s_bl.User.Read(username);
-                if (_user.Id != password)                
+                if (_user.password != password)                
                     MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);               
                 else
                 {

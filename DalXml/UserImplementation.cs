@@ -35,22 +35,28 @@ namespace Dal
             }
             users.Add(item);//add the object to the list
             XMLTools.SaveListToXMLSerializer(users, s_users_xml);
-            return item.userName;
+            return item.userName!;
         }
 
-        public void Delete(string userName)
+        public void Delete(int id)
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
             foreach (User tempUser in users)
             {
-                if (tempUser.userName == userName)
+                if (tempUser.id == id)
                 {
                     users.Remove(tempUser);
                     XMLTools.SaveListToXMLSerializer(users, s_users_xml);
                     return;
                 }
             }
-            throw new DalDoesNotExistException($"this user with user name={userName} is not exist");//throw exception
+            throw new DalDoesNotExistException($"this user with id={id} is not exist");//throw exception
+        }
+
+        public User? Read(int id)
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+            return users.FirstOrDefault(t => t.id == id);
         }
 
         public User? Read(string userName)
@@ -73,7 +79,7 @@ namespace Dal
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
             foreach (User tempUser in users)
             {
-                if (tempUser.userName == item.userName)
+                if (tempUser.id == item.id)
                 {
                     users.Remove(tempUser);
                     users.Add(item);

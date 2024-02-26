@@ -4,9 +4,10 @@ namespace Do;
 public record User(
 
     string? userName,
-    string? Id,
-    bool isAdmin
+    string? password,
+    bool isAdmin,
+    int id
 )
 {
-    User() : this(null, null, false) { }
+    User() : this(null, null, false,0) { }
 }

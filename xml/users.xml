@@ -2,17 +2,20 @@
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
     <userName>Gili</userName>
-    <Id>1212</Id>
+    <password>1212</password>
     <isAdmin>true</isAdmin>
+    <id>325748937</id>
   </User>
   <User>
     <userName>Ayelet</userName>
-    <Id>1111</Id>
+    <password>1111</password>
     <isAdmin>true</isAdmin>
+    <id>325697795</id>
   </User>
   <User>
-    <userName>as</userName>
-    <Id>12</Id>
+    <userName>asd</userName>
+    <password>124</password>
     <isAdmin>false</isAdmin>
+    <id>123</id>
   </User>
 </ArrayOfUser>

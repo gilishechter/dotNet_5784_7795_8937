@@ -27,7 +27,7 @@ namespace PL
         //readonly BO.User user;
         //private event Action<int, bool> _onUpdate;
 
-        private void onUpdate(int id,bool _update)
+        private void onUpdate(int id, bool _update)
         {
             _update = true;
         }
@@ -57,7 +57,7 @@ namespace PL
         {
             user = _user;
             InitializeComponent();
-           
+
         }
 
         private void Button_Click_Workers(object sender, RoutedEventArgs e)
@@ -67,7 +67,7 @@ namespace PL
 
         private void Button_Click_init(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?","Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?", "Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (MessageBoxResult.Yes == result)
                 // DalTest.Initialization.Do();
                 s_bl.InitializeDB();
@@ -89,18 +89,21 @@ namespace PL
 
         private void Button_Click_CurrentTask(object sender, RoutedEventArgs e)
         {
-            int id = int.Parse(user.Id);
-            BO.Worker worker = s_bl.Worker.Read(id);
+
+            BO.Worker worker = s_bl.Worker.Read(user.Id)!;
 
             //_onUpdate = onUpdate;
+            if (worker.WorkerTask!.Id == null)
+                MessageBox.Show("This worker doesn't have current task", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value).ShowDialog();
 
-            new TaskWindow(onUpdate, worker.WorkerTask.Id.Value).ShowDialog();
         }
 
         private void Button_Click_ChooseTask(object sender, RoutedEventArgs e)
         {
-            int id = int.Parse(user.Id);
-            BO.Worker worker = s_bl.Worker.Read(id);
+
+            BO.Worker worker = s_bl.Worker.Read(user.Id)!;
             new TaskListWindow(worker).ShowDialog();
         }
 
@@ -108,5 +111,23 @@ namespace PL
         {
             new StartDateWindow().ShowDialog();
         }
+
+        private void Button_Click_updateUser(object sender, RoutedEventArgs e)
+        {
+            BO.Worker worker = s_bl.Worker.Read(user.Id)!;
+            new SignUpWindow(worker).ShowDialog();
+
+        }
+
+        private void Button_Click_logOut(object sender, RoutedEventArgs e)
+        {
+           
+            new UserWindow().Show(); 
+            this.Close();
+        }
     }
 }
+
+
+    
+     

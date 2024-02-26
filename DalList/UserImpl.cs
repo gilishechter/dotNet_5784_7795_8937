@@ -22,14 +22,14 @@ internal class UserImplementation : IUser
     {
         foreach (User user in DataSource.Users)//go through the list
         {
-            if (user.userName == item.userName)//if the ID's equal
+            if (user.id == item.id)//if the ID's equal
             {
                 DataSource.Users.Remove(user);//remove the old item
                 DataSource.Users.Add(item);//add the new one
                 return;
             }
         }
-        throw new DalDoesNotExistException($"this worker with id={item.Id} is not exist");//throw exception
+        throw new DalDoesNotExistException($"this user with user Name={item.userName} is doesn't exist");//throw exception
     }
     public string Create(User item)
     {
@@ -42,25 +42,25 @@ internal class UserImplementation : IUser
         }
 
         DataSource.Users.Add(item);//add the object to the list
-        return item.userName;
+        return item.userName!;
     }
 
-    public void Delete(string userName)
+    public void Delete(int id)
     {
         foreach (User _user in DataSource.Users)//go through the list
         {
-            if (_user.userName == userName)//if the ID's even
+            if (_user.id == id)//if the ID's even
             {
                 DataSource.Users.Remove(_user);//remove the item from the list
                 return;
             }
         }
-        throw new DalDoesNotExistException($"this user with user name={userName} is not exist");
+        throw new DalDoesNotExistException($"this user with Id={id} is not exist");
     }
 
-    public User? Read(string userName)
+    public User? Read(int id)
     {
-        return DataSource.Users.FirstOrDefault(obj => obj.userName == userName);
+        return DataSource.Users.FirstOrDefault(obj => obj.id == id);
     }
 
     public IEnumerable<User> ReadAll(Func<User, bool>? filter = null)
@@ -69,5 +69,11 @@ internal class UserImplementation : IUser
             return DataSource.Users.Select(item => item);//return all the list
         else
             return DataSource.Users.Where(filter);//return the list after the filtering by the function
+    }
+
+    public User? Read(string userName)
+    {
+        return DataSource.Users.FirstOrDefault(obj => obj.userName == userName);
+
     }
 }
