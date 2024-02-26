@@ -24,10 +24,29 @@ namespace PL
     {
 
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-        BO.Worker ?worker1;
+        //BO.Worker ?worker1;
+        //string? Name;
+        //int Id;
+
+
+
+        public BO.Worker worker
+        {
+            get { return (BO.Worker)GetValue(workerProperty); }
+            set { SetValue(workerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for worker.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty workerProperty =
+            DependencyProperty.Register("worker", typeof(BO.Worker), typeof(SignUpWindow), new PropertyMetadata(null));
+
+
         public SignUpWindow(BO.Worker ?_worker=null)
         {
-            worker1=_worker;    
+            //worker1=_worker;    
+            //Name = _worker.Name;
+            //Id = _worker.Id;
+            worker = _worker;
             InitializeComponent();
         }
 
@@ -41,22 +60,26 @@ namespace PL
 
             TextBox usernameTextBox = (TextBox)parentGrid.Children[6];
             TextBox passwordBox = (TextBox)parentGrid.Children[7];
-
+           // Name = nameTextBox.Text;
             int id = int.Parse(IdBox.Text);
+           // Id = id;          
             try
-            {
-                if (worker1 == null) 
-                {  
-                BO.Worker worker = _s_bl.Worker.Read(id)!;
+            {               
+                BO.Worker worker1 = _s_bl.Worker.Read(id)!;
 
-                if (worker!.Name != nameTextBox.Text)
+                if (worker1!.Name != nameTextBox.Text)
                 {
                     MessageBox.Show("This worker dosen't exist", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
                     BO.User user = new() { Id = passwordBox.Text, userName = usernameTextBox.Text, isAdmin = false };
-                    _s_bl.User.Create(user);
+                    if (worker == null)
+                    {
+                        _s_bl.User.Create(user);
+                    }
+                    else
+                        _s_bl.User.Update(user);
                     this.Close();
                 }
 

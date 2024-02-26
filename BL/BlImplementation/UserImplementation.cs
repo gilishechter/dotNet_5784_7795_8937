@@ -39,7 +39,7 @@ internal class UserImplementation : IUser
         {
             userName = newUser.userName,
             Id = newUser.Id,
-            isAdmin = newUser.isAdmin,
+            isAdmin = newUser.isAdmin
         };
     }
 
@@ -71,5 +71,12 @@ internal class UserImplementation : IUser
 
         }
         return result;
+    }
+
+    public void Update(BO.User user)
+    {
+        Do.User doUser = new( user.userName, user.Id, user.isAdmin );
+        _dal.User.Update(doUser);
+
     }
 }

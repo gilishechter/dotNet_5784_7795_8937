@@ -67,5 +67,22 @@ namespace Dal
             else
                 return users.Where(filter);//return the list after the filtering by the function
         }
+
+        public void Update(User item)
+        {
+            List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+            foreach (User tempUser in users)
+            {
+                if (tempUser.userName == item.userName)
+                {
+                    users.Remove(tempUser);
+                    users.Add(item);
+                    XMLTools.SaveListToXMLSerializer(users, s_users_xml);
+                    return;
+                }
+            }
+            throw new DalDoesNotExistException($"this user with user name={item.userName} is not exist");//throw exception
+        }
     }
+
 }

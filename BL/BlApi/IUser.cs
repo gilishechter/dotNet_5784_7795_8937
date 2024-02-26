@@ -9,5 +9,7 @@ public interface IUser
     public void ClearUser();
     public IEnumerable<BO.User> ReadAll(Func<BO.User, bool>? filter = null);
     public BO.User? Read(string userName);
+    public void Update(BO.User user);
+
 
 }

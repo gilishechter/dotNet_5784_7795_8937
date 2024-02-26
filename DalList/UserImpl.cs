@@ -18,13 +18,26 @@ internal class UserImplementation : IUser
         }
     }
 
+    public void Update(User item)
+    {
+        foreach (User user in DataSource.Users)//go through the list
+        {
+            if (user.userName == item.userName)//if the ID's equal
+            {
+                DataSource.Users.Remove(user);//remove the old item
+                DataSource.Users.Add(item);//add the new one
+                return;
+            }
+        }
+        throw new DalDoesNotExistException($"this worker with id={item.Id} is not exist");//throw exception
+    }
     public string Create(User item)
     {
         foreach (User _user in DataSource.Users)//go through the list
         {
-            if (_user.Id == item.Id)//if the item is already exist
+            if (_user.userName == item.userName)//if the item is already exist
             {
-                throw new DalAlreadyExistsException($"this user with id={item.Id} is already exist");//throe exception
+                throw new DalAlreadyExistsException($"this user with user name={item.userName} is already exist");//throe exception
             }
         }
 
