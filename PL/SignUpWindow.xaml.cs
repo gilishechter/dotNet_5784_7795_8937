@@ -73,7 +73,7 @@ namespace PL
                 }
                 else
                 {
-                    BO.User user = new() { Id = passwordBox.Text, userName = usernameTextBox.Text, isAdmin = false };
+                    BO.User user = new() { password = passwordBox.Text, userName = usernameTextBox.Text, isAdmin = false ,Id=id};
                     if (worker == null)
                     {
                         _s_bl.User.Create(user);

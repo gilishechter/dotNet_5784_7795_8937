@@ -42,8 +42,8 @@ internal class WorkerImplementation : IWorker
             {
                 DataSource.Workers.Remove(Worker1);//remove the item from the list
                 string pass = Worker1.Id.ToString();
-                User user = new(Worker1.Name, pass, false);
-                DataSource.Users.Remove(user);
+                //User user = new(Worker1.Name, pass, false,);
+                //DataSource.Users.Remove(user);
                 return;
             }
         }

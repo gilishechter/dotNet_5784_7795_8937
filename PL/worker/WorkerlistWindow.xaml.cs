@@ -78,6 +78,9 @@ public partial class WorkerlistWindow : Window
             {
                 _s_bl.Worker.Delete(worker!.Id);
                 _workers.Remove(worker!);
+
+
+                _s_bl.User.Delete(worker.Id);
                 MessageBox.Show("This worker has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

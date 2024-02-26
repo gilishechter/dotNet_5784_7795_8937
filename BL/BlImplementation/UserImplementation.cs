@@ -19,27 +19,44 @@ internal class UserImplementation : IUser
 
     public string Create(BO.User user)
     {
-        Do.User newUser = new(user.userName, user.Id, user.isAdmin);
+        Do.User newUser = new(user.userName, user.password, user.isAdmin,user.Id);
         return _dal.User.Create(newUser);
     }
 
-    public void Delete(string userName)
+    public void Delete(int id)
     {
-        _dal.User.Delete(userName);
+        _dal.User.Delete(id);
     }
 
-    public BO.User? Read(string userName)
+    public BO.User? Read(int id)
     {
-        Do.User newUser = _dal.User.Read(userName);
+        Do.User newUser = _dal.User.Read(id)!;
         if(newUser == null)
         {
-            throw new BlDoesNotExistException($"this user with user name {userName} doesn't exist");
+            throw new BlDoesNotExistException($"this user with id={id} doesn't exist");
         }
         return new BO.User()
         {
             userName = newUser.userName,
-            Id = newUser.Id,
-            isAdmin = newUser.isAdmin
+            password = newUser.password,
+            isAdmin = newUser.isAdmin,
+            Id = newUser.id
+        };
+    }
+
+    public BO.User? Read(string userName)
+    {
+        Do.User newUser = _dal.User.Read(userName)!;
+        if (newUser == null)
+        {
+            throw new BlDoesNotExistException($"this user with user Name={userName} doesn't exist");
+        }
+        return new BO.User()
+        {
+            userName = newUser.userName,
+            password = newUser.password,
+            isAdmin = newUser.isAdmin,
+            Id = newUser.id
         };
     }
 
@@ -51,9 +68,10 @@ internal class UserImplementation : IUser
             result = (from Do.User doUser in _dal.User.ReadAll()
                       select new BO.User()
                       {
-                          Id = doUser.Id,
+                          Id = doUser.id,
+                          password = doUser.password,
                           isAdmin=doUser.isAdmin,
-                          userName = doUser.userName,
+                          userName = doUser.userName
                       });
         }
         else
@@ -61,7 +79,8 @@ internal class UserImplementation : IUser
             result = (from Do.User doUser in _dal.User.ReadAll()
                       let boUser = new BO.User()
                       {
-                          Id = doUser.Id,
+                          password = doUser.password,
+                          Id = doUser.id,
                           isAdmin = doUser.isAdmin,
                           userName = doUser.userName,
                       }
@@ -75,7 +94,7 @@ internal class UserImplementation : IUser
 
     public void Update(BO.User user)
     {
-        Do.User doUser = new( user.userName, user.Id, user.isAdmin );
+        Do.User doUser = new( user.userName, user.password, user.isAdmin,user.Id );
         _dal.User.Update(doUser);
 
     }

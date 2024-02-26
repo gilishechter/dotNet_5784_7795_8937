@@ -5,8 +5,9 @@ namespace DalApi;
 public interface IUser
 {
     string Create(Do.User item);
-    void Delete(string userName);
+    void Delete(int id);
     void ClearList();
+    Do.User? Read(int id);
     Do.User? Read(string userName);
 
     void Update(Do.User item); //Updates entity object

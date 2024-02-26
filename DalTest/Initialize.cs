@@ -38,8 +38,8 @@ public static class Initialization
             //User _newUser = new(_name, pass, false);
            // s_dal?.User.Create(_newUser);
         }
-        //User _newAdmin1 = new("Gili", "1212", true);
-        //User _newAdmin2 = new("Ayelet", "1111", true);
+        //User _newAdmin1 = new("Gili", "1212", true,325748937);
+        //User _newAdmin2 = new("Ayelet", "1111", true,325697795);
         //s_dal?.User.Create(_newAdmin1);
         //s_dal?.User.Create(_newAdmin2);
     }
