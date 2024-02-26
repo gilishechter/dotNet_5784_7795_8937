@@ -52,16 +52,19 @@ namespace PL
                 string password = passwordBox.Password;
 
                 _user = _s_bl.User.Read(username);
-                if (_user.Id != password)
-                    MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (_user.Id != password)                
+                    MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);               
                 else
+                {
                     new MainWindow(_user).Show();
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            this.Close();
+            
 
         }
 

@@ -52,8 +52,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Background="Transparent" BorderThickness="0" Click="click_deleteWorker" Command="{Binding click_deleteWorker}" CommandParameter="{Binding}">
-                                        <Image Source="https://www.shutterstock.com/image-vector/transparent-trash-icon-png-vector-260nw-1946016211.jpg"
-                                            Width="20" Height="20"/>
+                                        <Image Source="https://img.freepik.com/premium-vector/trash-can-icon_628407-1443.jpg" Width="25" Height="25" />
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>

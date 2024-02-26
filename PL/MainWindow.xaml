@@ -7,9 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
     DataContext="{Binding user, RelativeSource={RelativeSource Mode=Self}}">
-
     <Window.Resources>
-        <Style TargetType="Button">
+        <Style x:Name="MainButton" TargetType="Button">
             <Setter Property="Height"
                     Value="84"/>
             <Setter Property="Width"
@@ -26,6 +25,7 @@
                     Value="{x:Null}"/>
         </Style>
     </Window.Resources>
+    
 
     <Grid Height="434" VerticalAlignment="Center">
         <Grid.Background>
@@ -41,7 +41,7 @@
         <Button Content="Current Task" HorizontalAlignment="Left" Margin="196,217,0,0" VerticalAlignment="Top" Click="Button_Click_CurrentTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
         <Button Content="Choose New Task" HorizontalAlignment="Left" Margin="423,217,0,0" VerticalAlignment="Top" Click="Button_Click_ChooseTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
 
-        <Button Content="Enter Start Date To The Project" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Height="40" Width="340" Click="Button_Click_StartDate" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
+        <Button Content="Start Date" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134" Click="Button_Click_StartDate" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
 
     </Grid>
 </Window>

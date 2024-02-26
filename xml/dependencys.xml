@@ -215,4 +215,19 @@
     <DependenceTask>3</DependenceTask>
     <PrevTask>2</PrevTask>
   </Dependency>
+  <Dependency>
+    <Id>45</Id>
+    <DependenceTask>7</DependenceTask>
+    <PrevTask>3</PrevTask>
+  </Dependency>
+  <Dependency>
+    <Id>46</Id>
+    <DependenceTask>7</DependenceTask>
+    <PrevTask>13</PrevTask>
+  </Dependency>
+  <Dependency>
+    <Id>47</Id>
+    <DependenceTask>7</DependenceTask>
+    <PrevTask>7</PrevTask>
+  </Dependency>
 </ArrayOfDependency>

@@ -26,9 +26,10 @@
         </Grid>
         <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" IsEnabled="{Binding isAllTasks}" SelectedValue="{Binding status, Mode=TwoWay}"  Grid.Column="1"  Grid.ColumnSpan="3" Background="LightBlue" SelectionChanged="ComboBox_SelectionChanged_status" />
         <!--SelectionChanged="options_SelectionChanged_filters"-->
-        <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4" Margin="0,46,0,80" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateTask">
+        <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4" Margin="0,46,0,80" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateTask" HorizontalAlignment="Center">
+           
             <ListView.View>
-                <GridView>
+                <GridView AllowsColumnReorder="true">
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"/>

@@ -6,13 +6,13 @@ using System.Runtime.Intrinsics.Arm;
 
 internal class TaskImplementation : ITask
 {
-    public DalApi.IDal _dal = DalApi.Factory.Get;
+    public static DalApi.IDal _dal = DalApi.Factory.Get;
     /// <summary>
     /// this function return the dependencies tasks
     /// </summary>
     /// <param name="doTask"></param>
     /// <returns></returns>
-    private IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
+    public static IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
     {
         var result = (from Do.Dependency dependency in _dal.Dependency.ReadAll()
                       where doTask.Id == dependency.DependenceTask && _dal.Task.Read(dependency.PrevTask) != null
