@@ -201,7 +201,6 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.StartDate != null)
             throw new BlDuringExecution("you cant update the start date during the execution");
 
-
         if (boTask.StartDate != null)
             boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
 

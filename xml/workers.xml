@@ -42,4 +42,11 @@
     <Name>aaa</Name>
     <Email>h@gmail.com</Email>
   </Worker>
+  <Worker>
+    <Id>216293373</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>99999</HourPrice>
+    <Name>esti</Name>
+    <Email>e@gmail.com</Email>
+  </Worker>
 </ArrayOfWorker>
