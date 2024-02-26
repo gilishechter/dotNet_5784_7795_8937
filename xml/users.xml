@@ -10,34 +10,4 @@
     <Id>1111</Id>
     <isAdmin>true</isAdmin>
   </User>
-  <User>
-    <userName>Avital Shenker</userName>
-    <Id>237852373</Id>
-    <isAdmin>false</isAdmin>
-  </User>
-  <User>
-    <userName>Ayala Bikel</userName>
-    <Id>290215353</Id>
-    <isAdmin>false</isAdmin>
-  </User>
-  <User>
-    <userName>Bibi Netanyahu</userName>
-    <Id>402173093</Id>
-    <isAdmin>false</isAdmin>
-  </User>
-  <User>
-    <userName>Eliana Yakobs</userName>
-    <Id>560323077</Id>
-    <isAdmin>false</isAdmin>
-  </User>
-  <User>
-    <userName>Dana Frider</userName>
-    <Id>996233782</Id>
-    <isAdmin>false</isAdmin>
-  </User>
-  <User>
-    <userName>aaa</userName>
-    <Id>123</Id>
-    <isAdmin>false</isAdmin>
-  </User>
 </ArrayOfUser>
