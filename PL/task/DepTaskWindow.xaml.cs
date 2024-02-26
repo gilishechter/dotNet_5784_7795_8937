@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PL.Tools.ToObservableCollection;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,16 +27,42 @@ namespace PL.task
         {
             InitializeComponent();
             _Id = id;
+            tasks = _s_bl?.Task.ReadAll().ToObservableCollection();
+            DataContext = this;
         }
-        public int idDep
+        //public int idDep
+        //{
+        //    get { return (int)GetValue(idDepProperty); }
+        //    set { SetValue(idDepProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for idDep.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty idDepProperty =
+        //    DependencyProperty.Register("idDep", typeof(int), typeof(DepTaskWindow), new PropertyMetadata(0));
+
+        public ObservableCollection<BO.TaskList> tasks
         {
-            get { return (int)GetValue(idDepProperty); }
-            set { SetValue(idDepProperty, value); }
+            get { return (ObservableCollection<BO.TaskList>)GetValue(tasklistProperty); }
+            set { SetValue(tasklistProperty, value); }
+
         }
 
-        // Using a DependencyProperty as the backing store for idDep.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty idDepProperty =
-            DependencyProperty.Register("idDep", typeof(int), typeof(DepTaskWindow), new PropertyMetadata(0));
+        // Using a DependencyProperty as the backing store for _tasks.  This enables animation, styling, binding, etc...
+        private static readonly DependencyProperty tasklistProperty =
+            DependencyProperty.Register("tasks", typeof(ObservableCollection<BO.TaskList>), typeof(TaskListWindow), new PropertyMetadata(null));
+
+
+
+        public BO.TaskList selectedTask
+        {
+            get { return (BO.TaskList)GetValue(taskProperty); }
+            set { SetValue(taskProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for task.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty taskProperty =
+            DependencyProperty.Register("selectedTask", typeof(BO.TaskList), typeof(DepTaskWindow), new PropertyMetadata(null));
+
 
 
         private void Button_Click_cancel(object sender, RoutedEventArgs e)
@@ -45,9 +73,11 @@ namespace PL.task
         private void Button_Click_ok(object sender, RoutedEventArgs e)
         {
             try {
-                _s_bl.Task.Read(idDep);
+              //BO.Task _task = (sender as ComboBox)?.SelectedItem as BO.Task;
 
-                _s_bl.TaskList.Create(_Id, idDep);
+                _s_bl.Task.Read(selectedTask.Id);
+
+                _s_bl.TaskList.Create(_Id, selectedTask.Id);
                 this.Close();
                 MessageBox.Show("The task succesfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             }

@@ -19,7 +19,7 @@
                 <TextBox Grid.Row="1" Margin="5" Background="#333333" BorderBrush="#777777" Foreground="White" HorizontalAlignment="Center" Width="100"/>
                 <Label Content="Password:" Grid.Row="2" Foreground="White" HorizontalAlignment="Center"/>
                 <PasswordBox Grid.Row="3" Margin="5,-90,0,0" Background="#333333" BorderBrush="#777777" Foreground="White" HorizontalAlignment="Center" Width="100" Height="25"/>
-                <Button Content="Log In" Grid.Row="4" Margin="50" Padding="8" Background="#008cba" Foreground="White" HorizontalAlignment="Center" Height="35" Width="70" Click="Click_LogIn" />
+                <Button Content="Log In" Grid.Row="4" Margin="50" Padding="8" Background="#008cba" Foreground="White" HorizontalAlignment="Center" Height="35" Width="70" Click="Click_LogIn" DragEnter="Click_LogIn" TouchEnter="Click_LogIn" />
             </Grid>
         </Border>
     </Grid>

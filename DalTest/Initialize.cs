@@ -34,9 +34,9 @@ public static class Initialization
             Worker _newWorker = new(_id, _workerRank, _hourPrice, _name, _email);
             s_dal?.Worker?.Create(_newWorker);
 
-            string pass = _id.ToString();
-            User _newUser = new(_name, pass, false);
-            s_dal?.User.Create(_newUser);
+           // string pass = _id.ToString();
+            //User _newUser = new(_name, pass, false);
+           // s_dal?.User.Create(_newUser);
         }
         //User _newAdmin1 = new("Gili", "1212", true);
         //User _newAdmin2 = new("Ayelet", "1111", true);

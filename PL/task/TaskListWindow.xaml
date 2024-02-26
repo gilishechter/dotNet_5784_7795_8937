@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self }}">
 
     <Grid>
         <Grid.Background>
@@ -36,13 +36,12 @@
                     <GridViewColumn Header="" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate >
-                               
+                                <StackPanel>
                                     <Button Background="Transparent" BorderThickness="0" Click="click_DeleteTask" Command="{Binding click_updateTask}" CommandParameter="{Binding}"
-                                          Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        
-                                        <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20" />
+                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext.isAllTasks, Converter={StaticResource ConvertBoolToVisabilityKey}}">
+                                        <Image Source="https://img.freepik.com/premium-vector/trash-can-icon_628407-1443.jpg" Width="25" Height="25" />
                                     </Button>
-                                
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

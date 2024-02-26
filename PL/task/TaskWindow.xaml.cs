@@ -16,10 +16,20 @@ namespace PL.task
         private event Action<int, bool> _onAddOrUpdate;
 
         private readonly bool _isUpdate;
-        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0)
+
+        private readonly int _id;
+
+
+
+        public bool _isAllTasks { get; set; }=false;
+
+        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true)
         {
-            InitializeComponent();
+            //InitializeComponent();
+            DataContext = this;
             _onAddOrUpdate = onAddOrUpdate;
+            _isAllTasks = isAllTasks;
+           _id=id;
             try
             {
                 _isUpdate = id is not 0;
@@ -29,6 +39,7 @@ namespace PL.task
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            InitializeComponent();
         }
 
 
@@ -107,6 +118,12 @@ namespace PL.task
         private void Button_Click_AddDep(object sender, RoutedEventArgs e)
         {
             new DepTaskWindow(task.Id).ShowDialog();
+
+        }
+
+        private void reOpenList(object sender, EventArgs e)
+        {
+            task = (_isUpdate ? s_bl.Task.Read(_id) : new BO.Task())!;
         }
     }
 

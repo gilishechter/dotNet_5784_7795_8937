@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.task"
         mc:Ignorable="d"
         Title="TaskWindow" Height="600" Width="550"
-        DataContext="{Binding task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+        DataContext="{Binding task, RelativeSource={RelativeSource Self}, Mode=TwoWay}" Activated="reOpenList">
     <!--Activated="reOpenDepTaskList_activated"-->
 
 
@@ -34,7 +34,7 @@
         </Style>
     </Window.Resources>
     <ScrollViewer>
-        <Grid>
+        <Grid DataContext="{Binding}">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD8EEFB" Offset="0"/>
@@ -103,8 +103,9 @@
                             <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                        <Button Background="Transparent" BorderThickness="0" Click="double_click_updateDepTask" Command="{Binding double_click_updateDepTask}" CommandParameter="{Binding}">
-                                            <Image Source="C:\Users\1\לימודים\שנה ב\סמסטר א\MINIP\transparent.png" Width="20" Height="20"/>
+                                        <Button Background="Transparent" BorderThickness="0" Click="double_click_updateDepTask" Command="{Binding double_click_updateDepTask}" CommandParameter="{Binding}"
+                                            Visibility="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=_isAllTasks, Converter={StaticResource ConvertBoolToVisabilityKey}}">
+                                            <Image Source="https://img.freepik.com/premium-vector/trash-can-icon_628407-1443.jpg" Width="25" Height="25" />
                                         </Button>
                                     </StackPanel>
                             </DataTemplate>
@@ -118,7 +119,9 @@
             <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
          HorizontalAlignment="Left" Margin="100,880,0,0" VerticalAlignment="Top" Height="47" Width="88" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="18" FontWeight="Bold" Click="Button_Click_AddOrUpdateTask" RenderTransformOrigin="-0.009,-0.225" />
             <Grid/>
-            <Button Content="Add dependence Task" Margin="250,700,0,0"    BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep"></Button>
+            <Button Content="Add dependence Task" Margin="250,700,0,0"    BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep" 
+             Visibility="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=_isAllTasks, Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
+
 
         </Grid>
     </ScrollViewer>

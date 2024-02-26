@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="DepTaskWindow" Height="220" Width="420"
         
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding tasks, RelativeSource={RelativeSource Self}}">
 
     <Grid>
         <Grid.Background>
@@ -15,9 +15,9 @@
                 <GradientStop Color="#FFD8EEFB" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Label Content="Enter the new dependence task:" HorizontalAlignment="Left" Margin="109,33,0,0" VerticalAlignment="Top" Height="30" Width="264" FontWeight="Bold" FontSize="14"/>
+        <Label Content="Choose the new dependence task:" HorizontalAlignment="Left" Margin="99,23,0,0" VerticalAlignment="Top" Height="30" Width="264" FontWeight="Bold" FontSize="14"/>
         <Button Content="OK" HorizontalAlignment="Left" Margin="322,142,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.066,-0.174" Width="75" Height="30" Click="Button_Click_ok" Background="LightBlue" BorderBrush="Black"/>
-        <TextBox Text="{Binding idDep, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=True,  UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox ItemsSource="{Binding tasks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=True,  UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding selectedTask}" HorizontalAlignment="Center" Width="299"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="240,142,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.221,0.607" Width="75" Height="30" Click="Button_Click_cancel" Background="LightBlue" BorderBrush="Black"/>
 
     </Grid>

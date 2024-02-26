@@ -22,6 +22,7 @@ namespace PL
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
         public UserWindow()
         {
+           // _s_bl.InitializeDB();
             InitializeComponent();
         }
 
@@ -63,5 +64,6 @@ namespace PL
             this.Close();
 
         }
+
     }
 }
