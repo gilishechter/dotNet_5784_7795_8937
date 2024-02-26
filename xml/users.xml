@@ -10,4 +10,9 @@
     <Id>1111</Id>
     <isAdmin>true</isAdmin>
   </User>
+  <User>
+    <userName>as</userName>
+    <Id>12</Id>
+    <isAdmin>false</isAdmin>
+  </User>
 </ArrayOfUser>

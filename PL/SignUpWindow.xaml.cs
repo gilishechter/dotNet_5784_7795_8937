@@ -24,9 +24,10 @@ namespace PL
     {
 
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-
-        public SignUpWindow()
+        BO.Worker ?worker1;
+        public SignUpWindow(BO.Worker ?_worker=null)
         {
+            worker1=_worker;    
             InitializeComponent();
         }
 
@@ -44,6 +45,8 @@ namespace PL
             int id = int.Parse(IdBox.Text);
             try
             {
+                if (worker1 == null) 
+                {  
                 BO.Worker worker = _s_bl.Worker.Read(id)!;
 
                 if (worker!.Name != nameTextBox.Text)

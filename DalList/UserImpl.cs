@@ -11,8 +11,10 @@ internal class UserImplementation : IUser
     {
         foreach (var item in DataSource.Users)
         {
-            if(!item.isAdmin)
-            DataSource.Users.Remove(item);
+            if (!item.isAdmin)
+            {
+                DataSource.Users.Remove(item);
+            }
         }
     }
 
