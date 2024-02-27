@@ -37,16 +37,30 @@
   </Worker>
   <Worker>
     <Id>123</Id>
-    <WorkerRank>Beginner</WorkerRank>
+    <WorkerRank>Advanced_Beginner</WorkerRank>
     <HourPrice>85</HourPrice>
     <Name>aaa</Name>
     <Email>a@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>216293373</Id>
-    <WorkerRank>Expert</WorkerRank>
-    <HourPrice>99999</HourPrice>
-    <Name>esti</Name>
-    <Email>e@gmail.com</Email>
+    <Id>56</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>56</HourPrice>
+    <Name>tt</Name>
+    <Email>@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>14</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>96</HourPrice>
+    <Name>ayala</Name>
+    <Email>@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>15</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>89</HourPrice>
+    <Name>adi</Name>
+    <Email>@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>

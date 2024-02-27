@@ -5,6 +5,10 @@ using BO;
 internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+
+    private readonly Bl _bl;
+    internal WorkerImplementation(Bl bl) => _bl = bl;
+
     /// <summary>
     /// The function get bo worker and throw exception / create the worker object
     /// </summary>
@@ -78,9 +82,9 @@ internal class WorkerImplementation : IWorker
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    public static BO.Status GetStatus(Do.Task task)
+    public  BO.Status GetStatus(Do.Task task)
     {
-        var dateTimeNow = DateTime.Now;
+       
         //If the task does not have the id of the worker working on it, the status is Unscheduled
         //If the task have the id of the worker working on it,and the start date don't come yet the status is Scheduled
         //If the task have the id of the worker working on it,and the start date come but the end date dont come yet status is Scheduled OnTrackStarted
@@ -89,8 +93,8 @@ internal class WorkerImplementation : IWorker
         return task switch
         {
             Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
-            Do.Task t when t.StartDate > dateTimeNow => BO.Status.Scheduled,
-            Do.Task t when t.DeadLine > dateTimeNow => BO.Status.OnTrackStarted,
+            Do.Task t when t.StartDate > _bl.Clock => BO.Status.Scheduled,
+            Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
         };
     }

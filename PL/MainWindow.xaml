@@ -1,16 +1,17 @@
-﻿<Window x:Class="PL.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-    DataContext="{Binding user, RelativeSource={RelativeSource Mode=Self}}">
+    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <Style x:Name="MainButton" TargetType="Button">
+        <Style x:Name="MainButton" TargetType="{x:Type Button}">
             <Setter Property="Height"
-                    Value="84"/>
+                    Value="60"/>
             <Setter Property="Width"
                     Value="180"/>
             <Setter Property="BorderBrush"
@@ -32,19 +33,21 @@
             <ImageBrush ImageSource="/51VGDWJTpJL._AC_UF894,1000_QL80_.jpg"/>
         </Grid.Background>
         <!--workers button-->
-        <Button Content="Handle Workers" HorizontalAlignment="Left" Margin="423,269,0,0" VerticalAlignment="Top" Click="Button_Click_Workers" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}" />
-        <Button Content="Initialization" HorizontalAlignment="Left" Margin="423,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469" Click="Button_Click_init" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
-        <Label Content="       T&amp;T&#xD;&#xA;Tour&amp;Travel" Margin="0,41,0,0" Height="90" Width="308" RenderTransformOrigin="0.5,0.5" FontFamily="Californian FB" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"></Label>
-        <Button Content="Reset" HorizontalAlignment="Left" Margin="196,153,0,0" VerticalAlignment="Top" Click="ButtonReset_Click" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
-        <Button Content="Handle Tasks" HorizontalAlignment="Left" Margin="196,269,0,0" VerticalAlignment="Top" Click="Button_Click_Tasks" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
+        <Button  Content="Handle Workers" HorizontalAlignment="Left" Margin="505,233,0,0" VerticalAlignment="Top" Click="Button_Click_Workers" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}" />
+        <Button Content="Initialization" HorizontalAlignment="Left" Margin="505,137,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.207,1.469" Click="Button_Click_init" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}"/>
+        <Label Content="       T&amp;T&#xA;Tour&amp;Travel" Margin="0,41,0,0" Height="90" Width="308" RenderTransformOrigin="0.5,0.5" FontFamily="Californian FB" FontSize="36" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"/>
+        <Button Content="Reset" HorizontalAlignment="Left" Margin="274,137,0,0" VerticalAlignment="Top" Click="ButtonReset_Click" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}"/>
+        <Button Content="Handle Tasks" HorizontalAlignment="Left" Margin="274,233,0,0" VerticalAlignment="Top" Click="Button_Click_Tasks" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}"/>
 
-        <Button Content="Current Task" HorizontalAlignment="Left" Margin="196,217,0,0" VerticalAlignment="Top" Click="Button_Click_CurrentTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
-        <Button Content="Choose New Task" HorizontalAlignment="Left" Margin="423,217,0,0" VerticalAlignment="Top" Click="Button_Click_ChooseTask" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}"/>
+        <Button Content="Current Task" HorizontalAlignment="Left" Margin="196,217,0,0" VerticalAlignment="Top" Click="Button_Click_CurrentTask" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey2}, Mode=OneTime}"/>
+        <Button Content="Choose New Task" HorizontalAlignment="Left" Margin="423,217,0,0" VerticalAlignment="Top" Click="Button_Click_ChooseTask" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey2}, Mode=OneTime}"/>
 
-        <Button Content="Start Date" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134" Click="Button_Click_StartDate" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
-        <Button Content="update user" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134"  Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}" Click="Button_Click_updateUser"/>
+        <Button Content="Start Date" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134" Click="Button_Click_StartDate" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}"/>
+        <Button Content="update user" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134"  Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey2}, Mode=OneTime}" Click="Button_Click_updateUser"/>
 
-        <Button Content="Log Out" FontSize="15" Margin="24,17,682,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="32" Width="NaN" FontFamily="Gisha" Click="Button_Click_logOut"/>
+        <Button Content="Log Out" FontSize="15" Margin="24,17,696,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="20" Width="60" FontFamily="Gisha" Click="Button_Click_logOut"/>
+        <TextBlock HorizontalAlignment="Left" Margin="91,336,0,0" TextWrapping="Wrap" Text="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" VerticalAlignment="Top" Height="40" Width="71"/>
+
 
     </Grid>
 </Window>

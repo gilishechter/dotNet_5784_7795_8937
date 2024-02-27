@@ -93,10 +93,42 @@ public partial class TaskListWindow : Window
 
     private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)
     {
-        if (_tasks == null)
+        if (isAllTasks)
         {
-            _tasks = ((status == BO.Status.None) ?
-           _s_bl?.Task.ReadAll()! : _s_bl?.Task.ReadAll(item => item.Status == status)!).ToObservableCollection();
+            _tasks = _s_bl.Task.ReadAll().ToObservableCollection();
+            ObservableCollection<BO.TaskList> tempTaskList = new ObservableCollection<BO.TaskList>();
+            if (status == BO.Status.None && level == BO.level.None)
+            {
+                return;
+            }
+            if (status == BO.Status.None)
+            {
+
+                foreach (var taskInList in _tasks)
+                {
+                    BO.Task tempTask = _s_bl.Task.Read(taskInList.Id)!;
+                    if (tempTask.Rank == (int)level)
+                        tempTaskList.Add(taskInList);
+
+                }
+                _tasks = tempTaskList;
+                return;
+
+            }
+            if (level == BO.level.None)
+            {
+                _tasks = _s_bl.Task.ReadAll(t=>t.Status==status).ToObservableCollection();
+                return;
+
+            }
+            foreach (var taskInList in _tasks)
+            {
+                BO.Task tempTask = _s_bl.Task.Read(taskInList.Id)!;
+                if (tempTask.Rank == (int)level && taskInList.Status == status)
+                    tempTaskList.Add(taskInList);
+
+            }
+            _tasks = tempTaskList;
         }
     }
 
@@ -138,6 +170,5 @@ public partial class TaskListWindow : Window
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-
 
 }

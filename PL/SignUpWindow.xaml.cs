@@ -77,9 +77,14 @@ namespace PL
                     if (worker == null)
                     {
                         _s_bl.User.Create(user);
+                        MessageBox.Show("This user signed up successfully", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     }
                     else
+                    {
                         _s_bl.User.Update(user);
+                        MessageBox.Show("This user successfully updated", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                     this.Close();
                 }
 

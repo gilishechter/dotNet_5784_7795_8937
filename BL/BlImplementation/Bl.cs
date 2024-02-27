@@ -11,15 +11,17 @@ internal class Bl : IBl
 {
     public DalApi.IDal _dal = DalApi.Factory.Get;
 
-    public ITask Task => new TaskImplementation();
+    public ITask Task => new TaskImplementation(this);
 
-    public ITaskList TaskList => new TaskListImplementation();
+    public ITaskList TaskList => new TaskListImplementation(this);
 
-    public IWorker Worker => new WorkerImplementation();
-
+    public IWorker Worker => new WorkerImplementation(this);
+    
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
     public IUser User =>  new UserImplementation();
+   
+
 
     //public void AutometicSchedule()            //we didn't do the bonus yet
     //{
@@ -86,7 +88,31 @@ internal class Bl : IBl
     public DateTime? GetEndProject()=> _dal.GetEndDate();
     public DateTime? GetStartProject() => _dal.GetStartDate();  
     public void SetEndProject(DateTime? date)=> _dal.SetEndDate(date);
-    public void SetStartProject(DateTime? date)=>_dal.SetStartDate(date);
+    public void SetStartProject(DateTime? date) => _dal.SetStartDate(date);
 
-  
+    public void SetClockHour()
+    {
+        Clock.AddHours(1);
+    }
+
+    public void SetClockYear()
+    {
+        Clock.AddYears(1);
+    }
+
+    public void SetClockDay()
+    {
+        Clock.AddDays(1);
+    }
+
+    public void ResetClock()
+    {
+        Clock=s_Clock;
+    }
+
+    private static DateTime s_Clock = DateTime.Now;
+    public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
+
+
+
 }
