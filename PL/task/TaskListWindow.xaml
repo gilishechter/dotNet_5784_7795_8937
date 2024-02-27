@@ -22,12 +22,14 @@
         <Grid Height="auto" Grid.Row="0" Width="auto">
             <!--<ComboBox ItemsSource="{Binding Source={StaticResource FilterCollectionKey}}" SelectedValue="{Binding filter, Mode=TwoWay}" HorizontalAlignment="Left" Margin="200,2,0,0" VerticalAlignment="Top" Width="170" Height="46" />-->
             <!--SelectionChanged="ComboBox_SelectionChanged_filter"-->
-            <Label Content="Choose Status:" HorizontalAlignment="Left" Margin="38,0,0,0" VerticalAlignment="Center" Width="157" Height="46" FontSize="20"/>
+            <Label Content="Choose Filter:" HorizontalAlignment="Left" Margin="38,0,0,0" VerticalAlignment="Center" Width="157" Height="46" FontSize="20"/>
         </Grid>
-        <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" IsEnabled="{Binding isAllTasks}" SelectedValue="{Binding status, Mode=TwoWay}"  Grid.Column="1"  Grid.ColumnSpan="3" Background="LightBlue" SelectionChanged="ComboBox_SelectionChanged_status" />
+        <ComboBox ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" Width="170" Height="40" IsEnabled="{Binding isAllTasks}" SelectedValue="{Binding status, Mode=TwoWay}"  Grid.Column="1" Background="LightBlue" SelectionChanged="ComboBox_SelectionChanged_status" Margin="180,0,27,0" Grid.ColumnSpan="3" />
+
+        <ComboBox ItemsSource="{Binding Source={StaticResource LevelCollectionKey}}" Width="170" Height="40" IsEnabled="{Binding isAllTasks}" SelectedValue="{Binding level, Mode=TwoWay}"  Grid.Column="1" Background="LightBlue"  Margin="-180,0,27,0" Grid.ColumnSpan="3" SelectionChanged="ComboBox_SelectionChanged_status" />
         <!--SelectionChanged="options_SelectionChanged_filters"-->
         <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4" Margin="0,46,0,80" Grid.RowSpan="2" FontFamily="Arial" FontSize="14" MouseDoubleClick="double_click_updateTask" HorizontalAlignment="Center">
-           
+
             <ListView.View>
                 <GridView >
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>

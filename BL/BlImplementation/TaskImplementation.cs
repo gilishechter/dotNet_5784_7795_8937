@@ -7,12 +7,33 @@ using System.Runtime.Intrinsics.Arm;
 internal class TaskImplementation : ITask
 {
     public static DalApi.IDal _dal = DalApi.Factory.Get;
+
+    private readonly Bl _bl;
+    internal TaskImplementation(Bl bl) => _bl = bl;
     /// <summary>
     /// this function return the dependencies tasks
     /// </summary>
     /// <param name="doTask"></param>
     /// <returns></returns>
-    public static IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
+
+    public BO.Status GetStatus(Do.Task task)
+    {
+
+        //If the task does not have the id of the worker working on it, the status is Unscheduled
+        //If the task have the id of the worker working on it,and the start date don't come yet the status is Scheduled
+        //If the task have the id of the worker working on it,and the start date come but the end date dont come yet status is Scheduled OnTrackStarted
+        //else done
+
+        return task switch
+        {
+            Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
+            Do.Task t when t.StartDate > _bl.Clock => BO.Status.Scheduled,
+            Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
+            _ => BO.Status.Done,
+        };
+    }
+
+    public  IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
     {
         var result = (from Do.Dependency dependency in _dal.Dependency.ReadAll()
                       where doTask.Id == dependency.DependenceTask && _dal.Task.Read(dependency.PrevTask) != null
@@ -22,7 +43,7 @@ internal class TaskImplementation : ITask
                           Id = dependency.PrevTask,
                           Name = _dal.Task.Read(dependency.PrevTask)!.Name,
                           Description = _dal.Task.Read(dependency.PrevTask)!.Description,
-                          Status = WorkerImplementation.GetStatus(doTask)
+                          Status = GetStatus(doTask)
 
                       });
         return result;
@@ -58,7 +79,7 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
-        boTask.Status = WorkerImplementation.GetStatus(doTask);
+        boTask.Status = GetStatus(doTask);
 
         try
         {
@@ -86,7 +107,7 @@ internal class TaskImplementation : ITask
     {
 
         var result = _dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id //if the task has dependencies tasks
-    && WorkerImplementation.GetStatus(_dal.Task.Read(id)!) != BO.Status.Done).Select(dep => dep);//if the status is not done
+    && GetStatus(_dal.Task.Read(id)!) != BO.Status.Done).Select(dep => dep);//if the status is not done
 
         if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
@@ -133,7 +154,7 @@ internal class TaskImplementation : ITask
             Product = doTask.Product,
             Notes = doTask.Notes,
             Rank = doTask.Rank,
-            Status = WorkerImplementation.GetStatus(doTask),
+            Status = GetStatus(doTask),
             DependenceTasks = getDependenceList(doTask)
         };
 
@@ -154,7 +175,7 @@ internal class TaskImplementation : ITask
                         Id = doTask.Id,
                         Name = doTask.Name,
                         Description = doTask.Description,
-                        Status = WorkerImplementation.GetStatus(doTask),
+                        Status = GetStatus(doTask),
                     });
         }
         else
@@ -165,7 +186,7 @@ internal class TaskImplementation : ITask
                         Id = doTask.Id,
                         Name = doTask.Name,
                         Description = doTask.Description,
-                        Status = WorkerImplementation.GetStatus(doTask),
+                        Status = GetStatus(doTask),
                     }
                     where filter(boTask)
                     select boTask
@@ -211,7 +232,7 @@ internal class TaskImplementation : ITask
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     DeadLine, boTask.Product, boTask.Notes, boTask.Rank);//build the do object
-        boTask.Status = WorkerImplementation.GetStatus(doTask);//update the logic properties
+        boTask.Status = GetStatus(doTask);//update the logic properties
         //boTask.DependenceTasks = getDependenceList(doTask);
         
         try
@@ -326,13 +347,13 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.Rank <= (int)worker.WorkerRank && WorkerImplementation.GetStatus(task) == BO.Status.Unscheduled
+                     where task.Rank <= (int)worker.WorkerRank &&GetStatus(task) == BO.Status.Unscheduled
                      select new BO.TaskList()
                      {
                          Id = task.Id,
                          Name = task.Name,
                          Description = task.Description,
-                         Status = WorkerImplementation.GetStatus(task),
+                         Status = GetStatus(task),
                      });
         return tasks;
     }

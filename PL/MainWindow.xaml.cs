@@ -27,6 +27,19 @@ namespace PL
         //readonly BO.User user;
         //private event Action<int, bool> _onUpdate;
 
+        
+        public DateTime CurrentTime
+        {
+            get { return (DateTime)GetValue(CurrentTimeroperty); }
+            set { SetValue(CurrentTimeroperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentTimeroperty =
+            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
+
+       
+
         private void onUpdate(int id, bool _update)
         {
             _update = true;
@@ -37,25 +50,27 @@ namespace PL
             set { SetValue(MyPropertyProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("MyProperty", typeof(BO.User), typeof(MainWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("user", typeof(BO.User), typeof(MainWindow), new PropertyMetadata(null));
 
 
-        //public bool isAdmin
-        //{
-        //    get { return (bool)GetValue(isAdminProperty); }
-        //    set { SetValue(isAdminProperty, value); }
-        //}
+        public bool _isAdmin
+        {
+            get { return (bool)GetValue(isAdminProperty); }
+            set { SetValue(isAdminProperty, value); }
+        }
 
-        //// Using a DependencyProperty as the backing store for isAdmin.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty isAdminProperty =
-        //    DependencyProperty.Register("isAdmin", typeof(bool), typeof(MainWindow), new PropertyMetadata(0));
+        // Using a DependencyProperty as the backing store for isAdmin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty isAdminProperty =
+            DependencyProperty.Register("_isAdmin", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
 
         public MainWindow(BO.User _user)
         {
             user = _user;
+            _isAdmin = _user.isAdmin;
+            CurrentTime = s_bl.Clock;
             InitializeComponent();
 
         }

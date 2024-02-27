@@ -22,4 +22,15 @@ public interface IBl
     public DateTime? GetEndProject();
     public StatusProject CheckStatusProject();
     //public void AutometicSchedule(); we didn't do the bonus yet
+
+    #region
+    public DateTime Clock { get; }
+    public void SetClockHour();
+    public void SetClockYear();
+    public void SetClockDay();
+
+    public void ResetClock();
+
+
+    #endregion
 }
