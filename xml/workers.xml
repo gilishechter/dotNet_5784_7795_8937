@@ -49,4 +49,11 @@
     <Name>a</Name>
     <Email>@gmail.com</Email>
   </Worker>
+  <Worker>
+    <Id>12</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>20</HourPrice>
+    <Name>aa</Name>
+    <Email>@gmail.com</Email>
+  </Worker>
 </ArrayOfWorker>

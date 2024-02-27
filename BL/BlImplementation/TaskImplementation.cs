@@ -236,7 +236,7 @@ internal class TaskImplementation : ITask
         
         try
         {
-            if(boTask.IdWorker!=null)
+            if(boTask.IdWorker!=0)
                 CheckTaskForWorker(boTask);//call those functions
 
             if(boTask.StartDate!=null)
@@ -289,7 +289,7 @@ internal class TaskImplementation : ITask
     private void CheckTaskForWorker(BO.Task boTask)
     {
         var oldTask = _dal.Task.Read(boTask.Id);
-        if (oldTask!=null && oldTask.IdWorker != null && oldTask.IdWorker != boTask.IdWorker)//if another worker is assign
+        if (oldTask!=null && (oldTask.IdWorker != 0 && oldTask.IdWorker != null) && oldTask.IdWorker != boTask.IdWorker)//if another worker is assign
             throw new BlCantBeUpdated("this worker can't assign this task because another worker is assigned");
         if (oldTask != null && boTask.DependenceTasks != null)
         {
