@@ -25,11 +25,11 @@ public interface IBl
 
     #region
     public DateTime Clock { get; }
-    public void SetClockHour();
-    public void SetClockYear();
-    public void SetClockDay();
+    public DateTime SetClockHour();
+    public DateTime SetClockYear();
+    public DateTime SetClockDay();
 
-    public void ResetClock();
+    public DateTime ResetClock();
 
 
     #endregion

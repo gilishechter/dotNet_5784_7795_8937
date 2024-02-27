@@ -90,24 +90,24 @@ internal class Bl : IBl
     public void SetEndProject(DateTime? date)=> _dal.SetEndDate(date);
     public void SetStartProject(DateTime? date) => _dal.SetStartDate(date);
 
-    public void SetClockHour()
+    public DateTime SetClockHour()
     {
-        Clock.AddHours(1);
+        return Clock = Clock.AddHours(1);
     }
 
-    public void SetClockYear()
+    public DateTime SetClockYear()
     {
-        Clock.AddYears(1);
+        return Clock=Clock.AddYears(1);
     }
 
-    public void SetClockDay()
+    public DateTime SetClockDay()
     {
-        Clock.AddDays(1);
+        return Clock=Clock.AddDays(1);
     }
 
-    public void ResetClock()
+    public DateTime ResetClock()
     {
-        Clock=s_Clock;
+        return Clock = DateTime.Now;
     }
 
     private static DateTime s_Clock = DateTime.Now;
