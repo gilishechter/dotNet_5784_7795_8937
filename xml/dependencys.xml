@@ -31,11 +31,6 @@
     <PrevTask>6</PrevTask>
   </Dependency>
   <Dependency>
-    <Id>7</Id>
-    <DependenceTask>6</DependenceTask>
-    <PrevTask>3</PrevTask>
-  </Dependency>
-  <Dependency>
     <Id>8</Id>
     <DependenceTask>6</DependenceTask>
     <PrevTask>14</PrevTask>

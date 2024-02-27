@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using Accessibility;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,29 +25,52 @@ namespace PL
     {
 
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-        //BO.Worker ?worker1;
-        //string? Name;
-        //int Id;
 
-
-
-        public BO.Worker worker
+        public string _name
         {
-            get { return (BO.Worker)GetValue(workerProperty); }
-            set { SetValue(workerProperty, value); }
+            get { return (string)GetValue(_nameProperty); }
+            set { SetValue(_nameProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for worker.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty workerProperty =
-            DependencyProperty.Register("worker", typeof(BO.Worker), typeof(SignUpWindow), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for _name.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty _nameProperty =
+            DependencyProperty.Register("_name", typeof(string), typeof(SignUpWindow), new PropertyMetadata(null));
 
+
+        public int _id
+        {
+            get { return (int)GetValue(_idProperty); }
+            set { SetValue(_idProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for _id.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty _idProperty =
+            DependencyProperty.Register("_id", typeof(int), typeof(SignUpWindow), new PropertyMetadata(0));
+
+
+
+        public bool isCreate
+        {
+            get { return (bool)GetValue(isUpdateProperty); }
+            set { SetValue(isUpdateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for isUpdate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty isUpdateProperty =
+            DependencyProperty.Register("isUpdate", typeof(bool), typeof(SignUpWindow), new PropertyMetadata(true));
 
         public SignUpWindow(BO.Worker ?_worker=null)
         {
+            if(_worker != null)
+            {               
+                _id = _worker.Id;
+                _name = _worker.Name;
+                isCreate = false;
+            }
             //worker1=_worker;    
             //Name = _worker.Name;
             //Id = _worker.Id;
-            worker = _worker;
+            
             InitializeComponent();
         }
 
@@ -74,7 +98,7 @@ namespace PL
                 else
                 {
                     BO.User user = new() { password = passwordBox.Text, userName = usernameTextBox.Text, isAdmin = false ,Id=id};
-                    if (worker == null)
+                    if (isCreate)
                     {
                         _s_bl.User.Create(user);
                         MessageBox.Show("This user signed up successfully", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);

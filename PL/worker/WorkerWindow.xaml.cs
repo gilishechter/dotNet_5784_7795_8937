@@ -57,7 +57,7 @@ public partial class WorkerWindow : Window
             _onAddOrUpdate(_worker!.Id, _isUpdate);
 
             if (content is "Add") content += "e";
-            MessageBox.Show($"The _worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"The worker has been successfully {content}d", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
         catch (Exception ex)

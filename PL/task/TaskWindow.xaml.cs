@@ -22,18 +22,20 @@ namespace PL.task
 
 
         public bool _isAllTasks { get; set; }=false;
-
-        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true)
+        public bool _isCurrentTask { get; set; } = false;
+        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask=true)
         {
             //InitializeComponent();
             DataContext = this;
             _onAddOrUpdate = onAddOrUpdate;
             _isAllTasks = isAllTasks;
-           _id=id;
+           
+           _id =id;
             try
             {
                 _isUpdate = id is not 0;
                 task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
+                _isCurrentTask = isCurrentTask ;
             }
             catch (Exception ex)
             {

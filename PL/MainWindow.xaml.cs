@@ -111,7 +111,7 @@ namespace PL
             if (worker.WorkerTask!.Id == null)
                 MessageBox.Show("This worker doesn't have current task", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             else
-                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value).ShowDialog();
+                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value,false, false).ShowDialog();
 
         }
 
@@ -137,7 +137,7 @@ namespace PL
         private void Button_Click_logOut(object sender, RoutedEventArgs e)
         {
            
-            new UserWindow().Show(); 
+           
             this.Close();
         }
 

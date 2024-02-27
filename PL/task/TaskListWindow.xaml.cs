@@ -76,7 +76,7 @@ public partial class TaskListWindow : Window
     private void double_click_updateTask(object sender, MouseButtonEventArgs e)
     {
         BO.TaskList? task = (sender as ListView)?.SelectedItem as BO.TaskList;
-        new TaskWindow(onAddOrUpdate,task.Id, isAllTasks).ShowDialog();
+        new TaskWindow(onAddOrUpdate,task.Id, isAllTasks, true).ShowDialog();
     }
 
     private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)
