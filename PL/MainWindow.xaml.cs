@@ -140,6 +140,27 @@ namespace PL
             new UserWindow().Show(); 
             this.Close();
         }
+
+        private void Button_Click_oneHour(object sender, RoutedEventArgs e)
+        {
+            CurrentTime= s_bl.SetClockHour();
+         
+        }
+
+        private void Button_Click_oneDay(object sender, RoutedEventArgs e)
+        {
+            CurrentTime=s_bl.SetClockDay();
+        }
+
+        private void Button_Click_oneYear(object sender, RoutedEventArgs e)
+        {
+            CurrentTime = s_bl.SetClockYear();
+        }
+
+        private void Button_Click_ClockReset(object sender, RoutedEventArgs e)
+        {
+            CurrentTime= s_bl.ResetClock();
+        }
     }
 }
 
