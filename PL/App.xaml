@@ -8,7 +8,6 @@
             <local:Rankcollection x:Key="RankCollectionKey" />
             <local:Statuscollection x:Key="StatusCollectionKey" />
             <local:Levelcollection x:Key="LevelCollectionKey" />
-            <local:Filtercollection x:Key="FilterCollectionKey" />
             <local:StatusProjectcollection x:Key="StatusProjectcollectionKey" />
 
             <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>

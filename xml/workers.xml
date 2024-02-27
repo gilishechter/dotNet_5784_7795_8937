@@ -63,4 +63,11 @@
     <Name>adi</Name>
     <Email>@gmail.com</Email>
   </Worker>
+  <Worker>
+    <Id>789</Id>
+    <WorkerRank>Beginner</WorkerRank>
+    <HourPrice>89</HourPrice>
+    <Name>ch</Name>
+    <Email>@gmail.com</Email>
+  </Worker>
 </ArrayOfWorker>

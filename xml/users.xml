@@ -30,4 +30,10 @@
     <isAdmin>false</isAdmin>
     <id>15</id>
   </User>
+  <User>
+    <userName>h</userName>
+    <password>12</password>
+    <isAdmin>false</isAdmin>
+    <id>789</id>
+  </User>
 </ArrayOfUser>
