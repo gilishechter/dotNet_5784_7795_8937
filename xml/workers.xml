@@ -1,66 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>108565679</Id>
+    <Id>930806323</Id>
     <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>513</HourPrice>
+    <HourPrice>784</HourPrice>
     <Name>Avital Shenker</Name>
     <Email>AvitalShenker@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>836564630</Id>
+    <Id>433395172</Id>
     <WorkerRank>Intermediate</WorkerRank>
-    <HourPrice>257</HourPrice>
+    <HourPrice>577</HourPrice>
     <Name>Ayala Bikel</Name>
     <Email>AyalaBikel@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>293489428</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>299</HourPrice>
+    <Id>666164633</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>753</HourPrice>
     <Name>Bibi Netanyahu</Name>
     <Email>BibiNetanyahu@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>723992398</Id>
-    <WorkerRank>Intermediate</WorkerRank>
-    <HourPrice>533</HourPrice>
+    <Id>251180229</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>720</HourPrice>
     <Name>Eliana Yakobs</Name>
     <Email>ElianaYakobs@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>803213868</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>60</HourPrice>
+    <Id>592132730</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>642</HourPrice>
     <Name>Dana Frider</Name>
     <Email>DanaFrider@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>123</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>85</HourPrice>
-    <Name>aaa</Name>
-    <Email>a@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>56</Id>
+    <Id>741</Id>
     <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>56</HourPrice>
-    <Name>tt</Name>
+    <HourPrice>77</HourPrice>
+    <Name>as</Name>
     <Email>@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>14</Id>
+    <Id>1</Id>
     <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>96</HourPrice>
-    <Name>ayala</Name>
-    <Email>@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>15</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>89</HourPrice>
-    <Name>adi</Name>
+    <HourPrice>7</HourPrice>
+    <Name>a</Name>
     <Email>@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>

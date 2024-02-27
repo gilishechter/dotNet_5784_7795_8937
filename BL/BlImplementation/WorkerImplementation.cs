@@ -18,14 +18,14 @@ internal class WorkerImplementation : IWorker
     /// <exception cref="BlAlreadyExistsException"></exception>
     public int Create(BO.Worker boWorker)
     {
-        if (boWorker.Id < 0)
-            throw new FormatException("ID can't be negetive number");
+        if (boWorker.Id <= 0)
+            throw new FormatException("Incorrect ID");
         if (boWorker.Id == 0)
             throw new FormatException("you must enter an ID");
         if (boWorker.Name == null)
             throw new FormatException("you must enter a name");
         if (boWorker.HourPrice <= 0)
-            throw new FormatException("hour price can't be negetive number");
+            throw new FormatException("Incorrect hour price");
         if ((boWorker.Email == null))
             throw new FormatException("you must enter an email");
         if ((!boWorker.Email!.Contains("@gmail.com")))

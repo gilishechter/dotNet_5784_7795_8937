@@ -137,7 +137,7 @@ namespace PL
         private void Button_Click_logOut(object sender, RoutedEventArgs e)
         {
            
-            new UserWindow().Show(); 
+           
             this.Close();
         }
 

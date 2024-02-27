@@ -346,7 +346,7 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.Rank <= (int)worker.WorkerRank &&GetStatus(task) == BO.Status.Unscheduled
+                     where task.Rank <= (int)worker.WorkerRank && GetStatus(task) == BO.Status.Unscheduled && (getDependenceList(task).Where(t=> t.Status != BO.Status.Done)).Count()==0
                      select new BO.TaskList()
                      {
                          Id = task.Id,

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SignUpWindow" Height="350" Width="600">
+        Title="SignUpWindow" Height="350" Width="600"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Height"
@@ -53,8 +55,8 @@
                 <Label Content="User Name:" HorizontalAlignment="Left" Margin="110,130,0,0" VerticalAlignment="Top" Width="156"/>
                 <Label Content="Password:" HorizontalAlignment="Left" Margin="110,180,0,0" VerticalAlignment="Top" Width="141"/>
 
-                <TextBox HorizontalAlignment="Left" Margin="340,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                <TextBox HorizontalAlignment="Left" Margin="340,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBox Text="{Binding _name}" HorizontalAlignment="Left" Margin="340,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="{Binding isUpdate}" />
+                <TextBox Text="{Binding _id}" HorizontalAlignment="Left" Margin="340,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="{Binding isUpdate}"/>
                 <TextBox HorizontalAlignment="Left" Margin="340,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
                 <TextBox HorizontalAlignment="Left" Margin="340,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 

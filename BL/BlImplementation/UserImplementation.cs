@@ -20,6 +20,8 @@ internal class UserImplementation : IUser
     public string Create(BO.User user)
     {
         Do.User newUser = new(user.userName, user.password, user.isAdmin,user.Id);
+        if (_dal.User.Read(user.Id) != null)
+            throw new BlAlreadyExistsException($"this worker with id={user.Id} already has a user");
         return _dal.User.Create(newUser);
     }
 
