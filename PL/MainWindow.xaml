@@ -25,7 +25,7 @@
                     Value="{x:Null}"/>
         </Style>
     </Window.Resources>
-    
+
 
     <Grid Height="434" VerticalAlignment="Center">
         <Grid.Background>
@@ -43,8 +43,8 @@
 
         <Button Content="Start Date" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134" Click="Button_Click_StartDate" Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
         <Button Content="update user" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134"  Visibility="{Binding isAdmin, Mode=OneTime,Converter={StaticResource ConvertBoolToVisabilityKey2}}" Click="Button_Click_updateUser"/>
-        
-        <Button Content="Log Out" FontSize="15" Margin="24,17,696,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="20" Width="80" FontFamily="Gisha" Click="Button_Click_logOut"/>
+
+        <Button Content="Log Out" FontSize="15" Margin="24,17,682,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="32" Width="NaN" FontFamily="Gisha" Click="Button_Click_logOut"/>
 
     </Grid>
 </Window>

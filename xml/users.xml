@@ -18,4 +18,10 @@
     <isAdmin>false</isAdmin>
     <id>123</id>
   </User>
+  <User>
+    <userName>esti10</userName>
+    <password>8426</password>
+    <isAdmin>false</isAdmin>
+    <id>216293373</id>
+  </User>
 </ArrayOfUser>
