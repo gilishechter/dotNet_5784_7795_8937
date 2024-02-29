@@ -216,8 +216,8 @@ internal class TaskImplementation : ITask
         if (boTask.IdWorker != 0 &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)//throw match exeptions
             throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
 
-        if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != 0)
-            throw new BlWhilePlanning("you cant assign a worker while planning the project");
+        //if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && boTask.IdWorker != 0)
+        //    throw new BlWhilePlanning("you cant assign a worker while planning the project");
 
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Planning && (boTask.WantedStartDate != null || boTask.StartDate!= null
             || boTask.DeadLine != null || boTask.EndingDate != null))

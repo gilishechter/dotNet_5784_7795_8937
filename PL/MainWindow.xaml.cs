@@ -107,14 +107,27 @@ namespace PL
             BO.Worker worker = s_bl.Worker.Read(user.Id)!;
             MessageBoxResult result;
             //_onUpdate = onUpdate;
-            if (worker.WorkerTask!.Id == null)
+            //if (worker.WorkerTask!.Id == null)
+            //{
+            //    result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            //    if (result == MessageBoxResult.Yes)
+            //        new TaskListWindow(worker, false).ShowDialog();
+            //}
+            //else
+            //      new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
+
+            if (worker.WorkerTask!.Id != null && s_bl.Task.Read(worker.WorkerTask.Id.Value).WantedStartDate > DateTime.Now)
+                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
+            else
             {
                 result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
-                if(result== MessageBoxResult.Yes)
-                    new TaskListWindow(worker, false).ShowDialog();
+                if (result == MessageBoxResult.Yes)
+                     new TaskListWindow(worker, false).ShowDialog();
+
             }
-            else
-                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
+
+
+
 
         }
 
@@ -167,8 +180,8 @@ namespace PL
             {
                 //if(s_bl.GetStartProject()==null)
                 //    MessageBox.Show("You can't plan a schedule because there is no start project date ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                new StartDateWindow().ShowDialog();
+                if(s_bl.GetStartProject()==null)
+                    new StartDateWindow().ShowDialog();
 
                 s_bl.AutometicSchedule();
                 MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
