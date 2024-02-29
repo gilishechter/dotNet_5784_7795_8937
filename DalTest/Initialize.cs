@@ -52,37 +52,37 @@ public static class Initialization
         Dependency[] _idDependences = new Dependency[41];
 
 
-        _idDependences[0] = new(1, 1, 2);
-        _idDependences[1] = new(2, 1, 6);
-        _idDependences[2] = new(3, 3, 13);
-        _idDependences[3] = new(4, 4, 1);
-        _idDependences[4] = new(5, 5, 3);
-        _idDependences[5] = new(6, 5, 6);
-        _idDependences[6] = new(7, 6, 3);
-        _idDependences[7] = new(8, 6, 14);
+        _idDependences[0] = new(1, 4, 2);
+        _idDependences[1] = new(2, 4, 1);
+        _idDependences[2] = new(3, 4, 15);
+        _idDependences[3] = new(4, 5, 1);
+        _idDependences[4] = new(5, 5, 2);
+        _idDependences[5] = new(6, 5, 3);
+        _idDependences[6] = new(7, 6, 5);
+        _idDependences[7] = new(8, 6, 3);
         _idDependences[8] = new(9, 7, 3);
         _idDependences[9] = new(10, 7, 5);
 
-        _idDependences[10] = new(11, 7, 12);
-        _idDependences[11] = new(12, 7, 13);
+        _idDependences[10] = new(11, 7, 6);
+        _idDependences[11] = new(12, 7, 1);
         _idDependences[12] = new(13, 8, 5);
         _idDependences[13] = new(14, 8, 7);
         _idDependences[14] = new(15, 8, 2);
         _idDependences[15] = new(16, 9, 3);
         _idDependences[16] = new(17, 9, 6);
-        _idDependences[17] = new(18, 10, 3);
+        _idDependences[17] = new(18, 9, 8);
         _idDependences[18] = new(19, 10, 7);
-        _idDependences[19] = new(20, 10, 11);
+        _idDependences[19] = new(20, 10, 9);
 
-        _idDependences[20] = new(21, 11, 3);
+        _idDependences[20] = new(21, 10, 3);
         _idDependences[21] = new(22, 11, 7);
         _idDependences[22] = new(23, 12, 3);
-        _idDependences[23] = new(24, 12, 6);
+        _idDependences[23] = new(24, 12, 20);
         _idDependences[24] = new(25, 13, 1);
-        _idDependences[25] = new(26, 14, 15);
-        _idDependences[26] = new(27, 14, 16);
-        _idDependences[27] = new(28, 15, 3);
-        _idDependences[28] = new(29, 15, 16);
+        _idDependences[25] = new(26, 14, 5);
+        _idDependences[26] = new(27, 14, 11);
+        _idDependences[27] = new(28, 15, 13);
+        _idDependences[28] = new(29, 15, 6);
         _idDependences[29] = new(30, 16, 3);
 
         _idDependences[30] = new(31, 17, 3);
@@ -91,7 +91,7 @@ public static class Initialization
         _idDependences[33] = new(34, 18, 6);
         _idDependences[34] = new(35, 19, 3);
         _idDependences[35] = new(36, 19, 7);
-        _idDependences[36] = new(37, 19, 20);
+        _idDependences[36] = new(37, 19, 2);
         _idDependences[37] = new(38, 20, 3);
         _idDependences[38] = new(39, 20, 5);
         _idDependences[39] = new(40, 20, 6);
@@ -192,9 +192,17 @@ public static class Initialization
             bool _mileStone = false;//put random details
             int _rank = rand.Next(0, 5);
             int _idWorker = 0;
-            DateTime tempDate = new(2023, 10, 10);
-            int range = (DateTime.Today - tempDate).Days;
-            DateTime _createDate = tempDate.AddDays(rand.Next(range));
+            //DateTime tempDate = new(2023, 10, 10);
+            //int range = (DateTime.Today - tempDate).Days;
+            //DateTime _createDate = tempDate.AddDays(rand.Next(range));
+            DateTime today = DateTime.Today;
+            DateTime nextYear = today.AddYears(1);
+            TimeSpan range = nextYear - today;
+            int days = s_rand.Next(0, range.Days);
+
+            // תאריך גרור
+            DateTime _createDate = today.AddDays(days);
+           
 
             int randomHours = rand.Next(24); // 0 to 23
             int randomMinutes = rand.Next(60); // 0 to 59

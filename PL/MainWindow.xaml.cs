@@ -161,6 +161,23 @@ namespace PL
         {
             CurrentTime= s_bl.ResetClock();
         }
+
+        private void Button_Click_Aoto(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(s_bl.GetStartProject()==null)
+                    MessageBox.Show("You can't plan a schedule because there is no start project date ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                s_bl.AutometicSchedule();
+                MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
     }
 }
 

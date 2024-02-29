@@ -26,7 +26,7 @@ internal class TaskImplementation : ITask
 
         return task switch
         {
-            Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
+            Do.Task t when t.IdWorker is null || t.IdWorker is 0 => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > _bl.Clock => BO.Status.Scheduled,
             Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
@@ -59,6 +59,9 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlAlreadyExistsException"></exception>
     public int Create(BO.Task boTask)
     {
+        if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
+            throw new BlCantBeUpdated("you can't create a a task since the project started");
+
         if (boTask.Id < 0)
             throw new FormatException("ID can't be negetive number");
 
@@ -206,6 +209,9 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDuringExecution"></exception>
     public void Update(BO.Task boTask)
     {
+        if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
+            throw new BlCantBeUpdated("you can't update a a task since the project started");
+
         if (boTask.IdWorker != 0 &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)//throw match exeptions
             throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
 
@@ -323,7 +329,7 @@ internal class TaskImplementation : ITask
             throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
 
         var startDates = from BO.TaskList taskList in getDependenceList(_task)
-                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.StartDate == null
+                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
                          select taskList;
         if (startDates.Count() > 0)//if the previous tasks don't have start dates
             throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
@@ -346,7 +352,7 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.Rank <= (int)worker.WorkerRank && GetStatus(task) == BO.Status.Unscheduled && (getDependenceList(task).Where(t=> t.Status != BO.Status.Done)).Count()==0
+                     where task.Rank <= (int)worker.WorkerRank && GetStatus(task) == BO.Status.Unscheduled  && getDependenceList(task).FirstOrDefault(t=>t.Status != BO.Status.Done)==null /*(getDependenceList(task).Where(t=> t.Status != BO.Status.Done)).Count()==0*/
                      select new BO.TaskList()
                      {
                          Id = task.Id,

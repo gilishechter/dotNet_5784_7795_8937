@@ -12,46 +12,4 @@
     <isAdmin>true</isAdmin>
     <id>325697795</id>
   </User>
-  <User>
-    <userName>za</userName>
-    <password>2</password>
-    <isAdmin>false</isAdmin>
-    <id>741</id>
-  </User>
-  <User>
-    <userName>c</userName>
-    <password>1</password>
-    <isAdmin>false</isAdmin>
-    <id>741</id>
-  </User>
-  <User>
-    <userName>z</userName>
-    <password>1</password>
-    <isAdmin>false</isAdmin>
-    <id>741</id>
-  </User>
-  <User>
-    <userName>2</userName>
-    <password>q</password>
-    <isAdmin>false</isAdmin>
-    <id>741</id>
-  </User>
-  <User>
-    <userName>ww</userName>
-    <password>12</password>
-    <isAdmin>false</isAdmin>
-    <id>1</id>
-  </User>
-  <User>
-    <userName>gil</userName>
-    <password>123</password>
-    <isAdmin>false</isAdmin>
-    <id>12</id>
-  </User>
-  <User>
-    <userName>h</userName>
-    <password>12</password>
-    <isAdmin>false</isAdmin>
-    <id>789</id>
-  </User>
 </ArrayOfUser>

@@ -241,6 +241,7 @@ internal class WorkerImplementation : IWorker
         };
         return current;
     }
+        
 
     public void ClearWorker()
     {

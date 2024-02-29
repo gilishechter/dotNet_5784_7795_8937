@@ -2,6 +2,7 @@
 
 using BlApi;
 using BO;
+//using DalApi;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -20,51 +21,112 @@ internal class Bl : IBl
     public IWorkerTask WorkerTask => new WorkerTaskImplementation();
 
     public IUser User =>  new UserImplementation();
-   
+    public IEnumerable<BO.TaskList> getDependenceList(Do.Task doTask)
+    {
+        var result = (from Do.Dependency dependency in _dal.Dependency.ReadAll()
+                      where doTask.Id == dependency.DependenceTask && _dal.Task.Read(dependency.PrevTask) != null
 
+                      select new BO.TaskList//create the current task list for each dependence
+                      {
+                          Id = dependency.PrevTask,
+                          Name = _dal.Task.Read(dependency.PrevTask)!.Name,
+                          Description = _dal.Task.Read(dependency.PrevTask)!.Description,
+                          Status = GetStatus(doTask)
 
-    //public void AutometicSchedule()            //we didn't do the bonus yet
-    //{
-    //    var tasks = BlApi.Factory.Get().Task;
+                      });
+        return result;
+    }
 
-    //    foreach (var task in tasks.ReadAll())
-    //    {
-    //        var fullTask = tasks.Read(task.Id);
-    //        if (fullTask.DependenceTasks == null)
-    //            fullTask.StartDate = _dal.GetStartDate();
-    //    }
-    //}
+    public BO.Status GetStatus(Do.Task task)
+    {
 
-    //    foreach (var task in tasks.ReadAll())
-    //    {
-    //        BO.Task wantedTask = tasks.Read(task.Id)!;
-    //        if (wantedTask.DependenceTasks == null)
-    //            wantedTask.StartDate = _dal.GetStartDate();
-    //        else
-    //        {
-    //            var max = tasks.Read(task.Id)!.DeadLine;
-    //            foreach (var taskList in wantedTask.DependenceTasks)
-    //            {
-    //                if (tasks.Read(taskList.Id)!.DeadLine > max)
-    //                    max = tasks.Read(taskList.Id)!.DeadLine;
-    //            }
-    //            wantedTask.StartDate = max;
-    //        }
-    //    }
-    //}
+        //If the task does not have the id of the worker working on it, the status is Unscheduled
+        //If the task have the id of the worker working on it,and the start date don't come yet the status is Scheduled
+        //If the task have the id of the worker working on it,and the start date come but the end date dont come yet status is Scheduled OnTrackStarted
+        //else done
 
-    //public void recursiveAutoSchedule(BO.Task task)
-    //{
-    //    var tasks = BlApi.Factory.Get().Task;
-    //    // var fullTask = tasks.Read(task.Id);
-    //    var NostartDates = task.DependenceTasks.Where(date => tasks.Read(date.Id).StartDate == null);
-    //    if(NostartDates.Count() == 0 )
-    //    {
-    //        //var startDates = task.DependenceTasks.Where(date => tasks.Read(date.Id).StartDate != null);
-    //        foreach(var x)
+        return task switch
+        {
+            Do.Task t when t.IdWorker is null || t.IdWorker is 0 => BO.Status.Unscheduled,
+            Do.Task t when t.StartDate== null || t.StartDate > _bl.Clock => BO.Status.Scheduled,
+            Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
+            _ => BO.Status.Done,
+        };
+    }
+    private readonly Bl _bl;
+    //internal BlImplementation(Bl bl) => _bl = bl;
 
-    //    }       
-    //}
+    public DateTime? CreateSchedule(int _id, DateTime? _date)
+    {
+        Do.Task? _task = _dal.Task.Read(_id);
+        if (_task == null)//if the task doesn't exist
+            throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
+
+        var startDates = from BO.TaskList taskList in getDependenceList(_task)
+                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
+                         select taskList;
+        if (startDates.Count() > 0)//if the previous tasks don't have start dates
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
+
+        var endDates = from BO.TaskList taskList in getDependenceList(_task)
+                       where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
+                       select taskList;
+        if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
+            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+
+        if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
+            throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
+
+        Do.Task newTask = _task with { WantedStartDate = _date };
+        _dal.Task.Update(newTask);
+        return _date;
+
+    }
+
+    public void AutometicSchedule()
+    {
+        List<BO.TaskList> allNoStartDate = new List<BO.TaskList>();
+        IEnumerable<Do.Task> allTasks = _dal.Task.ReadAll();
+
+        foreach (var task in allTasks)
+        {
+            if ((getDependenceList(task)).Count() == 0)
+            {
+                CreateSchedule(task.Id, _dal.GetStartDate());
+            }
+        }
+        allTasks = _dal.Task.ReadAll();
+        while (allTasks.Any(t => t.WantedStartDate == null))
+        {
+            foreach (Do.Task task in allTasks)
+            {
+                IEnumerable<BO.TaskList> tasksDependencies = getDependenceList(task);
+                List<BO.TaskList> noStartDate = new List<BO.TaskList>();
+                List<Do.Task> thereIsStartDate = new List<Do.Task>();
+
+                foreach (BO.TaskList taskList in tasksDependencies)
+                {
+                    Do.Task dep = _dal.Task.Read(taskList.Id);
+                    if (dep.WantedStartDate == null)
+                    {
+                        noStartDate.Add(taskList);
+                        allNoStartDate.Add(taskList);
+                    }
+                    else
+                    {
+                        thereIsStartDate.Add(dep);
+                    }
+                }
+                if (noStartDate.Count() == 0 && task.WantedStartDate == null)
+                {
+                    var scheduledDate = thereIsStartDate.Max(dep => dep.WantedStartDate + dep.Time);
+                    CreateSchedule(task.Id, (DateTime)scheduledDate);
+                    allTasks = _dal.Task.ReadAll();
+                }
+            }           
+        }
+    }
+
     public StatusProject CheckStatusProject()
     {
         var tasks = BlApi.Factory.Get().Task.ReadAll();
@@ -112,7 +174,5 @@ internal class Bl : IBl
 
     private static DateTime s_Clock = DateTime.Now;
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
-
-
 
 }
