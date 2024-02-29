@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="GanttChartWindow" Height="450" Width="800">
+        Title="GanttChartWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
-       
+        <!-- רשימת התאריכים למעלה -->
+        <ListBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Dates}" />
+
+        <!-- רשימת המשימות בצד -->
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding tasks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TaskName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- תרשים הגנט -->
+        <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Tasks}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="2"
+                        Width="{Binding DurationInDays}" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding TaskName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
-</Window>
+
