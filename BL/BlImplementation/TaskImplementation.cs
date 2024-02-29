@@ -78,9 +78,10 @@ internal class TaskImplementation : ITask
             throw new BlDuringExecution("yoe can'd add task during execution");
 
         DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+        DateTime? createDate = _bl.Clock;
 
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
-                                    boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
+                                    boTask.Time, createDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
                                     DeadLine, boTask.Product, boTask.Notes, boTask.Rank);
         boTask.Status = GetStatus(doTask);
 
@@ -209,8 +210,8 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDuringExecution"></exception>
     public void Update(BO.Task boTask)
     {
-        if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
-            throw new BlCantBeUpdated("you can't update a a task since the project started");
+        //if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
+        //    throw new BlCantBeUpdated("you can't update a a task since the project started");
 
         if (boTask.IdWorker != 0 &&_dal.Worker.Read(doWorker => doWorker.Id == boTask.IdWorker) == null)//throw match exeptions
             throw new BlDoesNotExistException($"There is no worker with ID={boTask.IdWorker}");
@@ -233,6 +234,13 @@ internal class TaskImplementation : ITask
 
         DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
 
+        bool flag = false;
+
+        if (boTask.EndingDate != null && boTask.EndingDate > boTask.DeadLine)
+        {
+            boTask.Time = boTask.Time + (boTask.EndingDate - boTask.DeadLine);
+            flag = true;
+        }
 
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
                                     boTask.Time, boTask.CreateDate, boTask.WantedStartDate, boTask.StartDate, boTask.EndingDate,
@@ -248,15 +256,12 @@ internal class TaskImplementation : ITask
             if(boTask.StartDate!=null)
                 CheckStartDate(boTask.Id, boTask.StartDate);
 
-            //if (boTask.DependenceTasks != null)
-            //{
-            //    foreach(var dep in boTask.DependenceTasks)
-            //        _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id));
-            //    //(from BO.TaskList dep in boTask.DependenceTasks
-            //    //  _dal.Dependency.Update(new Do.Dependency(0, boTask.Id, dep.Id))).ToList();
-            //}
             _dal.Task.Update(doTask);
-            //CreateSchedule(boTask.Id, boTask.StartDate);
+
+            if (flag)
+            {                
+                throw new Exception("You finished the task too late");
+            }
         }
         catch (Do.DalDoesNotExistException ex)
         {
@@ -362,4 +367,21 @@ internal class TaskImplementation : ITask
                      });
         return tasks;
     }
+
+    public IEnumerable<BO.TaskList> OptionSchduleTasks(BO.Worker worker)
+    {
+        var tasks = (from Do.Task task in _dal.Task.ReadAll()
+                     //let task = _dal.Task.Read(taskList.Id)
+                     where task.IdWorker==worker.Id && getDependenceList(task).FirstOrDefault(t => t.Status != BO.Status.Done) == null
+                     select new BO.TaskList()
+                     {
+                         Id = task.Id,
+                         Name = task.Name,
+                         Description = task.Description,
+                         Status = GetStatus(task),
+                     });
+        return tasks;
+    }
+
+
 }

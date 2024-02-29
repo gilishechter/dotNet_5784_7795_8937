@@ -119,7 +119,12 @@ internal class Bl : IBl
                 }
                 if (noStartDate.Count() == 0 && task.WantedStartDate == null)
                 {
-                    var scheduledDate = thereIsStartDate.Max(dep => dep.WantedStartDate + dep.Time);
+                    DateTime? scheduledDate;
+                   // if (task.EndingDate == null)
+                        scheduledDate = thereIsStartDate.Max(dep => dep.WantedStartDate + dep.Time);
+                  //  else
+                      //  scheduledDate = thereIsStartDate.Max(dep => dep. + dep.Time);
+
                     CreateSchedule(task.Id, (DateTime)scheduledDate);
                     allTasks = _dal.Task.ReadAll();
                 }

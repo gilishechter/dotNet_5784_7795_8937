@@ -8,6 +8,6 @@ public interface ITask
     public int Create(BO.Task task);
     public BO.Task? Read(int Id);
     public IEnumerable<BO.TaskList> OptionTasks(BO.Worker worker);
-
+    public IEnumerable<BO.TaskList> OptionSchduleTasks(BO.Worker worker);
 
 }

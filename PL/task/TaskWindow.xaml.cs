@@ -1,6 +1,7 @@
 ﻿using PL.Tools.ToObservableCollection;
 using System;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,13 +20,10 @@ namespace PL.task
 
         private readonly int _id;
 
-
-
         public bool _isAllTasks { get; set; }=false;
         public bool _isCurrentTask { get; set; } = false;
         public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask=true)
         {
-            //InitializeComponent();
             DataContext = this;
             _onAddOrUpdate = onAddOrUpdate;
             _isAllTasks = isAllTasks;
@@ -34,7 +32,7 @@ namespace PL.task
             try
             {
                 _isUpdate = id is not 0;
-                task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
+                 task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
                 _isCurrentTask = isCurrentTask ;
             }
             catch (Exception ex)
@@ -76,9 +74,9 @@ namespace PL.task
                 var content = (sender as Button)!.Content;
 
                 int _id = task.Id;
-
-                if (_isUpdate) s_bl.Task.Update(task!);
-
+                BO.Task newTask;
+                if (_isUpdate)  s_bl.Task.Update(task!);
+                                 
                 else _id = s_bl.Task.Create(task);
 
                 _onAddOrUpdate(_id, _isUpdate);
@@ -91,7 +89,19 @@ namespace PL.task
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (ex.Message != "You finished the task too late")
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                else
+                {
+                    MessageBoxResult result= MessageBox.Show("Do you want to update the schedule", ex.Message, MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    if (MessageBoxResult.Yes == result)
+                    {
+                        s_bl.AutometicSchedule();
+                        MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    }
+                }
+
             }
         }
 

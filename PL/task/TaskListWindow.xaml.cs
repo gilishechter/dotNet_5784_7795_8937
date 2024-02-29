@@ -37,16 +37,18 @@ public partial class TaskListWindow : Window
     public static readonly DependencyProperty isAllTasksProperty =
         DependencyProperty.Register("isAllTasks", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(false));
 
-    
-    public TaskListWindow(BO.Worker? worker=null)
+  //  public bool _isSignUpTask { get; set; } = false;
+    public TaskListWindow(BO.Worker? worker=null, bool _isSignUpTask = true)
     {
         DataContext=this;
         if (worker != null)
         {
-            _tasks=_s_bl?.Task.OptionTasks(worker).ToObservableCollection();
+            if (_isSignUpTask)           
+                _tasks = _s_bl?.Task.OptionTasks(worker).ToObservableCollection();
+            
+            else
+                _tasks = _s_bl?.Task.OptionSchduleTasks(worker).ToObservableCollection();
             isAllTasks = false;
-            //IEnumerable<BO.TaskList> tasks= _s_bl.Task.OptionTasks(worker);
-            //_tasks=tasks.ToObservableCollection();
         }
         else { isAllTasks = true; }
         InitializeComponent();
