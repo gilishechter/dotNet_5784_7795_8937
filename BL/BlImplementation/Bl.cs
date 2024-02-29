@@ -67,7 +67,7 @@ internal class Bl : IBl
                          select taskList;
         if (startDates.Count() > 0)//if the previous tasks don't have start dates
             throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
-
+        
         var endDates = from BO.TaskList taskList in getDependenceList(_task)
                        where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
                        select taskList;
