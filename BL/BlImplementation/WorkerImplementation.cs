@@ -9,6 +9,8 @@ internal class WorkerImplementation : IWorker
     private readonly IBl _bl;
     internal WorkerImplementation(IBl bl) => _bl = bl;
 
+
+
     /// <summary>
     /// The function get bo worker and throw exception / create the worker object
     /// </summary>

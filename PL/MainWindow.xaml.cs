@@ -182,8 +182,9 @@ namespace PL
                 //    MessageBox.Show("You can't plan a schedule because there is no start project date ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 if(s_bl.GetStartProject()==null)
                     new StartDateWindow().ShowDialog();
-
-                s_bl.AutometicSchedule();
+                s_bl.Task.AutometicSchedule();
+              
+               // s_bl.AutometicSchedule();
                 MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch(Exception ex)

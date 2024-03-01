@@ -38,7 +38,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="64" Width="116" Margin="342,503,0,0" VerticalAlignment="Top" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Click="Button_Click_AddTask" RenderTransformOrigin="2.373,4.388" Grid.ColumnSpan="2" />
+            <!--<Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="64" Width="116" Margin="342,503,0,0" VerticalAlignment="Top" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Click="Button_Click_AddTask" RenderTransformOrigin="2.373,4.388" Grid.ColumnSpan="2" />-->
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200*"/>

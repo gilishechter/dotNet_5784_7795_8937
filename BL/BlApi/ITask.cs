@@ -9,5 +9,6 @@ public interface ITask
     public BO.Task? Read(int Id);
     public IEnumerable<BO.TaskList> OptionTasks(BO.Worker worker);
     public IEnumerable<BO.TaskList> OptionSchduleTasks(BO.Worker worker);
+    public void AutometicSchedule();
 
 }

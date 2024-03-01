@@ -10,6 +10,57 @@ internal class TaskImplementation : ITask
 
     private readonly IBl _bl;
     internal TaskImplementation(IBl bl) => _bl = bl;
+
+    public void AutometicSchedule()
+    {
+        List<BO.TaskList> allNoStartDate = new List<BO.TaskList>();
+        IEnumerable<Do.Task> allTasks = _dal.Task.ReadAll();
+
+        foreach (var task in allTasks)
+        {
+            if ((getDependenceList(task)).Count() == 0)
+            {
+                if (task.WantedStartDate == null)
+                    CreateSchedule(task.Id, _dal.GetStartDate());
+            }
+        }
+        allTasks = _dal.Task.ReadAll();
+        while (allTasks.Any(t => t.WantedStartDate == null))
+        {
+            foreach (Do.Task task in allTasks)
+            {
+                IEnumerable<BO.TaskList> tasksDependencies = getDependenceList(task);
+                List<BO.TaskList> noStartDate = new List<BO.TaskList>();
+                List<Do.Task> thereIsStartDate = new List<Do.Task>();
+
+                foreach (BO.TaskList taskList in tasksDependencies)
+                {
+                    Do.Task dep = _dal.Task.Read(taskList.Id);
+                    if (dep.WantedStartDate == null)
+                    {
+                        noStartDate.Add(taskList);
+                        allNoStartDate.Add(taskList);
+                    }
+                    else
+                    {
+                        thereIsStartDate.Add(dep);
+                    }
+                }
+                if (noStartDate.Count() == 0 && task.WantedStartDate == null)
+                {
+                    DateTime? scheduledDate;
+                    // if (task.EndingDate == null)
+                    scheduledDate = thereIsStartDate.Max(dep => dep.WantedStartDate + dep.Time);
+                    //  else
+                    //  scheduledDate = thereIsStartDate.Max(dep => dep. + dep.Time);
+
+                    CreateSchedule(task.Id, (DateTime)scheduledDate);
+                    allTasks = _dal.Task.ReadAll();
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// this function return the dependencies tasks
     /// </summary>

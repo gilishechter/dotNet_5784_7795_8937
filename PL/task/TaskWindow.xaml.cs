@@ -98,7 +98,7 @@ namespace PL.task
                     {
                         try
                         {
-                            s_bl.AutometicSchedule();
+                            s_bl.Task.AutometicSchedule();
                             MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         catch (Exception ex1)
