@@ -52,7 +52,7 @@ internal class Bl : IBl
         };
     }
     private readonly IBl _bl;
-    internal BlImplementation(IBl bl) => _bl = bl;
+    //internal BlImplementation(IBl bl) => _bl = bl;
 
     public DateTime? CreateSchedule(int _id, DateTime? _date)
     {
