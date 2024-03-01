@@ -25,7 +25,7 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         //readonly BO.User user;
-        //private event Action<int, bool> _onUpdate;
+        private event Action<int, bool> _onUpdate;
 
         
         public DateTime CurrentTime
@@ -106,25 +106,25 @@ namespace PL
         {
             BO.Worker worker = s_bl.Worker.Read(user.Id)!;
             MessageBoxResult result;
-            //_onUpdate = onUpdate;
-            //if (worker.WorkerTask!.Id == null)
-            //{
-            //    result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            //    if (result == MessageBoxResult.Yes)
-            //        new TaskListWindow(worker, false).ShowDialog();
-            //}
-            //else
-            //      new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
-
-            if (worker.WorkerTask!.Id != null && s_bl.Task.Read(worker.WorkerTask.Id.Value).WantedStartDate > DateTime.Now)
-                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
-            else
+            _onUpdate = onUpdate;
+            if (worker.WorkerTask!.Id == null)
             {
                 result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (result == MessageBoxResult.Yes)
-                     new TaskListWindow(worker, false).ShowDialog();
-
+                    new TaskListWindow(worker, false).ShowDialog();
             }
+            else
+                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
+
+            //if (worker.WorkerTask!.Id != null && s_bl.Task.Read(worker.WorkerTask.Id.Value).WantedStartDate > DateTime.Now)
+            //    new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
+            //else
+            //{
+            //    result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            //    if (result == MessageBoxResult.Yes)
+            //         new TaskListWindow(worker, false).ShowDialog();
+
+            //}
 
 
 

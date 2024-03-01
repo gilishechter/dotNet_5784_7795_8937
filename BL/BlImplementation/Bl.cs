@@ -1,6 +1,4 @@
-﻿
-
-using BlApi;
+﻿using BlApi;
 using BO;
 //using DalApi;
 using System.Linq;
@@ -31,7 +29,7 @@ internal class Bl : IBl
                           Id = dependency.PrevTask,
                           Name = _dal.Task.Read(dependency.PrevTask)!.Name,
                           Description = _dal.Task.Read(dependency.PrevTask)!.Description,
-                          Status = GetStatus(doTask)
+                          Status = GetStatus(_dal.Task.Read(dependency.PrevTask))
 
                       });
         return result;
@@ -53,8 +51,8 @@ internal class Bl : IBl
             _ => BO.Status.Done,
         };
     }
-    private readonly Bl _bl;
-    //internal BlImplementation(Bl bl) => _bl = bl;
+    private readonly IBl _bl;
+    internal BlImplementation(IBl bl) => _bl = bl;
 
     public DateTime? CreateSchedule(int _id, DateTime? _date)
     {
@@ -77,6 +75,10 @@ internal class Bl : IBl
         if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
             throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
 
+
+        if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
+
         Do.Task newTask = _task with { WantedStartDate = _date };
         _dal.Task.Update(newTask);
         return _date;
@@ -92,7 +94,8 @@ internal class Bl : IBl
         {
             if ((getDependenceList(task)).Count() == 0)
             {
-                CreateSchedule(task.Id, _dal.GetStartDate());
+                if(task.WantedStartDate == null)
+                    CreateSchedule(task.Id, _dal.GetStartDate());
             }
         }
         allTasks = _dal.Task.ReadAll();
@@ -117,7 +120,7 @@ internal class Bl : IBl
                         thereIsStartDate.Add(dep);
                     }
                 }
-                if (noStartDate.Count() == 0 && task.WantedStartDate == null)
+                if (noStartDate.Count() == 0 && task.WantedStartDate== null)
                 {
                     DateTime? scheduledDate;
                    // if (task.EndingDate == null)

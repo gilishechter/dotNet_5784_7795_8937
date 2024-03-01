@@ -204,7 +204,7 @@ public static class Initialization
             DateTime _createDate = today.AddDays(days);
            
 
-            int randomHours = rand.Next(24); // 0 to 23
+            int randomHours = rand.Next(100); // 0 to 23
             int randomMinutes = rand.Next(60); // 0 to 59
             int randomSeconds = rand.Next(60); // 0 to 59
 

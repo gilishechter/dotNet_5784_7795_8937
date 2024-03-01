@@ -8,8 +8,8 @@ internal class TaskImplementation : ITask
 {
     public static DalApi.IDal _dal = DalApi.Factory.Get;
 
-    private readonly Bl _bl;
-    internal TaskImplementation(Bl bl) => _bl = bl;
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
     /// <summary>
     /// this function return the dependencies tasks
     /// </summary>
@@ -27,7 +27,7 @@ internal class TaskImplementation : ITask
         return task switch
         {
             Do.Task t when t.IdWorker is null || t.IdWorker is 0 => BO.Status.Unscheduled,
-            Do.Task t when t.StartDate > _bl.Clock => BO.Status.Scheduled,
+            Do.Task t when t.StartDate > _bl.Clock || t.StartDate == null=> BO.Status.Scheduled,
             Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
             _ => BO.Status.Done,
         };
@@ -43,7 +43,7 @@ internal class TaskImplementation : ITask
                           Id = dependency.PrevTask,
                           Name = _dal.Task.Read(dependency.PrevTask)!.Name,
                           Description = _dal.Task.Read(dependency.PrevTask)!.Description,
-                          Status = GetStatus(doTask)
+                          Status = GetStatus(_dal.Task.Read(dependency.PrevTask))
 
                       });
         return result;
@@ -109,11 +109,14 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
-
-        var result = _dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id //if the task has dependencies tasks
-    && GetStatus(_dal.Task.Read(id)!) != BO.Status.Done).Select(dep => dep);//if the status is not done
-
-        if (result.Count() > 0)
+        var depTasks = getDependenceList(_dal.Task.Read(id));
+        
+        var result = from BO.TaskList task in depTasks
+                     where task.Status != BO.Status.Done
+                     select task;
+                                                                //getDependenceList(_dal.Task.Read(id))!= null/*_dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id*/ //if the task has dependencies tasks
+                                                                //).Select(dep => dep);//if the status is not done
+       if (result.Count() > 0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
 
 
@@ -348,7 +351,10 @@ internal class TaskImplementation : ITask
         if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
             throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
 
-      
+        if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
+            throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
+
+
         return _date;
 
     }
@@ -372,7 +378,7 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.IdWorker==worker.Id && getDependenceList(task).FirstOrDefault(t => t.Status != BO.Status.Done) == null
+                     where task.IdWorker==worker.Id && getDependenceList(task).FirstOrDefault(t => t.Status != BO.Status.Done) == null && task.StartDate == null && GetStatus(task)==BO.Status.Scheduled
                      select new BO.TaskList()
                      {
                          Id = task.Id,
