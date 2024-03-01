@@ -1,4 +1,5 @@
-﻿using PL.Tools.ToObservableCollection;
+﻿using PL.task;
+using PL.Tools.ToObservableCollection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,34 +24,54 @@ namespace PL;
 public partial class GanttChartWindow : Window
 {
     static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-    public ObservableCollection<BO.TaskList> task
+
+
+
+    public int _width
     {
-        get { return (ObservableCollection<BO.TaskList>)GetValue(taskopertyProperty); }
-        set { SetValue(taskopertyProperty, value); }
+        get { return (int)GetValue(widthProperty); }
+        set { SetValue(widthProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for task.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty taskopertyProperty =
-        DependencyProperty.Register("task", typeof(BO.Task), typeof(GanttChartWindow), new PropertyMetadata(null));
+    // Using a DependencyProperty as the backing store for width.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty widthProperty =
+        DependencyProperty.Register("width", typeof(int), typeof(GanttChartWindow), new PropertyMetadata(null));
 
 
-    public ObservableCollection<string>  Dates
+    private ObservableCollection<BO.TaskList> _tasks
     {
-        get { return (ObservableCollection<string>)GetValue( DatesProperty); }
-        set { SetValue( DatesProperty, value); }
+        get { return (ObservableCollection<BO.TaskList>)GetValue(tasklistProperty); }
+        set { SetValue(tasklistProperty, value); }
+
     }
 
-    // Using a DependencyProperty as the backing store for  Dates.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty  DatesProperty =
-        DependencyProperty.Register(" Dates", typeof(ObservableCollection<string>), typeof(GanttChartWindow), new PropertyMetadata(0));
+    // Using a DependencyProperty as the backing store for _tasks.  This enables animation, styling, binding, etc...
+    private static readonly DependencyProperty tasklistProperty =
+        DependencyProperty.Register("_tasks", typeof(ObservableCollection<BO.TaskList>), typeof(TaskListWindow), new PropertyMetadata(null));
+
+
+
 
 
 
     public GanttChartWindow()
     {
-        task = _s_bl.Task.ReadAll().ToObservableCollection();
-        InitializeComponent();
+    //   var _tasks =_s_bl.Task.ReadAll();
+    //    foreach (var task in _tasks)
+    //    {
+    //       ListViewItem listItem = new ListViewItem();
+    //        listItem.Content = task.Id;
+    //        listItem.Width=
 
+    //        var temp = _s_bl.Task.Read(task.Id);
+            
+    //        //_width =int.Parse((temp.EndingDate - temp.StartDate).ToString());
+
+    //    }
+        
+
+        InitializeComponent();
+        
 
     }
 
