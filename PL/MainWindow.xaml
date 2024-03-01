@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <Style x:Name="MainButton" TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Height"
                     Value="60"/>
             <Setter Property="Width"
@@ -24,6 +24,16 @@
                     Value="Bold"/>
             <Setter Property="Background"
                     Value="{x:Null}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Height"
+                            Value="75"/>
+                    <Setter Property="Width"
+                            Value="195"/>
+                </Trigger>
+            </Style.Triggers>
+            
         </Style>
     </Window.Resources>
 
@@ -45,7 +55,7 @@
         <Button Content="update user" HorizontalAlignment="Left" Margin="636,370,0,0" VerticalAlignment="Top" Height="40" Width="134"  Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey2}, Mode=OneTime}" Click="Button_Click_updateUser"/>
 
         <Button Content="Log Out" FontSize="15" Margin="24,17,696,0" BorderBrush="{x:Null}" VerticalAlignment="Top" Height="20" Width="60" FontFamily="Gisha" Click="Button_Click_logOut"/>
-        <TextBlock HorizontalAlignment="Left" FontFamily="Britannic Bold" Margin="53,309,0,0" TextWrapping="Wrap" Text="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" VerticalAlignment="Top" FontSize="15" Height="45" Width="100"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="Britannic Bold" Margin="51,315,0,0" TextWrapping="Wrap" Text="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" VerticalAlignment="Top" FontSize="15" Height="45" Width="100"/>
 
         <Button Content="One Hour" FontSize="12" HorizontalAlignment="Left" Margin="5,384,0,0" VerticalAlignment="Top" Height="30" Width="60" Click="Button_Click_oneHour"/>
         <Button Content="One Day" FontSize="12" HorizontalAlignment="Left" Margin="70,384,0,0" VerticalAlignment="Top" Height="30" Width="60" Click="Button_Click_oneDay"/>
