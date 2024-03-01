@@ -13,9 +13,9 @@
     <id>325697795</id>
   </User>
   <User>
-    <userName>abc</userName>
-    <password>123</password>
+    <userName>a</userName>
+    <password>1</password>
     <isAdmin>false</isAdmin>
-    <id>123</id>
+    <id>1</id>
   </User>
 </ArrayOfUser>

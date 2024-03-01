@@ -96,8 +96,16 @@ namespace PL.task
                     MessageBoxResult result= MessageBox.Show("Do you want to update the schedule", ex.Message, MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (MessageBoxResult.Yes == result)
                     {
-                        s_bl.AutometicSchedule();
-                        MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                        try
+                        {
+                            s_bl.AutometicSchedule();
+                            MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex1)
+                        {
+                            MessageBox.Show(ex1.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        }
 
                     }
                 }
