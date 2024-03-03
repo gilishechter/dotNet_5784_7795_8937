@@ -7,45 +7,19 @@
         mc:Ignorable="d"
         Title="GanttChartWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <!--<Window.Resources>-->
+        <!--<Style TargetType="{x:Type Rectangle}">
+            <Setter Property="Height"
+                    Value="60"/>
+            <Setter Property="Width"
+                    Value="{Binding _width}"/>
+           
+            <Setter Property="BorderBrush"
+                    Value="{Binding Path=color}"/>
+        </Style>
+    </Window.Resources>-->
     <Grid>
-        <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFD8EEFB" Offset="0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-        </Grid.RowDefinitions>
-            <Grid Height="auto" Grid.Row="0" >
-                </Grid>
-        <ListView  ItemsSource="{Binding _tasks}" Grid.ColumnSpan="4"  Grid.RowSpan="2" FontFamily="Arial" FontSize="14"  HorizontalAlignment="Left">
-            <ListView.View>
-                    <GridView >
-                        <GridViewColumn Header="" DisplayMemberBinding="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=DataContext}"/>
-                        <GridViewColumn Header="" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="" DisplayMemberBinding="{Binding Description}"/>
-                        <GridViewColumn Header="" DisplayMemberBinding="{Binding Status}"/>
-                        <GridViewColumn Header="" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate >
-                                    <StackPanel>
-                                        
-                                </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <!--<Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="64" Width="116" Margin="342,503,0,0" VerticalAlignment="Top" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="22" FontWeight="Bold" Click="Button_Click_AddTask" RenderTransformOrigin="2.373,4.388" Grid.ColumnSpan="2" />-->
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="181*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="15*"/>
-            </Grid.ColumnDefinitions>
+        
 
         </Grid>
 

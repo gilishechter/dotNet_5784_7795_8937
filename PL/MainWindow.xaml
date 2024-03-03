@@ -63,6 +63,7 @@
         <Button Content="Reset" FontSize="12" HorizontalAlignment="Left" Margin="80,361,0,0" VerticalAlignment="Top" Height="20" Width="40" BorderBrush="{x:Null}" Click="Button_Click_ClockReset"/>
 
         <Button Content="Automatic Schdule" HorizontalAlignment="Left" Margin="60,137,0,0" VerticalAlignment="Top" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}" Click="Button_Click_Aoto"/>
+        <Button Content="gant" HorizontalAlignment="Left" Margin="60,233,0,0" VerticalAlignment="Top" Visibility="{Binding _isAdmin, Converter={StaticResource ConvertBoolToVisabilityKey}, Mode=OneTime}" Click="Button_Click_Gant"/>
 
 
     </Grid>

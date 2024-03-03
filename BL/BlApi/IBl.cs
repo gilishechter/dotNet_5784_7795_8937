@@ -21,7 +21,7 @@ public interface IBl
     public DateTime? GetStartProject();
     public DateTime? GetEndProject();
     public StatusProject CheckStatusProject();
-    public void AutometicSchedule();
+   
 
     #region
     public DateTime Clock { get; }

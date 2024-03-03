@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PL
 {
@@ -65,16 +66,27 @@ namespace PL
         public static readonly DependencyProperty isAdminProperty =
             DependencyProperty.Register("_isAdmin", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
-
+        private DispatcherTimer _timer;
         public MainWindow(BO.User _user)
         {
+            CurrentTime = s_bl.Clock;
+            _timer =new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
             user = _user;
             _isAdmin = _user.isAdmin;
-            CurrentTime = s_bl.Clock;
+          //  CurrentTime = s_bl.Clock;
             InitializeComponent();
 
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            CurrentTime = CurrentTime.AddSeconds(1);
+        }
+
+        
         private void Button_Click_Workers(object sender, RoutedEventArgs e)
         {
             new WorkerlistWindow().Show();
@@ -192,6 +204,11 @@ namespace PL
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
+        }
+
+        private void Button_Click_Gant(object sender, RoutedEventArgs e)
+        {
+            new GanttChartWindow().ShowDialog();
         }
     }
 }
