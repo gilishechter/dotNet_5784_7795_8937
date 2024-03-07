@@ -37,9 +37,44 @@ public partial class UserWindow : Window
     public static readonly DependencyProperty _userProperty =
         DependencyProperty.Register("_user", typeof(BO.User), typeof(UserWindow), new PropertyMetadata(null));
 
+    //private void TextBox_TextChange(object sender, RoutedEventArgs e)
+    //{
+    //    var textBox = sender as TextBox;    
+    //    if(textBox != null)
+    //        _user = _s_bl.User.Read(textBox.Text);
+    //}
+    private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+    {
+        var passwordBox = sender as PasswordBox;
+        if (passwordBox != null)
+        {
+            if (_user.password != passwordBox.Password)
+            {
+                MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                _user.password = passwordBox.Password;
+            }
+
+            //    }
+
+            // _user= _s_bl.User.Read(_user.userName);
+            //    string password = passwordBox.Password;
+            //    if (_user.password != password)
+            //    { 
+            //        MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //    else
+            //    {
+            //        _user.password = password;
 
 
-    private void Click_LogIn(object sender, RoutedEventArgs e)
+            //    }
+            //}
+        } }
+
+        private void Click_LogIn(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -51,15 +86,18 @@ public partial class UserWindow : Window
 
             string username = usernameTextBox.Text;
             string password = passwordBox.Password;
-
+           // _s_bl.User.Read(_user.userName);
             _user = _s_bl.User.Read(username);
-            if (_user.password != password)                
-                MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);               
+
+
+            if (_user.password != password)
+                MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
             else
-            {
-                new MainWindow(_user).Show();
-                //this.Close();
-            }
+
+                _user.password = password;
+            new MainWindow(_user).Show();
+            //  this.Close();
+
         }
         catch (Exception ex)
         {

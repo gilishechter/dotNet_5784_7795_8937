@@ -16,8 +16,6 @@ namespace PL
             InitializeComponent();
         }
 
-
-
         public DateTime? StartDate
         {
             get { return (DateTime?)GetValue(StartDateProperty); }

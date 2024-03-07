@@ -76,7 +76,7 @@ namespace PL
             _timer.Start();
             user = _user;
             _isAdmin = _user.isAdmin;
-          //  CurrentTime = s_bl.Clock;
+            CurrentTime = s_bl.Clock;
             InitializeComponent();
 
         }
@@ -145,7 +145,6 @@ namespace PL
 
         private void Button_Click_SignUpTask(object sender, RoutedEventArgs e)
         {
-
             BO.Worker worker = s_bl.Worker.Read(user.Id)!;
             new TaskListWindow(worker,true).ShowDialog();
         }
@@ -167,8 +166,9 @@ namespace PL
 
         private void Button_Click_oneHour(object sender, RoutedEventArgs e)
         {
-            CurrentTime= s_bl.SetClockHour();
-         
+            CurrentTime =s_bl.SetClockHour();
+            
+
         }
 
         private void Button_Click_oneDay(object sender, RoutedEventArgs e)
@@ -192,12 +192,16 @@ namespace PL
             {
                 //if(s_bl.GetStartProject()==null)
                 //    MessageBox.Show("You can't plan a schedule because there is no start project date ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                if(s_bl.GetStartProject()==null)
+                if (s_bl.GetStartProject() == null)
+                
                     new StartDateWindow().ShowDialog();
-                s_bl.Task.AutometicSchedule();
-              
-               // s_bl.AutometicSchedule();
-                MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (s_bl.GetStartProject() != null)
+                {
+                    s_bl.Task.AutometicSchedule();
+                    MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
             }
             catch(Exception ex)
             {

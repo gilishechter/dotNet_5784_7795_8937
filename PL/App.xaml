@@ -16,6 +16,7 @@
             <local:ConvertStatusProjectPlanningToISEnable x:Key="ConvertStatusProjectPlanningToISEnableKey"/>
             <local:ConvertBoolToVisability x:Key="ConvertBoolToVisabilityKey"/>
             <local:ConvertBoolToVisability2 x:Key="ConvertBoolToVisabilityKey2"/>
+            <local:ConvertTimeToWidh x:Key="ConvertTimeToWidhKey"/>
 
 
             <ResourceDictionary.MergedDictionaries>

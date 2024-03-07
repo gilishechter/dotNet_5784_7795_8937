@@ -37,13 +37,14 @@ public partial class TaskListWindow : Window
     public static readonly DependencyProperty isAllTasksProperty =
         DependencyProperty.Register("isAllTasks", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(false));
 
-  //  public bool _isSignUpTask { get; set; } = false;
+    public bool isSignUpTask { get; set; } = false;
     public TaskListWindow(BO.Worker? worker=null, bool _isSignUpTask = true)
     {
         DataContext=this;
+        isSignUpTask = _isSignUpTask;
         if (worker != null)
         {
-            if (_isSignUpTask)           
+            if (_isSignUpTask)
                 _tasks = _s_bl?.Task.OptionTasks(worker).ToObservableCollection();
             
             else
@@ -78,7 +79,7 @@ public partial class TaskListWindow : Window
     private void double_click_updateTask(object sender, MouseButtonEventArgs e)
     {
         BO.TaskList? task = (sender as ListView)?.SelectedItem as BO.TaskList;
-        new TaskWindow(onAddOrUpdate,task.Id, isAllTasks, true).ShowDialog();
+        new TaskWindow(onAddOrUpdate,task.Id, isAllTasks, true, isSignUpTask).ShowDialog();
     }
 
     private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)

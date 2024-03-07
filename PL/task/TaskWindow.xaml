@@ -45,10 +45,10 @@
             <TextBox  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  IsEnabled="{Binding Id,Mode=OneTime,Converter={StaticResource ConverIdToIsEnableKey}}" Margin="250,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="ID Worker" Margin="70,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding IdWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding IdWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isNameId}" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="Name Worker:" Margin="70,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding NameWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Margin="250,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding NameWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isNameId}" Margin="250,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="Description:" Margin="70,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Margin="250,220,0,0" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -66,10 +66,10 @@
             <DatePicker SelectedDate="{Binding WantedStartDate, Mode=TwoWay}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Width="150" Margin="135,420,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Start Date" Margin="70,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Width="150" Margin="135,470,0,0" VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _startDate}" Width="150" Margin="135,470,0,0" VerticalAlignment="Top"/>
 
             <Label Content="End Date" Margin="70,520,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <DatePicker SelectedDate="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Width="150"  Margin="135,520,0,0"  VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding EndingDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _EndDate}" Width="150"  Margin="135,520,0,0"  VerticalAlignment="Top"/>
 
             <Label Content="Dead Line" Margin="70,570,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <DatePicker SelectedDate="{Binding DeadLine, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  Width="150" IsEnabled="False" Margin="135,570,0,0" VerticalAlignment="Top"/>

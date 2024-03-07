@@ -22,7 +22,12 @@ namespace PL.task
 
         public bool _isAllTasks { get; set; }=false;
         public bool _isCurrentTask { get; set; } = false;
-        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask=true)
+        public bool _isNameId { get; set; } = false;
+        public bool _EndDate { get; set; } = false;
+        public bool _startDate { get; set; } = false;
+
+
+        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask = true, bool isSignUpTask = false)
         {
             DataContext = this;
             _onAddOrUpdate = onAddOrUpdate;
@@ -34,6 +39,45 @@ namespace PL.task
                 _isUpdate = id is not 0;
                  task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
                 _isCurrentTask = isCurrentTask ;
+                if (isSignUpTask)
+                {
+                    _isCurrentTask = false;
+                    _isNameId = true;
+                    //if (isSignUpTask)
+                    //{
+                    //    _startDate = true;
+                    //    _isNameId = false;
+                    //}
+                }
+                else
+                {
+                    if (!isCurrentTask)
+                        _EndDate = true;
+                    else
+                    {
+                        _startDate = true;
+                        _isCurrentTask = false;
+                    }
+                    //_isNameId = false;
+                }
+                //if(!isCurrentTask)
+                //    _EndDate = true;
+
+                //if (isSignUpTask && !isCurrentTask)
+                //{
+                //    _startDate=true;
+                //    _isNameId=false;
+                //}
+                //else
+                //    _EndDate=true;
+                //else
+                //{
+                //    if (isSignUpTask)
+                //        _startDate = true;
+                //    else   
+                //        _EndDate = true;
+                //}
+
             }
             catch (Exception ex)
             {

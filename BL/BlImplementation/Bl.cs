@@ -54,36 +54,36 @@ internal class Bl : IBl
     private readonly IBl _bl;
     //internal BlImplementation(IBl bl) => _bl = bl;
 
-    public DateTime? CreateSchedule(int _id, DateTime? _date)
-    {
-        Do.Task? _task = _dal.Task.Read(_id);
-        if (_task == null)//if the task doesn't exist
-            throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
+    //public DateTime? CreateSchedule(int _id, DateTime? _date)
+    //{
+    //    Do.Task? _task = _dal.Task.Read(_id);
+    //    if (_task == null)//if the task doesn't exist
+    //        throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
 
-        var startDates = from BO.TaskList taskList in getDependenceList(_task)
-                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
-                         select taskList;
-        if (startDates.Count() > 0)//if the previous tasks don't have start dates
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
+    //    var startDates = from BO.TaskList taskList in getDependenceList(_task)
+    //                     where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
+    //                     select taskList;
+    //    if (startDates.Count() > 0)//if the previous tasks don't have start dates
+    //        throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
         
-        var endDates = from BO.TaskList taskList in getDependenceList(_task)
-                       where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
-                       select taskList;
-        if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+    //    var endDates = from BO.TaskList taskList in getDependenceList(_task)
+    //                   where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
+    //                   select taskList;
+    //    if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
+    //        throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
 
-        if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
-            throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
+    //    if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
+    //        throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
 
 
-        if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
-            throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
+    //    if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
+    //        throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
 
-        Do.Task newTask = _task with { WantedStartDate = _date };
-        _dal.Task.Update(newTask);
-        return _date;
+    //    Do.Task newTask = _task with { WantedStartDate = _date };
+    //    _dal.Task.Update(newTask);
+    //    return _date;
 
-    }
+    //}
 
     //public void AutometicSchedule()
     //{

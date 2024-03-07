@@ -24,6 +24,7 @@ internal class TaskImplementation : ITask
                     CreateSchedule(task.Id, _dal.GetStartDate());
             }
         }
+        
         allTasks = _dal.Task.ReadAll();
         while (allTasks.Any(t => t.WantedStartDate == null))
         {
@@ -80,6 +81,7 @@ internal class TaskImplementation : ITask
             Do.Task t when t.IdWorker is null || t.IdWorker is 0 => BO.Status.Unscheduled,
             Do.Task t when t.StartDate > _bl.Clock || t.StartDate == null=> BO.Status.Scheduled,
             Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
+            Do.Task t when t.DeadLine> _bl.Clock && t.EndingDate == null => BO.Status.InJeopardy,
             _ => BO.Status.Done,
         };
     }
@@ -405,7 +407,8 @@ internal class TaskImplementation : ITask
         if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
             throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
 
-
+        Do.Task newTask = _task with { WantedStartDate = _date };
+           _dal.Task.Update(newTask);
         return _date;
 
     }

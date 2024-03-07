@@ -7,20 +7,12 @@
         mc:Ignorable="d"
         Title="GanttChartWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <!--<Window.Resources>-->
-        <!--<Style TargetType="{x:Type Rectangle}">
-            <Setter Property="Height"
-                    Value="60"/>
-            <Setter Property="Width"
-                    Value="{Binding _width}"/>
-           
-            <Setter Property="BorderBrush"
-                    Value="{Binding Path=color}"/>
-        </Style>
-    </Window.Resources>-->
+
+
     <Grid>
-        
-
-        </Grid>
-
+        <StackPanel x:Name="MainStackPanel">
+            <!-- כאן יופיע התרשים גנט -->
+            <Canvas x:Name="GanttChartCanvas" Width="800" Height="400"/>
+        </StackPanel>
+    </Grid>
 </Window>

@@ -6,7 +6,7 @@ public enum Rank
 
 public enum Status
 {
-    Unscheduled, Scheduled, OnTrackStarted, Done, None
+    Unscheduled, Scheduled, OnTrackStarted, InJeopardy, Done, None
 }
 
 public enum StatusProject

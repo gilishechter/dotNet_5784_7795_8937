@@ -104,3 +104,18 @@ internal class ConvertBoolToVisability2 : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+internal class ConvertTimeToWidh: IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ((TimeSpan)value).Days * 2;
+      
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
+}
