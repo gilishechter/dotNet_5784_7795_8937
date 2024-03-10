@@ -133,7 +133,7 @@ public class TaskColorConverter : IValueConverter
             if (BO.Status.Scheduled == status)
                 return Brushes.Blue;
             if (BO.Status.Unscheduled == status)
-                return Brushes.Gray;
+                return Brushes.Blue;
             if (BO.Status.InJeopardy == status)
                 return Brushes.Red;
             return Brushes.White;

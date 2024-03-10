@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>711802716</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>652</HourPrice>
+    <Id>532368889</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>51</HourPrice>
     <Name>Avital Shenker</Name>
     <Email>AvitalShenker@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>928915041</Id>
-    <WorkerRank>Advanced_Beginner</WorkerRank>
-    <HourPrice>543</HourPrice>
+    <Id>827256227</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>923</HourPrice>
     <Name>Ayala Bikel</Name>
     <Email>AyalaBikel@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>673201397</Id>
-    <WorkerRank>Intermediate</WorkerRank>
-    <HourPrice>724</HourPrice>
+    <Id>904642258</Id>
+    <WorkerRank>Advanced_Beginner</WorkerRank>
+    <HourPrice>805</HourPrice>
     <Name>Bibi Netanyahu</Name>
     <Email>BibiNetanyahu@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>144580847</Id>
-    <WorkerRank>Advanced</WorkerRank>
-    <HourPrice>282</HourPrice>
+    <Id>504043441</Id>
+    <WorkerRank>Expert</WorkerRank>
+    <HourPrice>494</HourPrice>
     <Name>Eliana Yakobs</Name>
     <Email>ElianaYakobs@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>411093608</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>789</HourPrice>
+    <Id>435055194</Id>
+    <WorkerRank>Advanced_Beginner</WorkerRank>
+    <HourPrice>770</HourPrice>
     <Name>Dana Frider</Name>
     <Email>DanaFrider@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>12</Id>
-    <WorkerRank>Beginner</WorkerRank>
-    <HourPrice>25</HourPrice>
-    <Name>aa</Name>
-    <Email>@gmail.com</Email>
   </Worker>
 </ArrayOfWorker>

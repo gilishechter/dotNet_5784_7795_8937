@@ -212,7 +212,12 @@ namespace PL
 
         private void Button_Click_Gant(object sender, RoutedEventArgs e)
         {
-            new GanttChartWindow().ShowDialog();
+            if(s_bl.GetStartProject() == null)
+                MessageBox.Show("you must enter a start progect date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+                new GanttChartWindow().ShowDialog();
+
+
         }
     }
 }
