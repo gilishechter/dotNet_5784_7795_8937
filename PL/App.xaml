@@ -17,7 +17,7 @@
             <local:ConvertBoolToVisability x:Key="ConvertBoolToVisabilityKey"/>
             <local:ConvertBoolToVisability2 x:Key="ConvertBoolToVisabilityKey2"/>
             <local:ConvertTimeToWidh x:Key="ConvertTimeToWidhKey"/>
-
+            <local:TaskColorConverter x:Key="TaskColorConverterkey"/>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

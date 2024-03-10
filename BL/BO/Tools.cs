@@ -1,16 +1,21 @@
-﻿using System.Reflection;
+﻿using BlApi;
+using DalApi;
+using System.Reflection;
 using System.Text;
 
 namespace BO;
 
 public static class Tools
 {
-   /// <summary>
-   /// add all the object properties to one long string
-   /// </summary>
-   /// <typeparam name="T"></typeparam>
-   /// <param name="obj"></param>
-   /// <returns></returns>
+
+    private static readonly IBl _bl = BlApi.Factory.Get();
+    private static readonly IDal dal = DalApi.Factory.Get;
+    /// <summary>
+    /// add all the object properties to one long string
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static string ToStringProperty<T>(this T obj)
     {
         var properties = typeof(T).GetProperties();//get the type
@@ -35,6 +40,19 @@ public static class Tools
         return resultBuilder.ToString();//return the string
     }
 
+
+
+
+    public static int GetOfset(Do.Task task)
+    {
+        IEnumerable<Do.Dependency> dependencies = dal.Dependency.ReadAll(x => x.DependenceTask == task.Id);
+        if (dependencies.Count() == 0)
+            return (task.StartDate != null ? (int)(task.StartDate - _bl.GetStartProject())?.TotalDays! :
+                                            (int)(task.WantedStartDate - _bl.GetStartProject())?.TotalDays!) * 100;
+
+        int x = ((int)((from dep in dependencies
+                        let depTask = dal.Task.Read(dep.PrevTask)
+                        select depTask.WantedStartDate + depTask.Time).Max() - _bl.GetStartProject())?.TotalDays!) * 100;
+        return x;
+    }
 }
-
-

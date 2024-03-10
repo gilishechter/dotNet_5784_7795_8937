@@ -1,15 +1,16 @@
-﻿using BlApi;
-using PL.worker;
+﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-
+using System.Windows.Media;
 namespace PL;
 
 internal class ConvertIdToContent : IValueConverter
@@ -118,4 +119,30 @@ internal class ConvertTimeToWidh: IValueConverter
         throw new NotImplementedException();
     }
 
+}
+public class TaskColorConverter : IValueConverter
+{
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is BO.Status status)
+        {
+
+            if (BO.Status.Done == status)
+                return Brushes.Green;
+            if (BO.Status.Scheduled == status)
+                return Brushes.Blue;
+            if (BO.Status.Unscheduled == status)
+                return Brushes.Gray;
+            if (BO.Status.InJeopardy == status)
+                return Brushes.Red;
+            return Brushes.White;
+        }
+        else return Brushes.White;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
 }

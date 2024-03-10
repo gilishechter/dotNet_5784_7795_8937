@@ -101,6 +101,36 @@ internal class TaskImplementation : ITask
                       });
         return result;
     }
+    public IEnumerable<BO.GanttDetails> GetDetailsToGantt(Func<BO.GanttDetails, bool>? filter = null)
+    {
+        return (from task in ReadAll()
+                let t = _dal.Task.Read(task.Id)
+                let start = (int)(t.WantedStartDate - _bl.GetStartProject()).Value.TotalHours
+                select new BO.GanttDetails()
+                {
+                    ID = task.Id,
+                    Name = task.Name,
+                    TasksDays = (int)t.Time.Value.TotalHours * 2,
+                    StartOffset = start * 2,//TODO
+                    EndOffset = (int)(start + t.Time.Value.TotalHours) * 2,
+                    Dependencies = StringDependencies(task.Id),
+                    Status = task.Status,
+                }).ToList().OrderBy(x => x.StartOffset);
+    }
+
+    private string StringDependencies(int id)
+    {
+        var x = _dal.Dependency.ReadAll(x => x.DependenceTask == id)
+                                    .Where(dependency => dependency.DependenceTask == id)
+                                    .Select(dependency => dependency.PrevTask.ToString() + " ");
+        string dep = "";
+        foreach (string tmp in x)
+        {
+            dep += tmp.ToString();
+        }
+        return dep;
+    }
+
     /// <summary>
     /// create new BO object and send it to the DO create
     /// </summary>

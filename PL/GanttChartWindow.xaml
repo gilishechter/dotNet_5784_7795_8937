@@ -7,12 +7,52 @@
         mc:Ignorable="d"
         Title="GanttChartWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-
-
+    <Window.Resources>
+        <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
+        <!-- Define colors for completed and incomplete tasks -->
+        <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
+        <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
+        <SolidColorBrush x:Key="DelayedTaskColor" Color="Red"/>
+    </Window.Resources>
     <Grid>
-        <StackPanel x:Name="MainStackPanel">
-            <!-- כאן יופיע התרשים גנט -->
-            <Canvas x:Name="GanttChartCanvas" Width="800" Height="400"/>
+        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                    <GridViewColumn Header="Dependencies" DisplayMemberBinding="{Binding Dependencies}"/>
+
+                    <GridViewColumn Header="Gantt Chart" Width="850">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal" Width="850">
+                                    <Rectangle
+                                               IsEnabled="False"
+                                               Width="{Binding StartOffset}"
+                                               Height="20"
+                                               Fill="White"/>
+                                    <!-- Dynamic Color Rectangle -->
+                                    <Rectangle
+                                               Width="{Binding TasksDays}"
+                                               Height="20"
+                                               Fill="{Binding Status, Converter={StaticResource TaskColorConverterKey}}"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!-- Legend -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <TextBlock Text="Legend: " Margin="5"/>
+            <Border Background="Green" Width="20" Height="20" Margin="5"/>
+            <TextBlock Text="Completed" Margin="0,5,5,5"/>
+            <Border Background="Blue" Width="20" Height="20" Margin="5"/>
+            <TextBlock Text="Incomplete" Margin="0,5,5,5"/>
+            <Border Background="Red" Width="20" Height="20" Margin="5"/>
+            <TextBlock Text="Delayed" Margin="0,5,5,5"/>
         </StackPanel>
     </Grid>
 </Window>
