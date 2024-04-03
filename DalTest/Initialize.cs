@@ -21,7 +21,7 @@ public static class Initialization
         string[] workerNames =
         {
         "Avital Shenker", "Ayala Bikel", "Bibi Netanyahu",
-        "Eliana Yakobs", "Dana Frider"
+        "Eliana Yakobs", "Dana Frider", 
     };
         Random rand = new(DateTime.Now.Millisecond);
         foreach (string _name in workerNames)//the user input all the details to add the worker
@@ -34,14 +34,22 @@ public static class Initialization
             Worker _newWorker = new(_id, _workerRank, _hourPrice, _name, _email);
             s_dal?.Worker?.Create(_newWorker);
 
-           // string pass = _id.ToString();
-            //User _newUser = new(_name, pass, false);
-           // s_dal?.User.Create(_newUser);
         }
-        //User _newAdmin1 = new("Gili", "1212", true,325748937);
-        //User _newAdmin2 = new("Ayelet", "1111", true,325697795);
+        //User _newAdmin1 = new("Gili", "1212", true, 325748937);
+        //User _newAdmin2 = new("Ayelet", "1111", true, 325697795);
         //s_dal?.User.Create(_newAdmin1);
         //s_dal?.User.Create(_newAdmin2);
+
+        User _newUser1 = new("Esti", "1234", false, 25697795);
+        User _newUser2 = new("Efrat", "5678", false, 25748937);
+
+        Worker _newWorker1 = new(25697795, (Rank)3, 59, "Esti", "e@gmail.com");
+        s_dal?.Worker?.Create(_newWorker1);
+        Worker _newWorker2 = new(25748937, (Rank)2, 90, "Efrat", "ef@gmail.com");
+        s_dal?.Worker?.Create(_newWorker2);
+
+        s_dal?.User.Create(_newUser1);
+        s_dal?.User.Create(_newUser2);
     }
 
     /// <summary>
@@ -192,19 +200,12 @@ public static class Initialization
             bool _mileStone = false;//put random details
             int _rank = rand.Next(0, 5);
             int _idWorker = 0;
-            //DateTime tempDate = new(2023, 10, 10);
-            //int range = (DateTime.Today - tempDate).Days;
-            //DateTime _createDate = tempDate.AddDays(rand.Next(range));
+            
             DateTime today = DateTime.Today;
-            DateTime nextYear = today.AddYears(1);
-            TimeSpan range = nextYear - today;
-            int days = s_rand.Next(0, range.Days);
-
-            // תאריך גרור
-            DateTime _createDate = today.AddDays(days);
+            int days= s_rand.Next(0, 7);   
+            DateTime _createDate = today.AddDays(-days);
            
-
-            int randomHours = rand.Next(100); // 0 to 23
+            int randomHours = rand.Next(100)+5; // 0 to 23
             int randomMinutes = rand.Next(60); // 0 to 59
             int randomSeconds = rand.Next(60); // 0 to 59
 

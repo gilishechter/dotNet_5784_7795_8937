@@ -12,4 +12,16 @@
     <isAdmin>true</isAdmin>
     <id>325697795</id>
   </User>
+  <User>
+    <userName>Esti</userName>
+    <password>1234</password>
+    <isAdmin>false</isAdmin>
+    <id>25697795</id>
+  </User>
+  <User>
+    <userName>Efrat</userName>
+    <password>5678</password>
+    <isAdmin>false</isAdmin>
+    <id>25748937</id>
+  </User>
 </ArrayOfUser>

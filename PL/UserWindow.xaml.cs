@@ -22,95 +22,52 @@ public partial class UserWindow : Window
 {
     static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
     public UserWindow()
-    {
-       // _s_bl.InitializeDB();
+    {       
         InitializeComponent();
+        //_s_bl.InitializeDB(); //for list
     }
 
-    public BO.User _user
+    public string? _userName
     {
-        get { return (BO.User)GetValue(_userProperty); }
-        set { SetValue(_userProperty, value); }
+        get { return (string?)GetValue(_userNameProperty); }
+        set { SetValue(_userNameProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for _user.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty _userProperty =
-        DependencyProperty.Register("_user", typeof(BO.User), typeof(UserWindow), new PropertyMetadata(null));
+    public static readonly DependencyProperty _userNameProperty =
+        DependencyProperty.Register("_userName", typeof(string), typeof(UserWindow), new PropertyMetadata(null));
 
-    //private void TextBox_TextChange(object sender, RoutedEventArgs e)
-    //{
-    //    var textBox = sender as TextBox;    
-    //    if(textBox != null)
-    //        _user = _s_bl.User.Read(textBox.Text);
-    //}
+    string? password = null;
+
     private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
     {
-        var passwordBox = sender as PasswordBox;
-        if (passwordBox != null)
-        {
-            if (_user.password != passwordBox.Password)
-            {
-                MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                _user.password = passwordBox.Password;
-            }
+        password = (sender as PasswordBox)?.Password;      
+    }
 
-            //    }
-
-            // _user= _s_bl.User.Read(_user.userName);
-            //    string password = passwordBox.Password;
-            //    if (_user.password != password)
-            //    { 
-            //        MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //    else
-            //    {
-            //        _user.password = password;
-
-
-            //    }
-            //}
-        } }
-
-        private void Click_LogIn(object sender, RoutedEventArgs e)
+    private void Click_LogIn(object sender, RoutedEventArgs e)
     {
         try
-        {
-            Button button = (Button)sender;
-            Grid parentGrid = (Grid)button.Parent;
-
-            TextBox usernameTextBox = (TextBox)parentGrid.Children[1];
-            PasswordBox passwordBox = (PasswordBox)parentGrid.Children[3];
-
-            string username = usernameTextBox.Text;
-            string password = passwordBox.Password;
-           // _s_bl.User.Read(_user.userName);
-            _user = _s_bl.User.Read(username);
+        {         
+            BO.User _user = _s_bl.User.Read(_userName!)!;
 
 
             if (_user.password != password)
                 MessageBox.Show("Wrong password", "Try again", MessageBoxButton.OK, MessageBoxImage.Error);
             else
-
+            {
                 _user.password = password;
-            new MainWindow(_user).Show();
-            //  this.Close();
+                new MainWindow(_user).Show();              
+            }
 
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        
-
+        }        
     }
 
     private void Button_Click_SignUp(object sender, RoutedEventArgs e)
     {
         new SignUpWindow().ShowDialog();
-
     }
-
 }

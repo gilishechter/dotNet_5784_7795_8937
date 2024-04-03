@@ -25,21 +25,13 @@ namespace PL.task
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
         public DepTaskWindow(int id)
         {
-            InitializeComponent();
+           
             _Id = id;
-            tasks = _s_bl?.Task.ReadAll().ToObservableCollection();
-            DataContext = this;
+            tasks = _s_bl?.Task.ReadAll().ToObservableCollection()!;
+           // DataContext = this;
+            InitializeComponent();
         }
-        //public int idDep
-        //{
-        //    get { return (int)GetValue(idDepProperty); }
-        //    set { SetValue(idDepProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for idDep.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty idDepProperty =
-        //    DependencyProperty.Register("idDep", typeof(int), typeof(DepTaskWindow), new PropertyMetadata(0));
-
+       
         public ObservableCollection<BO.TaskList> tasks
         {
             get { return (ObservableCollection<BO.TaskList>)GetValue(tasklistProperty); }
@@ -73,12 +65,12 @@ namespace PL.task
         private void Button_Click_ok(object sender, RoutedEventArgs e)
         {
             try {
-              //BO.Task _task = (sender as ComboBox)?.SelectedItem as BO.Task;
 
                 _s_bl.Task.Read(selectedTask.Id);
 
                 _s_bl.TaskList.Create(_Id, selectedTask.Id);
                 this.Close();
+          
                 MessageBox.Show("The task succesfully added", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

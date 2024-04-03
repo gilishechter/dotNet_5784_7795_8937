@@ -49,3 +49,9 @@ public class BlCantUpdateStartDateExecution : Exception
 {
     public BlCantUpdateStartDateExecution(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlCantCreate: Exception
+{
+    public BlCantCreate(string? message) : base(message) { }
+}

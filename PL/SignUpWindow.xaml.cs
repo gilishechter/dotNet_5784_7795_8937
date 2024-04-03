@@ -26,27 +26,17 @@ namespace PL
 
         static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
 
-        public string _name
-        {
-            get { return (string)GetValue(_nameProperty); }
-            set { SetValue(_nameProperty, value); }
-        }
+        public string _name { get; set; }
+        //{
+        //    get { return (string)GetValue(_nameProperty); }
+        //    set { SetValue(_nameProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for _name.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty _nameProperty =
-            DependencyProperty.Register("_name", typeof(string), typeof(SignUpWindow), new PropertyMetadata(null));
+        //// Using a DependencyProperty as the backing store for _name.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty _nameProperty =
+        //    DependencyProperty.Register("_name", typeof(string), typeof(SignUpWindow), new PropertyMetadata(null));
 
-
-        public int _id
-        {
-            get { return (int)GetValue(_idProperty); }
-            set { SetValue(_idProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for _id.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty _idProperty =
-            DependencyProperty.Register("_id", typeof(int), typeof(SignUpWindow), new PropertyMetadata(0));
-
+        public int _id { get; set; }
 
 
         public bool isCreate
@@ -59,6 +49,9 @@ namespace PL
         public static readonly DependencyProperty isUpdateProperty =
             DependencyProperty.Register("isUpdate", typeof(bool), typeof(SignUpWindow), new PropertyMetadata(true));
 
+        public string? userName { get; set; }
+        public string? password { get; set; }
+
         public SignUpWindow(BO.Worker ?_worker=null)
         {
             if(_worker != null)
@@ -67,37 +60,23 @@ namespace PL
                 _name = _worker.Name;
                 isCreate = false;
             }
-            //worker1=_worker;    
-            //Name = _worker.Name;
-            //Id = _worker.Id;
-            
             InitializeComponent();
         }
 
         private void Button_Click_Cont(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            Grid parentGrid = (Grid)button.Parent;
-            
-            TextBox nameTextBox = (TextBox)parentGrid.Children[4];
-            TextBox IdBox = (TextBox)parentGrid.Children[5];
-
-            TextBox usernameTextBox = (TextBox)parentGrid.Children[6];
-            TextBox passwordBox = (TextBox)parentGrid.Children[7];
-           // Name = nameTextBox.Text;
-            int id = int.Parse(IdBox.Text);
-           // Id = id;          
+        {          
+           
             try
             {               
-                BO.Worker worker1 = _s_bl.Worker.Read(id)!;
+                BO.Worker worker1 = _s_bl.Worker.Read(_id)!;
 
-                if (worker1!.Name != nameTextBox.Text)
+                if (worker1!.Name != _name)
                 {
                     MessageBox.Show("This worker dosen't exist", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    BO.User user = new() { password = passwordBox.Text, userName = usernameTextBox.Text, isAdmin = false ,Id=id};
+                    BO.User user = new() { password = password, userName = userName, isAdmin = false ,Id=_id};
                     if (isCreate)
                     {
                         _s_bl.User.Create(user);

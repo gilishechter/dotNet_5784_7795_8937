@@ -43,36 +43,36 @@ internal class ConvertIdToISEnable : IValueConverter
         throw new NotImplementedException();
     }
 }
-    internal class ConvertStatusProjectToISEnable : IValueConverter
-    {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid))
-                return true;
-            return false;
-        }
+//    internal class ConvertStatusProjectToISEnable : IValueConverter
+//    {
+//        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+//        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//        {
+//            if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid))
+//                return true;
+//            return false;
+//        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-internal class ConvertStatusProjectPlanningToISEnable : IValueConverter
-{
-    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid) || (s_bl.CheckStatusProject() == BO.StatusProject.Planning))
-            return true;
-        return false;
-    }
+//        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//internal class ConvertStatusProjectPlanningToISEnable : IValueConverter
+//{
+//    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        if ((s_bl.CheckStatusProject() == BO.StatusProject.Mid) || (s_bl.CheckStatusProject() == BO.StatusProject.Planning))
+//            return true;
+//        return false;
+//    }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
+//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
 
 internal class ConvertBoolToVisability : IValueConverter
 {
@@ -129,16 +129,16 @@ public class TaskColorConverter : IValueConverter
         {
 
             if (BO.Status.Done == status)
-                return Brushes.Green;
+                return Brushes.DeepPink;
             if (BO.Status.Scheduled == status)
-                return Brushes.Blue;
+                return Brushes.DarkBlue;
             if (BO.Status.Unscheduled == status)
-                return Brushes.Blue;
+                return Brushes.DarkBlue;
             if (BO.Status.InJeopardy == status)
                 return Brushes.Red;
-            return Brushes.White;
+            return Brushes.LightBlue;
         }
-        else return Brushes.White;
+        else return Brushes.LightBlue;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

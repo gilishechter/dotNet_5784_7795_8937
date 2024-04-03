@@ -25,7 +25,7 @@ public interface IBl
 
     #region
     public DateTime Clock { get; }
-    public DateTime SetClockHour();
+    public DateTime SetClocMonth();
     public DateTime SetClockYear();
     public DateTime SetClockDay();
 

@@ -53,7 +53,6 @@ internal class TaskListImplementation : ITaskList
         var tasks = getDependenceList(task).Where(t => t.Id == idtaskList);
         if (tasks.Count() != 0)
             throw new BlAlreadyExistsException("This task already depends on the task you selected");
-
         _dal.Dependency.Create(new Do.Dependency(0, IdCurrentTask, idtaskList));
         return idtaskList;
     }

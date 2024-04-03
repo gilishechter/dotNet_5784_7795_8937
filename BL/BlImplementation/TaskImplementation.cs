@@ -1,5 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
+using DlhSoft.Windows.Data;
 using System.Collections.ObjectModel;
 using System.Runtime.Intrinsics.Arm;
 
@@ -15,6 +16,14 @@ internal class TaskImplementation : ITask
     {
         List<BO.TaskList> allNoStartDate = new List<BO.TaskList>();
         IEnumerable<Do.Task> allTasks = _dal.Task.ReadAll();
+
+        foreach (var task in allTasks)
+        {
+            // task.WantedStartDate=null;
+            Do.Task newTask = task with { WantedStartDate = null };
+            _dal.Task.Update(newTask);
+        }
+        allTasks = _dal.Task.ReadAll();
 
         foreach (var task in allTasks)
         {
@@ -59,6 +68,11 @@ internal class TaskImplementation : ITask
                     allTasks = _dal.Task.ReadAll();
                 }
             }
+        } 
+        foreach(Do.Task task in _dal.Task.ReadAll())
+        {
+            Do.Task newTask = task with { DeadLine = task.WantedStartDate + task.Time };
+            _dal.Task.Update(newTask);
         }
     }
 
@@ -78,10 +92,10 @@ internal class TaskImplementation : ITask
 
         return task switch
         {
+            Do.Task t when t.DeadLine < _bl.Clock && t.EndingDate == null => BO.Status.InJeopardy,
             Do.Task t when t.IdWorker is null || t.IdWorker is 0 => BO.Status.Unscheduled,
-            Do.Task t when t.StartDate > _bl.Clock || t.StartDate == null=> BO.Status.Scheduled,
-            Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
-            Do.Task t when t.DeadLine> _bl.Clock && t.EndingDate == null => BO.Status.InJeopardy,
+            Do.Task t when t.StartDate > _bl.Clock || t.StartDate == null => BO.Status.Scheduled,
+            Do.Task t when t.DeadLine > _bl.Clock && t.EndingDate == null => BO.Status.OnTrackStarted,         
             _ => BO.Status.Done,
         };
     }
@@ -111,7 +125,7 @@ internal class TaskImplementation : ITask
                     ID = task.Id,
                     Name = task.Name,
                     TasksDays = (int)t.Time.Value.TotalHours * 2,
-                    StartOffset = start * 2,//TODO
+                    StartOffset = start * 2,
                     EndOffset = (int)(start + t.Time.Value.TotalHours) * 2,
                     Dependencies = StringDependencies(task.Id),
                     Status = task.Status,
@@ -160,6 +174,9 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution)
             throw new BlDuringExecution("yoe can'd add task during execution");
 
+        if (boTask.Status == BO.Status.None)
+            throw new BlCantCreate("you cant choose None as status");
+
         DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
         DateTime? createDate = _bl.Clock;
 
@@ -192,14 +209,18 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
-        var depTasks = getDependenceList(_dal.Task.Read(id));
-        
-        var result = from BO.TaskList task in depTasks
-                     where task.Status != BO.Status.Done
-                     select task;
-                                                                //getDependenceList(_dal.Task.Read(id))!= null/*_dal.Dependency.ReadAll().Where(dep => dep.PrevTask == id*/ //if the task has dependencies tasks
-                                                                //).Select(dep => dep);//if the status is not done
-       if (result.Count() > 0)
+
+        if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
+            throw new BlCantBeDeleted("You can't delete task during execution");
+
+        var result = from BO.TaskList task in _bl.Task.ReadAll()
+                     let fullTask = _bl.Task.Read(task.Id)
+                     let depTasks = fullTask.DependenceTasks
+                     from dep in depTasks
+                     where dep.Id == id
+                     select task;         
+                                                               
+       if (result.Count()>0)
             throw new BlCantBeDeleted("this task can't be deleted because it has dependence tasks");
 
 
@@ -296,6 +317,8 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlDuringExecution"></exception>
     public void Update(BO.Task boTask)
     {
+        var oldTask = _dal.Task.Read(boTask.Id);
+
         //if (BlApi.Factory.Get().CheckStatusProject() != BO.StatusProject.Planning)
         //    throw new BlCantBeUpdated("you can't update a a task since the project started");
 
@@ -314,18 +337,32 @@ internal class TaskImplementation : ITask
 
         if (BlApi.Factory.Get().CheckStatusProject() == BO.StatusProject.Execution && boTask.StartDate != null)
             throw new BlDuringExecution("you cant update the start date during the execution");
+        if (boTask.Status == BO.Status.None)
+            throw new BlCantBeUpdated("you cant choose None as status");
 
         if (boTask.StartDate != null)
             boTask.StartDate = CreateSchedule(boTask.Id, boTask.StartDate);
 
-        DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+        if (boTask.EndingDate < _bl.Clock)
+            throw new BlCantBeUpdated("this date passed");
+         DateTime? DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+           
+
+       
+            //AutometicSchedule();
+        //    throw new BlCantBeUpdated("The deadLine is over");
+
+        if(boTask.DeadLine> boTask.EndingDate && boTask.EndingDate != null)
+            DeadLine = boTask.EndingDate;
 
         bool flag = false;
 
         if (boTask.EndingDate != null && boTask.EndingDate > boTask.DeadLine)
         {
-            boTask.Time = boTask.Time + (boTask.EndingDate - boTask.DeadLine);
+           boTask.Time = boTask.Time + (boTask.EndingDate - boTask.DeadLine);
             flag = true;
+            // DeadLine = boTask.StartDate > boTask.WantedStartDate ? boTask.StartDate + boTask.Time : boTask.WantedStartDate + boTask.Time;
+
         }
 
         Do.Task doTask = new(boTask.Id, boTask.IdWorker, boTask.Name, boTask.Description, boTask.MileStone,
@@ -343,6 +380,10 @@ internal class TaskImplementation : ITask
                 CheckStartDate(boTask.Id, boTask.StartDate);
 
             _dal.Task.Update(doTask);
+            AutometicSchedule();
+
+            if (boTask.StartDate > boTask.DeadLine)
+                throw new Exception("You start the task too late");
 
             if (flag)
             {                
@@ -416,27 +457,29 @@ internal class TaskImplementation : ITask
     public DateTime? CreateSchedule(int _id, DateTime? _date)
     {
         Do.Task? _task = _dal.Task.Read(_id);
-        if (_task == null)//if the task doesn't exist
-            throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
 
-        var startDates = from BO.TaskList taskList in getDependenceList(_task)
-                         where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
-                         select taskList;
-        if (startDates.Count() > 0)//if the previous tasks don't have start dates
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
+            if (_task == null)//if the task doesn't exist
+                throw new BlDoesNotExistException($"this task with id ={_id} doesn't exist");
+        if (getDependenceList(_task) != null)
+        {
+            var startDates = from BO.TaskList taskList in getDependenceList(_task)
+                             where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.WantedStartDate == null
+                             select taskList;
+            if (startDates.Count() > 0)//if the previous tasks don't have start dates
+                throw new BlCantUpdateStartDateExecution("You can't update the start date, because the previous tasks don't have start dates");
 
-        var endDates = from BO.TaskList taskList in getDependenceList(_task)
-                       where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
-                       select taskList;
-        if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
-            throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+            var endDates = from BO.TaskList taskList in getDependenceList(_task)
+                           where getDependenceList(_task) != null && _dal.Task.Read(taskList.Id) != null && _dal.Task.Read(taskList.Id)!.EndingDate > _date
+                           select taskList;
+           // if (endDates.Count() > 0)//if the date is sooner then the previous tasks end dates
+            //    throw new BlCantUpdateStartDateExecution("You can't update the start date, because the date is sooner then the previous tasks end dates");
+        }
+            if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
+                throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
 
-        if (getDependenceList(_task) == null && _date < _dal.GetStartDate())//if he date is sooner then the start project date
-            throw new BlCantUpdateStartDateExecution("You can't update the start date because the date is sooner then the start project date");
-
-        if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
-            throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
-
+            if (_task.WantedStartDate != null && _date < _task.WantedStartDate)
+                throw new BlCantUpdateStartDateExecution("You can't update the start date because the planned start date didn't arrive yet");
+        
         Do.Task newTask = _task with { WantedStartDate = _date };
            _dal.Task.Update(newTask);
         return _date;
@@ -447,7 +490,7 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.Rank <= (int)worker.WorkerRank && GetStatus(task) == BO.Status.Unscheduled  && getDependenceList(task).FirstOrDefault(t=>t.Status != BO.Status.Done)==null /*(getDependenceList(task).Where(t=> t.Status != BO.Status.Done)).Count()==0*/
+                     where task.Rank <= (int)worker.WorkerRank && (GetStatus(task) == BO.Status.Unscheduled ||( GetStatus(task) == BO.Status.InJeopardy && task.IdWorker == 0) ) && getDependenceList(task).FirstOrDefault(t=>t.Status != BO.Status.Done)==null /*(getDependenceList(task).Where(t=> t.Status != BO.Status.Done)).Count()==0*/
                      select new BO.TaskList()
                      {
                          Id = task.Id,
@@ -462,7 +505,7 @@ internal class TaskImplementation : ITask
     {
         var tasks = (from Do.Task task in _dal.Task.ReadAll()
                      //let task = _dal.Task.Read(taskList.Id)
-                     where task.IdWorker==worker.Id && getDependenceList(task).FirstOrDefault(t => t.Status != BO.Status.Done) == null && task.StartDate == null && GetStatus(task)==BO.Status.Scheduled
+                     where task.IdWorker==worker.Id && getDependenceList(task).FirstOrDefault(t => t.Status != BO.Status.Done) == null && task.StartDate == null && (GetStatus(task)==BO.Status.Scheduled || GetStatus(task) == BO.Status.InJeopardy)
                      select new BO.TaskList()
                      {
                          Id = task.Id,
@@ -474,4 +517,20 @@ internal class TaskImplementation : ITask
     }
 
 
+    public void checkWorker(BO.Task task, int id)
+    {
+        BO.Worker worker = _bl.Worker.Read(id)!;
+        if (task.IdWorker != id)
+            throw new BlCantBeUpdated("wrong Id");
+        if (task.NameWorker != worker.Name)
+            throw new BlCantBeUpdated("wrong Name");
+        if (task.StartDate < _bl.Clock && task.EndingDate == null)
+            throw new BlCantBeUpdated("The date has passed");
+        if (task.StartDate > _bl.Clock )
+            throw new BlCantBeUpdated("The date hasn't arrived yet");
+        if (task.EndingDate < _bl.Clock)
+            throw new BlCantBeUpdated("The date has passed");
+        if (task.EndingDate > _bl.Clock)
+            throw new BlCantBeUpdated("The date hasn't arrived yet");
+    }
 }

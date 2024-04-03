@@ -56,9 +56,9 @@
                 <Label Content="Password:" HorizontalAlignment="Left" Margin="110,180,0,0" VerticalAlignment="Top" Width="141"/>
 
                 <TextBox Text="{Binding _name}" HorizontalAlignment="Left" Margin="340,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="{Binding isUpdate}" />
-                <TextBox Text="{Binding _id}" HorizontalAlignment="Left" Margin="340,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="{Binding isUpdate}"/>
-                <TextBox HorizontalAlignment="Left" Margin="340,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
-                <TextBox HorizontalAlignment="Left" Margin="340,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBox Text="{Binding _id}" MaxLength="9" HorizontalAlignment="Left" Margin="340,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="{Binding isUpdate}"/>
+                <TextBox Text="{Binding userName}" HorizontalAlignment="Left" Margin="340,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+                <TextBox Text="{Binding password}" HorizontalAlignment="Left" Margin="340,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
                 <Button Content="Continue" FontSize="20" Background="#008cba" HorizontalAlignment="Left" Margin="240,235,0,0" VerticalAlignment="Top" Height="45" Width="116" Click="Button_Click_Cont"/>
 

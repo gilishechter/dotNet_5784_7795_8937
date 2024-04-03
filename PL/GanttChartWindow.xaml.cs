@@ -31,10 +31,6 @@ namespace PL
 
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.GanttDetails>), typeof(GanttChartWindow), new PropertyMetadata(null));
-
-        //private BO.Engineer? Engineer;
-        // TaskListWindow? _taskListWindow;
-
         public GanttChartWindow()
         {
             InitializeComponent();

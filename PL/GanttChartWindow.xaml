@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="GanttChartWindow" Height="450" Width="800"
+        Title="GanttChartWindow" Height="700" Width="1000"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
         <!-- Define colors for completed and incomplete tasks -->
-        <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
-        <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
+        <SolidColorBrush x:Key="CompletedTaskColor" Color="DeepPink"/>
+        <SolidColorBrush x:Key="IncompleteTaskColor" Color="DarkBlue"/>
         <SolidColorBrush x:Key="DelayedTaskColor" Color="Red"/>
     </Window.Resources>
-    <Grid>
-        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
+    <Grid Background="LightBlue">
+        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Center">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
-                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                    <GridViewColumn Header="ID"  DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Name}" Width="250"/>
                     <GridViewColumn Header="Dependencies" DisplayMemberBinding="{Binding Dependencies}"/>
 
                     <GridViewColumn Header="Gantt Chart" Width="850">
@@ -30,7 +30,7 @@
                                                IsEnabled="False"
                                                Width="{Binding StartOffset}"
                                                Height="20"
-                                               Fill="White"/>
+                                               Fill="LightBlue"/>
                                     <!-- Dynamic Color Rectangle -->
                                     <Rectangle
                                                Width="{Binding TasksDays}"
@@ -47,9 +47,9 @@
         <!-- Legend -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <TextBlock Text="Legend: " Margin="5"/>
-            <Border Background="Green" Width="20" Height="20" Margin="5"/>
+            <Border Background="DeepPink" Width="20" Height="20" Margin="5"/>
             <TextBlock Text="Completed" Margin="0,5,5,5"/>
-            <Border Background="Blue" Width="20" Height="20" Margin="5"/>
+            <Border Background="DarkBlue"  Width="20" Height="20" Margin="5"/>
             <TextBlock Text="Incomplete" Margin="0,5,5,5"/>
             <Border Background="Red" Width="20" Height="20" Margin="5"/>
             <TextBlock Text="Delayed" Margin="0,5,5,5"/>

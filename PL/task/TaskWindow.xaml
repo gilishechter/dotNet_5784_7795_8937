@@ -45,7 +45,7 @@
             <TextBox  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  IsEnabled="{Binding Id,Mode=OneTime,Converter={StaticResource ConverIdToIsEnableKey}}" Margin="250,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="ID Worker" Margin="70,120,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <TextBox Text="{Binding IdWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isNameId}" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBox Text="{Binding IdWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" MaxLength="9" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isNameId}" Margin="250,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="Name Worker:" Margin="70,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <TextBox Text="{Binding NameWorker, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isNameId}" Margin="250,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -60,10 +60,10 @@
             <TextBox Text="{Binding Time, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Margin="250,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
             <Label Content="Create Date"  Padding="0,0,10,0" Margin="70,370,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Width="150" Margin="135,370,0,0" VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding CreateDate, Mode=TwoWay}" IsEnabled="False" Width="150" Margin="135,370,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Planed Start Date"  Margin="70,420,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <DatePicker SelectedDate="{Binding WantedStartDate, Mode=TwoWay}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" Width="150" Margin="135,420,0,0" VerticalAlignment="Top"/>
+            <DatePicker SelectedDate="{Binding WantedStartDate, Mode=TwoWay}" IsEnabled="False" Width="150" Margin="135,420,0,0" VerticalAlignment="Top"/>
 
             <Label Content="Start Date" Margin="70,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
             <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _startDate}" Width="150" Margin="135,470,0,0" VerticalAlignment="Top"/>
@@ -88,8 +88,8 @@
         SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, 
         ValidatesOnExceptions=true}" IsEnabled="False" Margin="250,770,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168" Width="150" Height="30" HorizontalAlignment="Left"/>
 
-            <Label Content="Dependence Task" Margin="70,820,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
-            <ListView ItemsSource="{Binding DependenceTasks}" Margin="250,860,0,0" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" VerticalAlignment="Top">
+            <Label Content="Dependence Task" Margin="70,810,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.481,1.168"/>
+            <ListView ItemsSource="{Binding DependenceTasks}" Margin="250,810,0,0" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= _isCurrentTask}" VerticalAlignment="Top">
                 <ListView.View>
                     <GridView >
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
@@ -115,9 +115,9 @@
 
 
             <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-         HorizontalAlignment="Left" Margin="100,880,0,0" VerticalAlignment="Top" Height="47" Width="88" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="18" FontWeight="Bold" Click="Button_Click_AddOrUpdateTask" RenderTransformOrigin="-0.009,-0.225" />
+         HorizontalAlignment="Left" Margin="100,920,0,0" VerticalAlignment="Top" Height="47" Width="130" BorderBrush="#FF030303" Background="{x:Null}" FontFamily="Britannic Bold" FontSize="18" FontWeight="Bold" Click="Button_Click_AddOrUpdateTask" RenderTransformOrigin="-0.009,-0.225" />
             <Grid/>
-            <Button Content="Add dependence Task" Margin="250,700,0,0"    BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep" 
+            <Button Content="Add dependence Task" Margin="60,740,0,0"   BorderBrush="Black" Background="LightBlue" Click="Button_Click_AddDep"  HorizontalAlignment="Left"
              Visibility="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=_isCurrentTask, Converter={StaticResource ConvertBoolToVisabilityKey}}"/>
 
 

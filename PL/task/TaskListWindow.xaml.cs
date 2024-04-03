@@ -1,5 +1,4 @@
 ﻿using PL.Tools.ToObservableCollection;
-using PL.Tools.NewFolder;
 using PL.worker;
 using System;
 using System.Collections.Generic;
@@ -24,8 +23,7 @@ namespace PL.task;
 public partial class TaskListWindow : Window
 {
     static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
-    // public bool isAllTasks { get; set; }
-
+    
 
     public bool isAllTasks
     {
@@ -38,9 +36,11 @@ public partial class TaskListWindow : Window
         DependencyProperty.Register("isAllTasks", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(false));
 
     public bool isSignUpTask { get; set; } = false;
+    int _idWorker = 0;
     public TaskListWindow(BO.Worker? worker=null, bool _isSignUpTask = true)
     {
-        DataContext=this;
+       // DataContext=this;
+
         isSignUpTask = _isSignUpTask;
         if (worker != null)
         {
@@ -50,6 +50,8 @@ public partial class TaskListWindow : Window
             else
                 _tasks = _s_bl?.Task.OptionSchduleTasks(worker).ToObservableCollection();
             isAllTasks = false;
+
+            _idWorker = worker.Id;
         }
         else { isAllTasks = true; }
         InitializeComponent();
@@ -74,12 +76,16 @@ public partial class TaskListWindow : Window
    
     private void Button_Click_AddTask(object sender, RoutedEventArgs e)
     {
-        new TaskWindow(onAddOrUpdate).ShowDialog();
+        if (_s_bl.GetStartProject() != null)
+            MessageBox.Show("you can't add task since the project startes", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        else
+            new TaskWindow(onAddOrUpdate).ShowDialog();
+
     }
     private void double_click_updateTask(object sender, MouseButtonEventArgs e)
     {
         BO.TaskList? task = (sender as ListView)?.SelectedItem as BO.TaskList;
-        new TaskWindow(onAddOrUpdate,task.Id, isAllTasks, true, isSignUpTask).ShowDialog();
+        new TaskWindow(onAddOrUpdate,task!.Id, isAllTasks, true, isSignUpTask, _idWorker).ShowDialog();
     }
 
     private void ComboBox_SelectionChanged_status(object sender, SelectionChangedEventArgs e)
@@ -136,10 +142,11 @@ public partial class TaskListWindow : Window
         {
             var oldTask = _tasks.FirstOrDefault(task => task.Id == id);
             _tasks.Remove(oldTask!);
-            _tasks.OrderBy(task => task.Id).ToObservableCollection();
+          
             
         }           
         _tasks.Add(tasklist);
+        _tasks.OrderBy(task => task.Id).ToObservableCollection();
     }
   
     private void click_DeleteTask(object sender, RoutedEventArgs e)
@@ -151,7 +158,7 @@ public partial class TaskListWindow : Window
 
             if (MessageBoxResult.Yes == result)
             {
-                _s_bl.Task.Delete(_task.Id);
+                _s_bl.Task.Delete(_task!.Id);
                 _tasks.Remove(_task!);
                 MessageBox.Show("This task has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             }

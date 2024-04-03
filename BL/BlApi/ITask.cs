@@ -11,7 +11,7 @@ public interface ITask
     public IEnumerable<BO.TaskList> OptionSchduleTasks(BO.Worker worker);
     public void AutometicSchedule();
     public IEnumerable<BO.GanttDetails> GetDetailsToGantt(Func<BO.GanttDetails, bool>? filter = null);
-
+    public void checkWorker(BO.Task task, int id);
 
 
 

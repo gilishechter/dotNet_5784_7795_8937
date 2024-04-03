@@ -1,4 +1,4 @@
-﻿using PL.Tools.NewFolder;
+﻿
 using PL.Tools.ToObservableCollection;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ public partial class WorkerlistWindow : Window
 {
     static readonly BlApi.IBl _s_bl = BlApi.Factory.Get();
 
-    //private ObservableCollection<BO.Worker> _workers = new ObservableCollection<BO.Worker>();
+    
     public WorkerlistWindow()
     {
         InitializeComponent();
@@ -54,7 +54,7 @@ public partial class WorkerlistWindow : Window
     private void Double_Click_Update(object sender, MouseButtonEventArgs e)
     {
         BO.Worker? worker =(sender as ListView)?.SelectedItem as BO.Worker;
-        new WorkerWindow(onAddOrUpdate, worker.Id).ShowDialog();     
+        new WorkerWindow(onAddOrUpdate, worker!.Id).ShowDialog();     
     }
 
     private void onAddOrUpdate(int id, bool isUpdate)
@@ -79,8 +79,6 @@ public partial class WorkerlistWindow : Window
                 _s_bl.Worker.Delete(worker!.Id);
                 _workers.Remove(worker!);
 
-
-                _s_bl.User.Delete(worker.Id);
                 MessageBox.Show("This worker has been successfully deleted", "Well Done!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

@@ -33,6 +33,10 @@ internal class WorkerImplementation : IWorker
         if ((!boWorker.Email!.Contains("@gmail.com")))
             throw new FormatException("the email is invalid");
 
+        if (boWorker.WorkerRank == BO.Rank.None)
+            throw new BlCantCreate("you cant choose None as rank");
+
+
         Do.Worker Doworker = new(boWorker.Id, (Do.Rank)boWorker.WorkerRank, boWorker.HourPrice, boWorker.Name, boWorker.Email);
         boWorker.WorkerTask = GetWorkerTask(Doworker);//update current task for worker 
         try
@@ -94,6 +98,7 @@ internal class WorkerImplementation : IWorker
 
         return task switch
         {
+            Do.Task t when t.DeadLine < _bl.Clock && t.EndingDate == null => BO.Status.InJeopardy,
             Do.Task t when t.IdWorker is null => BO.Status.Unscheduled,
             Do.Task t when t.StartDate == null || t.StartDate > _bl.Clock => BO.Status.Scheduled,
             Do.Task t when t.DeadLine > _bl.Clock => BO.Status.OnTrackStarted,
@@ -182,6 +187,9 @@ internal class WorkerImplementation : IWorker
         if (oldWorker.WorkerRank > boWorker.WorkerRank)
             throw new FormatException("worker rank can only increase");
 
+        if (boWorker.WorkerRank == BO.Rank.None)
+            throw new BlCantBeUpdated("you cant choose None as rank");
+
         if (boWorker.WorkerTask != null && boWorker.WorkerTask.Id is int taskId)//put the int value in taskId because read get int?
         {
             var doTask = _dal.Task.Read(taskId);
@@ -235,7 +243,7 @@ internal class WorkerImplementation : IWorker
     /// <returns></returns>
     public WorkerTask? GetWorkerTask(Do.Worker doWorker)
     {
-        Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && GetStatus(tmp) is Status.OnTrackStarted);
+        Do.Task? task = _dal.Task.Read(tmp => tmp.IdWorker == doWorker.Id && (GetStatus(tmp) is Status.OnTrackStarted|| (GetStatus(tmp) is Status.InJeopardy && tmp.StartDate != null)));
         WorkerTask current = new()
         {
             Id = task != null ? task.Id : null,

@@ -1,7 +1,6 @@
 ﻿using PL.Tools.ToObservableCollection;
 using System;
 using System.Collections.ObjectModel;
-using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,63 +19,49 @@ namespace PL.task
 
         private readonly int _id;
 
-        public bool _isAllTasks { get; set; }=false;
+        public bool _isAllTasks { get; set; } = false;
         public bool _isCurrentTask { get; set; } = false;
         public bool _isNameId { get; set; } = false;
         public bool _EndDate { get; set; } = false;
         public bool _startDate { get; set; } = false;
+        public int _workerId;
 
-
-        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask = true, bool isSignUpTask = false)
+        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool isAllTasks = true, bool isCurrentTask = true, bool isSignUpTask = false, int workerId = 0)
         {
-            DataContext = this;
+            //DataContext = this;
             _onAddOrUpdate = onAddOrUpdate;
             _isAllTasks = isAllTasks;
-           
-           _id =id;
+
+            _id = id;
             try
             {
+                _workerId = workerId;
                 _isUpdate = id is not 0;
-                 task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
-                _isCurrentTask = isCurrentTask ;
-                if (isSignUpTask)
-                {
-                    _isCurrentTask = false;
-                    _isNameId = true;
-                    //if (isSignUpTask)
-                    //{
-                    //    _startDate = true;
-                    //    _isNameId = false;
-                    //}
-                }
+                task = (_isUpdate ? s_bl.Task.Read(id) : new BO.Task())!;
+                _isCurrentTask = isCurrentTask;
+                if (isAllTasks)
+                    isCurrentTask = true;
                 else
                 {
-                    if (!isCurrentTask)
-                        _EndDate = true;
+                    if (isSignUpTask)
+                    {
+                        _isCurrentTask = false;
+                        _isNameId = true;
+                        
+                    }
                     else
                     {
-                        _startDate = true;
-                        _isCurrentTask = false;
-                    }
-                    //_isNameId = false;
-                }
-                //if(!isCurrentTask)
-                //    _EndDate = true;
+                        if (!isCurrentTask)
+                            _EndDate = true;
+                        else
+                        {
+                            _startDate = true;
+                            _isCurrentTask = false;
+                        }
 
-                //if (isSignUpTask && !isCurrentTask)
-                //{
-                //    _startDate=true;
-                //    _isNameId=false;
-                //}
-                //else
-                //    _EndDate=true;
-                //else
-                //{
-                //    if (isSignUpTask)
-                //        _startDate = true;
-                //    else   
-                //        _EndDate = true;
-                //}
+                    }
+                }
+             
 
             }
             catch (Exception ex)
@@ -98,7 +83,7 @@ namespace PL.task
             DependencyProperty.Register("CurrentTime", typeof(ObservableCollection<BO.TaskList>), typeof(TaskWindow), new PropertyMetadata(null));
 
 
-        public BO.StatusProject statusProject { get; set; } = BO.StatusProject.Planning;
+    //    public BO.StatusProject statusProject { get; set; } = BO.StatusProject.Planning;
         public BO.Task task
         {
             get { return (BO.Task)GetValue(taskProperty); }
@@ -115,13 +100,17 @@ namespace PL.task
         {
             try
             {
+                if (!_isCurrentTask)
+                    s_bl.Task.checkWorker(task, _workerId);
+
                 var content = (sender as Button)!.Content;
 
                 int _id = task.Id;
                 BO.Task newTask;
-                if (_isUpdate)  s_bl.Task.Update(task!);
-                                 
+                if (_isUpdate) s_bl.Task.Update(task!);
+
                 else _id = s_bl.Task.Create(task);
+              
 
                 _onAddOrUpdate(_id, _isUpdate);
 
@@ -133,17 +122,25 @@ namespace PL.task
             }
             catch (Exception ex)
             {
+                if (ex.Message == "You start the task too late")
+                {
+                    s_bl.Task.AutometicSchedule();
+                    this.Close();
+                    return;
+                }
+
                 if (ex.Message != "You finished the task too late")
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
                 {
-                    MessageBoxResult result= MessageBox.Show("Do you want to update the schedule", ex.Message, MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    MessageBoxResult result = MessageBox.Show("Do you want to update the schedule", ex.Message, MessageBoxButton.YesNo, MessageBoxImage.Error);
                     if (MessageBoxResult.Yes == result)
                     {
                         try
                         {
                             s_bl.Task.AutometicSchedule();
                             MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.Close();
                         }
                         catch (Exception ex1)
                         {
@@ -157,7 +154,7 @@ namespace PL.task
             }
         }
 
-        private void double_click_updateDepTask(object sender, RoutedEventArgs e)
+        private void double_click_updateDepTask(object sender, RoutedEventArgs e)//delete
         {
             try
             {
@@ -181,7 +178,14 @@ namespace PL.task
 
         private void Button_Click_AddDep(object sender, RoutedEventArgs e)
         {
-            new DepTaskWindow(task.Id).ShowDialog();
+            if (s_bl.GetStartProject() != null)
+                MessageBox.Show("Tou can't add dependence task after the planning stage", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                new DepTaskWindow(task.Id).ShowDialog();
+                this.Close();
+            }
+
 
         }
 

@@ -66,27 +66,16 @@ namespace PL
         public static readonly DependencyProperty isAdminProperty =
             DependencyProperty.Register("_isAdmin", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
-        private DispatcherTimer _timer;
+        public string? helloLabel { get; set; }
         public MainWindow(BO.User _user)
         {
             CurrentTime = s_bl.Clock;
-            _timer =new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += Timer_Tick;
-            _timer.Start();
             user = _user;
-            _isAdmin = _user.isAdmin;
-            CurrentTime = s_bl.Clock;
+            _isAdmin = _user.isAdmin;   
+            helloLabel = "Hello " + _user.userName + "!";
             InitializeComponent();
 
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            CurrentTime = CurrentTime.AddSeconds(1);
-        }
-
-        
+        }       
         private void Button_Click_Workers(object sender, RoutedEventArgs e)
         {
             new WorkerlistWindow().Show();
@@ -95,22 +84,20 @@ namespace PL
         private void Button_Click_init(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to initialize the date?", "Initialization", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (MessageBoxResult.Yes == result)
-                // DalTest.Initialization.Do();
+            if (MessageBoxResult.Yes == result)              
                 s_bl.InitializeDB();
         }
 
         private void ButtonReset_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the date?", "Reset", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (MessageBoxResult.Yes == result)
-                // DalTest.Initialization.Do();
+            if (MessageBoxResult.Yes == result)              
                 s_bl.Clear();
         }
 
         private void Button_Click_Tasks(object sender, RoutedEventArgs e)
         {
-            new TaskListWindow().Show();
+            new TaskListWindow(null, false).Show();
 
         }
 
@@ -126,21 +113,7 @@ namespace PL
                     new TaskListWindow(worker, false).ShowDialog();
             }
             else
-                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
-
-            //if (worker.WorkerTask!.Id != null && s_bl.Task.Read(worker.WorkerTask.Id.Value).WantedStartDate > DateTime.Now)
-            //    new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false).ShowDialog();
-            //else
-            //{
-            //    result = MessageBox.Show("Do you want to start new task?", "This worker doesn't have current task", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            //    if (result == MessageBoxResult.Yes)
-            //         new TaskListWindow(worker, false).ShowDialog();
-
-            //}
-
-
-
-
+                new TaskWindow(onUpdate, worker.WorkerTask.Id!.Value, false, false,false,worker.Id).ShowDialog();
         }
 
         private void Button_Click_SignUpTask(object sender, RoutedEventArgs e)
@@ -158,17 +131,13 @@ namespace PL
         }
 
         private void Button_Click_logOut(object sender, RoutedEventArgs e)
-        {
-           
-           
+        {                     
             this.Close();
         }
 
         private void Button_Click_oneHour(object sender, RoutedEventArgs e)
         {
-            CurrentTime =s_bl.SetClockHour();
-            
-
+            CurrentTime =s_bl.SetClocMonth();           
         }
 
         private void Button_Click_oneDay(object sender, RoutedEventArgs e)
@@ -189,18 +158,15 @@ namespace PL
         private void Button_Click_Aoto(object sender, RoutedEventArgs e)
         {
             try
-            {
-                //if(s_bl.GetStartProject()==null)
-                //    MessageBox.Show("You can't plan a schedule because there is no start project date ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            {              
                 if (s_bl.GetStartProject() == null)
                 
                     new StartDateWindow().ShowDialog();
-
-                if (s_bl.GetStartProject() != null)
-                {
+              //else
+              //  {
                     s_bl.Task.AutometicSchedule();
                     MessageBox.Show("The schdule successfully updated", "Well Done", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+                //}
 
             }
             catch(Exception ex)
@@ -213,7 +179,7 @@ namespace PL
         private void Button_Click_Gant(object sender, RoutedEventArgs e)
         {
             if(s_bl.GetStartProject() == null)
-                MessageBox.Show("you must enter a start progect date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("you must enter a start project date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             else
                 new GanttChartWindow().ShowDialog();
 

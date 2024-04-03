@@ -43,7 +43,7 @@ public static class Tools
 
 
 
-    public static int GetOfset(Do.Task task)
+    public static int GetOfset(Do.Task task)//calc the length of the "white" rectangle
     {
         IEnumerable<Do.Dependency> dependencies = dal.Dependency.ReadAll(x => x.DependenceTask == task.Id);
         if (dependencies.Count() == 0)
